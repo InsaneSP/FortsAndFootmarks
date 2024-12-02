@@ -1,0 +1,69 @@
+.hero-container {
+    width: 99.14vw;
+    height: 93.3vh;
+    background-image: url("../images/Rajgad.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    flex-direction: column;
+    color: #f5f5dc;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black !important;
+}
+
+h3 {
+    margin: 30px;
+    text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black !important;
+}
+
+.form-control {
+    border-radius: 15px !important;
+    width: 100% !important;
+}
+
+.btn{
+    color: #f5f5dc !important;
+    border-radius: 15px !important;
+    border-color: #f5f5dc  !important;
+    background-color: transparent !important;
+}
+
+.btn:hover{
+    color: black !important;
+    background-color: #f5f5dc !important;
+    border-color: #000 !important;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem; 
+    margin: 10px; 
+}
+
+.icon-text span {
+    margin-left: 10px;
+}
+
+.mt-12 {
+    display: flex;
+    justify-content: center; 
+    gap: 20px;
+}
+
+.d-flex{
+    width: 700px;
+}

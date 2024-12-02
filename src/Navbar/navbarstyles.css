@@ -1,0 +1,23 @@
+.navbar {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-nav .nav-item .nav-link {
+    margin-right: 4rem;
+    margin-left: 4rem;
+    font-size: 1.5rem;
+    transition: color 0.2s ease-in-out;
+    color: #000000;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    background-color: #424242;
+    color: white;
+    border-radius: 10px;
+}
+
+.d-flex input:focus {
+    border-color: #B87333; 
+    box-shadow: 0 0 5px #B87333; 
+}
