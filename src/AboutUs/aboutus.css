@@ -14,7 +14,7 @@
     margin: 0;
 }
 
-.image {
+.about-image {
     width: 90%;
     height: 50rem;
     margin: 20px 5%;
@@ -44,7 +44,7 @@
     margin: 15px;
 }
 
-.mission-container p {
+p {
     font-size: 1.1rem;
     line-height: 1.6;
 }

@@ -15,7 +15,7 @@ class AboutUs extends Component {
         return (
             <div className="container-fluid about-us-container">
                 <h1 className="heading">About FortsAndFootmarks</h1>
-                <img src={mountainFort} alt="Mountain Fort" className="image" />
+                <img src={mountainFort} alt="Mountain Fort" className="about-image" />
                 <div className="section">
                     <div className="mission-container">
                         <h4 className="subheading">Our Mission</h4>

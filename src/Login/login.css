@@ -172,8 +172,8 @@
 }
 
 .image {
-    width: 1000px !important;
-    height: 500px !important;
+    width: 700px !important;
+    height: 350px !important;
     transition: transform 1.1s ease-in-out;
     transition-delay: 0.4s;
 }
