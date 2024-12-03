@@ -39,16 +39,16 @@ class Login extends Component {
                             <input type="submit" value="Login" className="login-btn solid inp" />
                             <p className="social-text">Or Sign in with social platforms</p>
                             <div className="social-media">
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faFacebook} />
                                 </a>
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </a>
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faGoogle} />
                                 </a>
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faLinkedin} />
                                 </a>
                             </div>
@@ -72,16 +72,16 @@ class Login extends Component {
                             <input type="submit" className="login-btn inp" value="Sign up" />
                             <p className="social-text">Or Sign up with social platforms</p>
                             <div className="social-media">
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faFacebook} />
                                 </a>
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </a>
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faGoogle} />
                                 </a>
-                                <a href="#" className="social-icon">
+                                <a href="#" className="login-social-icon">
                                     <FontAwesomeIcon icon={faLinkedin} />
                                 </a>
                             </div>

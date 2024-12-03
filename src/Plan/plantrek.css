@@ -16,7 +16,8 @@
 }
 
 .itinerary {
-    height: 30rem;
+    min-height: 25rem;
+    height: auto !important;
     display: flex;
     flex-direction: column;
 }
@@ -69,6 +70,8 @@
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 25rem;
+    height: auto !important;
 }
 
 .card-heading {
@@ -206,12 +209,9 @@ textarea {
     cursor: pointer;
 }
 
-.action-btn.share {
+.action-btn.share, .action-btn.save {
     background-color: #000 !important;
-}
-
-.action-btn.save {
-    background-color: #000 !important;
+    color: #fff;
 }
 
 /* Responsive Design */

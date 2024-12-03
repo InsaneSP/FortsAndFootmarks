@@ -108,7 +108,7 @@
     justify-content: center;
 }
 
-.social-icon {
+.login-social-icon {
     height: 48px;
     width: 46px;
     display: flex;
@@ -123,7 +123,7 @@
     transition: 0.3s;
 }
 
-.social-icon:hover {
+.login-social-icon:hover {
     color: #d35b2a;
     border-color: #d35b2a;
 }
