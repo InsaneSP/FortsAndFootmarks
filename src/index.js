@@ -12,6 +12,7 @@ import Login from './Login/login';
 import Plan from './Plan/plantrek';
 import AboutUs from './AboutUs/aboutus';
 import ScrollToTop from './ScrollToTop';
+import IndividualFort from './IndividualFort/individualfort';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -34,6 +35,7 @@ root.render(
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/forts/:type" element={<Forts />} />
         <Route path="/plan" element={<Plan />} />
+        {/* <Route path="/" element={<IndividualFort />} /> */}
       </Routes>
       <Footer />
     </Router>

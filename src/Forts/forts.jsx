@@ -1,217 +1,106 @@
-import React, { Component } from "react";
-import mountainFort from "../images/Mountain.jfif";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faMapMarkerAlt,
-    faCalendarAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";  // Import useParams
 import "./forts.css";
 
-class Forts extends Component {
-    state = {};
-    render() {
-        return (
-            <div className="container-fluid">
-                <br />
-                <h1>Forts</h1>
-                <form class="d-flex search" role="search">
-                    <input
-                        class="form-control me-2"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                    />
-                    <button class="btn fbutton" type="submit">
-                        Search
-                    </button>
-                </form>
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button
-                                class="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne"
-                                aria-expanded="false"
-                                aria-controls="flush-collapseOne"
-                            >
-                                <div className="fort">
-                                    <img
-                                        src={mountainFort}
-                                        alt="Mountain Fort"
-                                        className="fortimg"
-                                    />
-                                    <div className="fortname">
-                                        <h5>Rajgad</h5>
-                                        <h6>
-                                            <FontAwesomeIcon icon={faMapMarkerAlt} className="icon" />
-                                            Raigad District, Maharashtra
-                                        </h6>
-                                    </div>
-                                </div>
-                            </button>
-                        </h2>
-                        <div
-                            id="flush-collapseOne"
-                            class="accordion-collapse collapse"
-                            data-bs-parent="#accordionFlushExample"
-                        >
-                            <div className="accordion-body">
-                                <div className="fort-details">
-                                    <img
-                                        src={mountainFort}
-                                        alt="Mountain Fort"
-                                        className="fort-details-img"
-                                    />
-                                    <div className="fort-info">
-                                        <div className="fort-date">
-                                            <FontAwesomeIcon
-                                                icon={faCalendarAlt}
-                                                className="calendar-icon"
-                                            />
-                                            <p>Built in 1656 by Chhatrapati Shivaji Maharaj</p>
-                                        </div>
-                                        <p className="history-text">
-                                            Raigad was the capital of the Maratha Empire under
-                                            Chhatrapati Shivaji Maharaj. It is located in the Sahyadri
-                                            mountain range.
-                                        </p>
-                                        <button className="btn fbutton">Explore More</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+const Forts = () => {
+    const [forts, setForts] = useState([]);
+    const { type } = useParams();  // This gets the category from the URL (e.g., "hill")
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button
-                                class="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseTwo"
-                                aria-expanded="false"
-                                aria-controls="flush-collapseTwo"
-                            >
-                                <div className="fort">
-                                    <img
-                                        src={mountainFort}
-                                        alt="Mountain Fort"
-                                        className="fortimg"
-                                    />
-                                    <div className="fortname">
-                                        <h5>Rajgad</h5>
-                                        <h6>
-                                            {" "}
-                                            <FontAwesomeIcon
-                                                icon={faMapMarkerAlt}
-                                                className="icon"
-                                            />{" "}
-                                            Raigad District, Maharashtra
-                                        </h6>
-                                    </div>
-                                </div>
-                            </button>
-                        </h2>
-                        <div
-                            id="flush-collapseTwo"
-                            class="accordion-collapse collapse"
-                            data-bs-parent="#accordionFlushExample"
-                        >
-                            <div className="accordion-body">
-                                <div className="fort-details">
-                                    <img
-                                        src={mountainFort}
-                                        alt="Mountain Fort"
-                                        className="fort-details-img"
-                                    />
-                                    <div className="fort-info">
-                                        <div className="fort-date">
-                                            <FontAwesomeIcon
-                                                icon={faCalendarAlt}
-                                                className="calendar-icon"
-                                            />
-                                            <p>Built in 1656 by Chhatrapati Shivaji Maharaj</p>
-                                        </div>
-                                        <p className="history-text">
-                                            Raigad was the capital of the Maratha Empire under
-                                            Chhatrapati Shivaji Maharaj. It is located in the Sahyadri
-                                            mountain range.
-                                        </p>
-                                        <button className="btn fbutton">Explore More</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    useEffect(() => {
+        const trimmedType = type.trim().toLowerCase(); // Trim and normalize type
+        console.log("Fetching forts for type:", trimmedType); // Log the type
+    
+        axios.get(`http://localhost:3001/forts/${trimmedType}`)
+            .then((response) => {
+                console.log("Response data:", response.data); // Log the response
+                setForts(response.data);
+            })
+            .catch((err) => console.error("Error fetching forts:", err));
+    }, [type]);
+    
+    
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button
-                                class="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree"
-                                aria-expanded="false"
-                                aria-controls="flush-collapseThree"
-                            >
-                                <div className="fort">
-                                    <img
-                                        src={mountainFort}
-                                        alt="Mountain Fort"
-                                        className="fortimg"
-                                    />
-                                    <div className="fortname">
-                                        <h5>Rajgad</h5>
-                                        <h6>
-                                            {" "}
-                                            <FontAwesomeIcon
-                                                icon={faMapMarkerAlt}
-                                                className="icon"
-                                            />{" "}
-                                            Raigad District, Maharashtra
-                                        </h6>
-                                    </div>
-                                </div>
-                            </button>
-                        </h2>
-                        <div
-                            id="flush-collapseThree"
-                            class="accordion-collapse collapse"
-                            data-bs-parent="#accordionFlushExample"
-                        >
-                            <div className="accordion-body">
-                                <div className="fort-details">
-                                    <img
-                                        src={mountainFort}
-                                        alt="Mountain Fort"
-                                        className="fort-details-img"
-                                    />
-                                    <div className="fort-info">
-                                        <div className="fort-date">
-                                            <FontAwesomeIcon
-                                                icon={faCalendarAlt}
-                                                className="calendar-icon"
-                                            />
-                                            <p>Built in 1656 by Chhatrapati Shivaji Maharaj</p>
+    return (
+        <div className="container-fluid">
+            <br />
+            <h1>{type} Forts</h1>
+            <form className="d-flex search" role="search">
+                <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                />
+                <button className="btn fbutton" type="submit">
+                    Search
+                </button>
+            </form>
+            <div className="accordion accordion-flush" id="accordionFlushExample">
+                {forts.length > 0 ? (
+                    forts.map((fort, index) => (
+                        <div className="accordion-item" key={fort._id}>
+                            <h2 className="accordion-header">
+                                <button
+                                    className="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target={`#flush-collapse${index}`}
+                                    aria-expanded="false"
+                                    aria-controls={`flush-collapse${index}`}
+                                >
+                                    <div className="fort">
+                                        {/* Image and details */}
+                                        <div className="fortname">
+                                            <h5>{fort.name}</h5>
+                                            <h6>
+                                                <FontAwesomeIcon
+                                                    icon={faMapMarkerAlt}
+                                                    className="icon"
+                                                />
+                                                {fort.location}
+                                            </h6>
                                         </div>
-                                        <p className="history-text">
-                                            Raigad was the capital of the Maratha Empire under
-                                            Chhatrapati Shivaji Maharaj. It is located in the Sahyadri
-                                            mountain range.
-                                        </p>
-                                        <button className="btn fbutton">Explore More</button>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div
+                                id={`flush-collapse${index}`}
+                                className="accordion-collapse collapse"
+                                data-bs-parent="#accordionFlushExample"
+                            >
+                                <div className="accordion-body">
+                                    <div className="fort-details">
+                                        <img
+                                            src={`http://localhost:5000/uploads/${fort.photos[0]}`} // Assuming the photo is stored on your server
+                                            alt={fort.name}
+                                            className="fort-details-img"
+                                        />
+                                        <div className="fort-info">
+                                            <div className="fort-date">
+                                                {/* <FontAwesomeIcon
+                                                    icon={faCalendarAlt}
+                                                    className="calendar-icon"
+                                                /> */}
+                                                <p>{fort.historicalSignificance}</p>
+                                            </div>
+                                            <p className="history-text">{fort.history.summary}</p>
+                                            <button className="btn fbutton">Explore More</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <br />
+                    ))
+                ) : (
+                    <p>No forts found for the selected category.</p>
+                )}
             </div>
-        );
-    }
-}
+            <br />
+        </div>
+    );
+};
 
 export default Forts;
