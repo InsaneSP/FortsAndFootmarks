@@ -35,7 +35,7 @@ root.render(
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/forts/:type" element={<Forts />} />
         <Route path="/plan" element={<Plan />} />
-        {/* <Route path="/" element={<IndividualFort />} /> */}
+        <Route path="/fort/:fortName" element={<IndividualFort />} />
       </Routes>
       <Footer />
     </Router>

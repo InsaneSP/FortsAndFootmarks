@@ -1,10 +1,19 @@
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: transparent !important;  /* Remove background color */
+    transform: none !important;  /* Remove transform scaling */
+    box-shadow: none !important;  /* Remove box-shadow (if any) */
+}
+
 .carousel-item img {
     height: 35rem;
     object-fit: cover;
 }
 
-.card-text{
-    margin: 0.5%;
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .fbutton {
