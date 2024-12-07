@@ -1,8 +1,16 @@
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    background-color: transparent !important;  /* Remove background color */
-    transform: none !important;  /* Remove transform scaling */
-    box-shadow: none !important;  /* Remove box-shadow (if any) */
+.carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    top: 40% !important;
+    width: 50px; /* Set the width of the control buttons */
+    height: 50px; /* Set the height of the control buttons */
+    z-index: 10;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: black; /* Add a background color for the icons */
+    width: 30px; /* Adjust the width of the icons */
+    height: 30px; /* Adjust the height of the icons */
+    border-radius: 50%; /* Make the icons circular */
 }
 
 .carousel-item img {

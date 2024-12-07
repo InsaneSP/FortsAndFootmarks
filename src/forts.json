@@ -2,9 +2,10 @@
     {
         "name": "Rajgad",
         "photos": [
-            "photo1.jpg",
-            "photo2.jpg",
-            "photo3.jpg"
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555538/rajgad1_zuto7p.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555501/rajgad3_ifyxxk.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555501/rajgad2_y0dewo.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555501/rajgad4_zlkopz.jpg"
         ],
         "rating": 4.8,
         "historicalSignificance": "The King of Forts - Chhatrapati Shivaji Maharaj's First Capital.",
@@ -114,9 +115,10 @@
     {
         "name": "Sindhudurg",
         "photos": [
-            "sindhudurg1.jpg",
-            "sindhudurg2.jpg",
-            "sindhudurg3.jpg"
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556634/Coastal_v6lwys.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556583/sindhudurg2_xtrcpo.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556582/sindhudurg3_i6yusf.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556582/sindhudurg4_dozcln.jpg"
         ],
         "rating": 4.7,
         "historicalSignificance": "The Gateway to Maratha Naval Power - Built by Shivaji Maharaj in 1664.",
@@ -221,9 +223,10 @@
     {
         "name": "Raigad",
         "photos": [
-            "raigad1.jpg",
-            "raigad2.jpg",
-            "raigad3.jpg"
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/raigad1_qk9drk.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/raigad2_qkiek7.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/raigad3_bkkqah.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556582/raigad4_sqw440.jpg"
         ],
         "rating": 4.9,
         "historicalSignificance": "The Crown of the Maratha Empire - Chhatrapati Shivaji Maharaj's Coronation Fort.",
@@ -329,9 +332,10 @@
     {
         "name": "Shivneri",
         "photos": [
-            "shivneri1.jpg",
-            "shivneri2.jpg",
-            "shivneri3.jpg"
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/shivneri1_wah0zr.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556580/shivneri2_myvojf.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/shivneri3_lk9ndf.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/shivneri4_wmb2jm.jpg"
         ],
         "rating": 4.6,
         "historicalSignificance": "The Birthplace of Chhatrapati Shivaji Maharaj - A Fort of Heritage and Valor.",
@@ -428,9 +432,10 @@
     {
         "name": "Pratapgad",
         "photos": [
-            "pratapgad1.jpg",
-            "pratapgad2.jpg",
-            "pratapgad3.jpg"
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556580/pratapgad1_fzhhye.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556580/pratapgad2_buik6k.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/pratapgad3_sene7k.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556580/pratapgad1_fzhhye.jpg"
         ],
         "rating": 4.5,
         "historicalSignificance": "The Fort of Triumph - Witness to Chhatrapati Shivaji Maharaj's Victory Over Afzal Khan.",

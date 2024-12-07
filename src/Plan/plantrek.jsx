@@ -7,6 +7,9 @@ import {
     faSave,
     faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { jsPDF } from "jspdf";  // Import jsPDF
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";  // Import share buttons
 import "./plantrek.css";
 
 const Plan = () => {
@@ -27,64 +30,70 @@ const Plan = () => {
         },
     ]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // To check if user is logged in
+    const navigate = useNavigate();
 
-    // Functions for itinerary
-    const handleAddActivity = (dayIndex) => {
-        const updatedItinerary = [...itinerary];
-        updatedItinerary[dayIndex].activities.push("");
-        setItinerary(updatedItinerary);
-    };
-
-    const handleActivityChange = (dayIndex, activityIndex, value) => {
-        const updatedItinerary = [...itinerary];
-        updatedItinerary[dayIndex].activities[activityIndex] = value;
-        setItinerary(updatedItinerary);
-    };
-
-    const handleDeleteActivity = (dayIndex, activityIndex) => {
-        const updatedItinerary = [...itinerary];
-        updatedItinerary[dayIndex].activities.splice(activityIndex, 1);
-        setItinerary(updatedItinerary);
-    };
-
-    const handleAddDay = () => {
-        setItinerary([
-            ...itinerary,
-            { day: `Day ${itinerary.length + 1}`, activities: [""] },
-        ]);
-    };
-
-    // Functions for expense tracker
-    const handleAddExpense = () => {
-        setExpenses([...expenses, { item: "", amount: 0 }]);
-    };
-
-    const handleExpenseChange = (index, field, value) => {
-        const updatedExpenses = [...expenses];
-        updatedExpenses[index][field] =
-            field === "amount" ? parseFloat(value) || 0 : value;
-        setExpenses(updatedExpenses);
-        setTotalExpense(
-            updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+        // Functions for itinerary
+        const handleAddActivity = (dayIndex) => {
+            const updatedItinerary = [...itinerary];
+            updatedItinerary[dayIndex].activities.push("");
+            setItinerary(updatedItinerary);
+        };
+    
+        const handleActivityChange = (dayIndex, activityIndex, value) => {
+            const updatedItinerary = [...itinerary];
+            updatedItinerary[dayIndex].activities[activityIndex] = value;
+            setItinerary(updatedItinerary);
+        };
+    
+        const handleDeleteActivity = (dayIndex, activityIndex) => {
+            const updatedItinerary = [...itinerary];
+            updatedItinerary[dayIndex].activities.splice(activityIndex, 1);
+            setItinerary(updatedItinerary);
+        };
+    
+        const handleAddDay = () => {
+            setItinerary([
+                ...itinerary,
+                { day: `Day ${itinerary.length + 1}`, activities: [""] },
+            ]);
+        };
+    
+        // Functions for expense tracker
+        const handleAddExpense = () => {
+            setExpenses([...expenses, { item: "", amount: 0 }]);
+        };
+    
+        const handleExpenseChange = (index, field, value) => {
+            const updatedExpenses = [...expenses];
+            updatedExpenses[index][field] =
+                field === "amount" ? parseFloat(value) || 0 : value;
+            setExpenses(updatedExpenses);
+            setTotalExpense(
+                updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+            );
+        };
+    
+        const handleDeleteExpense = (index) => {
+            const updatedExpenses = [...expenses];
+            updatedExpenses.splice(index, 1);
+            setExpenses(updatedExpenses);
+            setTotalExpense(
+                updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+            );
+        };
+    
+        // Filter timeline based on search
+        const filteredTimeline = fortTimeline.filter((fort) =>
+            fort.fortName.toLowerCase().includes(searchQuery.toLowerCase())
         );
-    };
 
-    const handleDeleteExpense = (index) => {
-        const updatedExpenses = [...expenses];
-        updatedExpenses.splice(index, 1);
-        setExpenses(updatedExpenses);
-        setTotalExpense(
-            updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
-        );
-    };
-
-    // Filter timeline based on search
-    const filteredTimeline = fortTimeline.filter((fort) =>
-        fort.fortName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    // Function to handle sharing the trek plan
     const handleSharePlan = () => {
+        if (!isLoggedIn) {
+            alert("You must log in to share the trek plan.");
+            return;
+        }
+
         const planData = {
             itinerary,
             notes,
@@ -99,23 +108,46 @@ const Plan = () => {
             .catch(() => alert("Failed to copy Trek Plan to clipboard."));
     };
 
-    // Function to handle saving the trek plan
-    const handleSavePlan = () => {
-        const planData = {
-            itinerary,
-            notes,
-            expenses,
-            totalExpense,
-        };
+    const handleSavePlanAsPDF = () => {
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        let yPos = 10;
+    
+        // Add itinerary
+        doc.text("Trek Plan", 10, yPos);
+        yPos += 10; // Move to the next line
+    
+        doc.text("Itinerary:", 10, yPos);
+        yPos += 10; // Move to the next line
+        itinerary.forEach((day, i) => {
+            doc.text(`${day.day}: ${day.activities.join(", ")}`, 10, yPos);
+            yPos += 10; // Adjust y position for the next item
+        });
+    
+        // Add notes
+        doc.text("Notes:", 10, yPos);
+        yPos += 10;
+        doc.text(notes, 10, yPos);
+        yPos += 10 + (notes.split("\n").length * 5); // Adjust y position based on the length of notes
+    
+        // Add expenses
+        doc.text("Expenses:", 10, yPos);
+        yPos += 10;
+        expenses.forEach((expense, i) => {
+            doc.text(`${expense.item}: ₹${expense.amount}`, 10, yPos);
+            yPos += 10; // Adjust y position for the next item
+        });
+    
+        // Add total expense
+        doc.text(`Total Expense: ₹${totalExpense.toFixed(2)}`, 10, yPos);
+    
+        // Save PDF
+        doc.save("TrekPlan.pdf");
+    };    
 
-        const fileName = "TrekPlan.json";
-        const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
-            JSON.stringify(planData, null, 2)
-        )}`;
-        const link = document.createElement("a");
-        link.href = jsonString;
-        link.download = fileName;
-        link.click();
+    const handleLogin = () => {
+        // Implement the login logic here, and once the user logs in, set isLoggedIn to true
+        setIsLoggedIn(true);  // Simulating successful login
     };
 
     return (
@@ -274,14 +306,30 @@ const Plan = () => {
                 </div>
             </div>
 
+            {/* Social Share and Save */}
             <div className="action-buttons">
                 <button className="btn action-btn share" onClick={handleSharePlan}>
                     <FontAwesomeIcon icon={faShareAlt} /> Share Trek Plan
                 </button>
-                <button className="btn action-btn save" onClick={handleSavePlan}>
+                <button className="btn action-btn save" onClick={handleSavePlanAsPDF}>
                     <FontAwesomeIcon icon={faSave} /> Save Trek Plan
                 </button>
             </div>
+
+            {/* Social Media Share Buttons (requires login) */}
+            {isLoggedIn && (
+                <div className="social-share">
+                    <FacebookShareButton url={window.location.href}>
+                        Share on Facebook
+                    </FacebookShareButton>
+                    <TwitterShareButton url={window.location.href}>
+                        Share on Twitter
+                    </TwitterShareButton>
+                    <WhatsappShareButton url={window.location.href}>
+                        Share on WhatsApp
+                    </WhatsappShareButton>
+                </div>
+            )}
         </div>
     );
 };

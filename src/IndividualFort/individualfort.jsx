@@ -21,7 +21,17 @@ import { useParams } from "react-router-dom";
 import slugify from "slugify";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 import "./individualfort.css";
+import "leaflet/dist/leaflet.css";
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 
 const IndividualFort = () => {
     const { fortName } = useParams();
@@ -51,16 +61,16 @@ const IndividualFort = () => {
 
     return (
         <div className="container-fluid">
-            {/* <div className="image-section">
-                <img src={coastalFort} alt={`${fortData.name} 1`} className="image-1" />
+            <div className="image-section">
+                <img src={fortData.photos[0]} alt={`${fortData.name} 1`} className="image-1" onError={(e) => console.log('Image failed to load:', e.target.src)} />
                 <div className="image-2-3-4">
                     <div className="image-2-3">
-                        <img src={mountainFort} alt={`${fortData.name} 2`} className="image-2" />
-                        <img src={inlandFort} alt={`${fortData.name} 3`} className="image-3" />
+                        <img src={fortData.photos[1]} alt={`${fortData.name} 2`} className="image-2" onError={(e) => console.log('Image failed to load:', e.target.src)} />
+                        <img src={fortData.photos[2]} alt={`${fortData.name} 3`} className="image-3" onError={(e) => console.log('Image failed to load:', e.target.src)} />
                     </div>
-                    <img src={hillFort} alt={`${fortData.name} 4`} className="image-4" />
+                    <img src={fortData.photos[3]} alt={`${fortData.name} 4`} className="image-4" onError={(e) => console.log('Image failed to load:', e.target.src)} />
                 </div>
-            </div> */}
+            </div>
 
             <div className="head">
                 <h1>{fortData.name}</h1>
@@ -125,7 +135,7 @@ const IndividualFort = () => {
                                 style={{ color: "Green" }}
                             />
                             <div className="other-info-item">
-                                <p>Local Accommodations</p>
+                                <h6>Local Accommodations</h6>
                                 {fortData.localAccommodation.map((accommodation, index) => (
                                     <p key={index}>{accommodation}</p>
                                 ))}
@@ -138,7 +148,7 @@ const IndividualFort = () => {
                                 style={{ color: "Red" }}
                             />
                             <div className="other-info-item">
-                                <p>How to Reach</p>
+                                <h6>How to Reach</h6>
                                 <p>Nearest Bus Stop: {fortData.howToReach.nearestBusStop}</p>
                                 {fortData.howToReach.busesAvailable.map((bus, index) => (
                                     <p key={index}>{bus}</p>
@@ -152,7 +162,7 @@ const IndividualFort = () => {
                                 style={{ color: "Blue" }}
                             />
                             <div className="other-info-item">
-                                <p>Nearest Railway Station</p>
+                                <h6>Nearest Railway Station</h6>
                                 <p>{fortData.nearestRailwayStation}</p>
                             </div>
                         </div>
@@ -163,7 +173,7 @@ const IndividualFort = () => {
                                 style={{ color: "Gold" }}
                             />
                             <div className="other-info-item">
-                                <p>Approximate Budget</p>
+                                <h6>Approximate Budget</h6>
                                 <p>{fortData.approximateBudget}</p>
                             </div>
                         </div>
@@ -173,9 +183,26 @@ const IndividualFort = () => {
 
             <div className="location-section">
                 <h2>Location</h2>
-                <a href={fortData.map.googleMaps} target="_blank" rel="noopener noreferrer">
+                <a
+                    href={`https://www.google.com/maps?q=${fortData.map.coordinates.latitude},${fortData.map.coordinates.longitude}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     View on Google Maps
                 </a>
+                <MapContainer
+                    center={[fortData.map.coordinates.latitude, fortData.map.coordinates.longitude]} // Replace with lat/lng from the database
+                    zoom={13}
+                    style={{ height: "600px", width: "100%", marginTop: "20px" }}
+                >
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <Marker position={[fortData.map.coordinates.latitude, fortData.map.coordinates.longitude]}>
+                        <Popup>{fortData.name}</Popup>
+                    </Marker>
+                </MapContainer>
                 <h2>Best Time to Visit</h2>
                 <p>Best months: {fortData.bestTimeToVisit.months.join(", ")}</p>
             </div>
@@ -257,13 +284,13 @@ const IndividualFort = () => {
                         <div className="card fort-card no-hover" key={index}>
                             <div className="card-body">
                                 <h5>{fort}</h5>
-                                <img src={mountainFort} className="card-img-top" alt="..." /><br />
+                                <img src={fortData.photos[0]} className="card-img-top" alt="..." /><br />
                                 <button
                                     className="btn fbutton"
                                     onClick={() => {
                                         const fortSlug = slugify(fort, { lower: true, strict: true });
-                                        const firstWordSlug = fortSlug.split('-')[0];  // Get the first word before the hyphen
-                                        navigate(`/fort/${firstWordSlug}`);  // Navigate to the first word of the slug
+                                        const firstWordSlug = fortSlug.split('-')[0];
+                                        navigate(`/fort/${firstWordSlug}`);
                                     }}
                                 >
                                     Explore More

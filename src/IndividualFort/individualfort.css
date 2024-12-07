@@ -1,37 +1,36 @@
 .image-section {
     display: flex;
-    justify-content: space-between;
-    height: 75vh;
-    margin-bottom: 1%;
-}
-
-.image-section img {
     width: 100%;
-    object-fit: cover;
 }
 
 .image-1 {
-    flex: 0 0 60%;
+    width: 60%;
+    object-fit: cover;
 }
 
 .image-2-3-4 {
+    width: 40%;
     display: flex;
     flex-direction: column;
 }
 
 .image-2-3 {
     display: flex;
-    width: 0 0 40%;
-    flex: 1;
+    flex-direction: row;
+    height: 50%;
 }
 
-.image-2-3 img {
+.image-2,
+.image-3 {
     width: 50%;
+    height: 100%;
     object-fit: cover;
 }
 
 .image-4 {
-    flex: 0 0 40%;
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
 }
 
 .head {
@@ -63,41 +62,60 @@
 
 .button-container {
     display: flex;
-    gap: 10px;
-    margin-top: 1% !important;
+    justify-content: left;
+    background-color: #c9c9c9;
+    width: 15%;
+    border-radius: 15px !important;
+    overflow: hidden;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #f0f0f0;
+    padding: 5px 15px;
+    background-color: #c9c9c9;
     border: none;
+    /* Add a light border for separation */
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: #000;
 }
 
 button.active {
-    background-color: #007bff;
-    color: white;
-}
-
-button:hover {
-    background-color: #ddd;
+    background-color: #ffffff;
+    color: #000;
+    font-weight: bold;
+    border: 1px solid #ffff;
+    border-radius: 10px !important;
+    height: 50%;
+    margin: 3%;
 }
 
 .other-info-item-container {
     display: flex;
-    margin: 1%;
+    align-items: center;
     gap: 20px;
+    margin: 1%;
 }
 
 .other-info-icon {
-    height: 50px;
+    font-size: 24px;
+}
+
+.other-info-item {
+    flex-grow: 1;
+}
+
+.other-info-item h6 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .other-info-item p {
-    line-height: 95% !important;
-    margin: 0%;
+    margin: 0;
+    font-size: 14px;
+    color: #555;
 }
+
 
 .time-to-visit-section {
     display: flex;
@@ -121,17 +139,17 @@ h2 {
     margin-top: 0.5% !important;
 }
 
-.forts-card-section{
+.forts-card-section {
     display: flex;
     gap: 20px;
 }
 
-.fort-card{
-    width: auto !important;
+.fort-card {
+    width: 100% !important;
     height: 36rem !important;
 }
 
-.fort-card img{
+.fort-card img {
     width: 100%;
     height: 60%;
     border-radius: 5%;
