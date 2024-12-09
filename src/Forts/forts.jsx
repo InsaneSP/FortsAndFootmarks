@@ -33,21 +33,9 @@ const Forts = () => {
     useEffect(() => {
         const fetchForts = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/forts/${type}`);
-                setForts(response.data); // Set all forts
-                setFilteredForts(response.data); // Initialize filtered forts
-            } catch (error) {
-                console.error("Error fetching forts:", error);
-            }
-        };
-
-        fetchForts();
-    }, [type]);
-
-    useEffect(() => {
-        const fetchForts = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/forts/`);
+                const response = type ? 
+                    await axios.get(`http://localhost:3001/forts/${type}`) : 
+                    await axios.get('http://localhost:3001/forts');
                 setForts(response.data); // Set all forts
                 setFilteredForts(response.data); // Initialize filtered forts
             } catch (error) {
