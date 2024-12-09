@@ -146,7 +146,7 @@ h2 {
 
 .fort-card {
     width: 100% !important;
-    height: 36rem !important;
+    height: auto !important;
 }
 
 .fort-card img {

@@ -21,10 +21,7 @@ const Forts = () => {
         // Filter forts based on search query
         const filtered = forts.filter(fort => 
             fort.name.toLowerCase().includes(query) || 
-            fort.location.toLowerCase().includes(query) || 
-            (fort.bestTimeToVisit.season && fort.bestTimeToVisit.season.toLowerCase().includes(query)) || // Filter by season
-            (fort.durationOfTrek && fort.durationOfTrek.toLowerCase().includes(query)) || // Filter by duration
-            (fort.experience && fort.experience.toLowerCase().includes(query))
+            fort.location.toLowerCase().includes(query)
         );
         setFilteredForts(filtered); // Update filtered forts
     };

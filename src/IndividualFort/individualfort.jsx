@@ -58,6 +58,11 @@ const IndividualFort = () => {
 
     if (!fortData) return <div>Fort not found or loading...</div>;  // Handle missing data
 
+    const fortSeasons = fortData.season.split(', ');
+
+  // Filter and store only the seasons that are included in the fort data
+    const displaySeasons = fortSeasons.filter(season => fortData.season.includes(season));
+
 
     return (
         <div className="container-fluid">
@@ -207,35 +212,39 @@ const IndividualFort = () => {
                 <p>Best months: {fortData.bestTimeToVisit.months.join(", ")}</p>
             </div>
             <div className="time-to-visit-section">
-                <div class="card season-card no-hover">
-                    <div class="card-body season">
-                        <div className="season-name">
-                            <FontAwesomeIcon icon={faSun} />
-                            <h6>Summer</h6>
+            {displaySeasons.includes("Summer") && (
+                    <div className="card season-card no-hover">
+                        <div className="card-body season">
+                            <div className="season-name">
+                                <FontAwesomeIcon icon={faSun} />
+                                <h6>Summer</h6>
+                            </div>
+                            <p>Hot during the day, cooler nights. Less crowded.</p>
                         </div>
-                        <p>Hot during the day, cooler nights. Less crowded.</p>
                     </div>
-                </div>
-                <div class="card season-card no-hover">
-                    <div class="card-body season">
-                        <div className="season-name">
-                            <FontAwesomeIcon icon={faCloud} />
-                            <h6>Monsoon</h6>
+                )}
+                {displaySeasons.includes("Monsoon") && (
+                    <div className="card season-card no-hover">
+                        <div className="card-body season">
+                            <div className="season-name">
+                                <FontAwesomeIcon icon={faCloud} />
+                                <h6>Monsoon</h6>
+                            </div>
+                            <p>Lush green surroundings, but trails can be slippery.</p>
                         </div>
-                        <p>Lush green surroundings, but trails can be slippery.</p>
                     </div>
-                </div>
-                <div class="card season-card no-hover">
-                    <div class="card-body season">
-                        <div className="season-name">
-                            <FontAwesomeIcon icon={faSnowflake} />
-                            <h6>Winter</h6>
+                )}
+                {displaySeasons.includes("Winter") && (
+                    <div className="card season-card no-hover">
+                        <div className="card-body season">
+                            <div className="season-name">
+                                <FontAwesomeIcon icon={faSnowflake} />
+                                <h6>Winter</h6>
+                            </div>
+                            <p>Pleasant weather, ideal for trekking. Peak tourist season.</p>
                         </div>
-                        <p>
-                            Pleasant weather, ideal for trekking. Peak tourist season.
-                        </p>
                     </div>
-                </div>
+                )}
             </div>
             <div className="faq-section">
                 <h2>Frequently Asked Questions</h2>
