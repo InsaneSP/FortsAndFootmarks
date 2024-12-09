@@ -1,0 +1,400 @@
+[
+    {
+        "name": "Rajgad",
+        "photos": [
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555538/rajgad1_zuto7p.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555501/rajgad3_ifyxxk.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555501/rajgad2_y0dewo.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733555501/rajgad4_zlkopz.jpg"
+        ],
+        "rating": 4.8,
+        "historicalSignificance": "The King of Forts - Chhatrapati Shivaji Maharaj's First Capital.",
+        "type": "hill",
+        "durationOfTrek": "2 days",
+        "difficulty": "Moderate",
+        "distance": "35 km from Pune",
+        "history": {
+            "summary": "Rajgad served as the first capital of the Maratha Empire under Chhatrapati Shivaji Maharaj, renowned for its strategic design and historical importance.",
+            "detailed": [
+                {
+                    "title": "Early History and Construction:",
+                    "content": "Rajgad was originally known as Murumbdev and was part of the Nizam Shahi dynasty's territory. The fort was under various rulers before being captured by Shivaji Maharaj around 1646-1647, during his early military campaigns. Once in Maratha hands, the fort was renamed Rajgad and became a key base for Shivaji Maharaj's expanding empire."
+                },
+                {
+                    "title": "Capital of the Maratha Empire:",
+                    "content": "Shivaji Maharaj made Rajgad his capital in the early years of his reign. From 1647 to 1670, Rajgad was the center of administration and governance. The fort's strategic location provided a strong defensive position and control over the surrounding region."
+                },
+                {
+                    "title": "Rajgad's Role in the Maratha Empire",
+                    "content": "Rajgad was not just a military base but also the administrative center for several key decisions that laid the foundation of the Maratha Empire’s expansion. Chhatrapati Sambhaji Maharaj's coronation here further emphasized its importance in Maratha history."
+                },
+                {
+                    "title": "Invasion of Shahiste Khan (1660):",
+                    "content": "In 1660, under the command of Aurangzeb, Shahiste Khan attempted an invasion of Shivaji Maharaj's territories. According to Persian sources, Shahiste Khan sent forces towards Rajgad, who destroyed several nearby villages. However, they did not try to capture the fort itself. On April 6, 1663, Shivaji Maharaj launched a surprise attack on Shahiste Khan, and Rajgad was secured."
+                },
+                {
+                    "title": "Mirza Raja Jai Singh's Campaign (1665):",
+                    "content": "In 1665, when Mirza Raja Jai Singh of the Mughal Empire launched an attack on Shivaji Maharaj's kingdom, he sent his generals, Dawood Khan and Ra Singh, to capture Rajgad. On April 30, 1665, the Mughal forces attempted to capture the fort, but they were repelled by the fierce resistance of the Marathas."
+                },
+                {
+                    "title": "Birthplace of Rajaram Maharaj:",
+                    "content": "Rajgad is also notable for being the birthplace of Rajaram Maharaj, the younger son of Shivaji Maharaj. He was born here on February 24, 1670."
+                },
+                {
+                    "title": "The Fall of Rajgad to the Mughals:",
+                    "content": "After the death of Shivaji Maharaj in 1680, Rajgad fell into the hands of the Mughals in 1689 under Aurangzeb's orders. However, it was quickly recaptured by the Marathas in 1707 under the leadership of Gunaji Sawant."
+                },
+                {
+                    "title": "Later Use and Administration:",
+                    "content": "After the fall of Rajgad to the Mughals, it was reoccupied by the Marathas. During the Peshwa era, the fort's administration was handed over to various officers, including the Shilimkar and Pawar families. The fort continued to hold strategic importance, but its role as the capital was eventually replaced by Raigad Fort in 1670."
+                }
+            ],
+            "historicalTimeline": [
+                {
+                    "year": 1645,
+                    "event": "Rajgad becomes the capital of the Maratha Empire under Chhatrapati Shivaji Maharaj."
+                },
+                {
+                    "year": 1670,
+                    "event": "The capital is shifted from Rajgad to Raigad, but the fort remains a strategic military base."
+                },
+                {
+                    "year": 1689,
+                    "event": "Mughal forces attempt to capture Rajgad but fail due to its formidable defense."
+                },
+                {
+                    "year": 1674,
+                    "event": "The coronation of Chhatrapati Sambhaji Maharaj takes place at Rajgad."
+                }
+            ]
+        },
+        "keyPoints": [
+            "Sanjeevani Machi - A long, fortified structure with bastions and hidden passages.",
+            "Suvela Machi - A short machi with remarkable bastions and secret pathways.",
+            "Bale Killa - The main fort area with the highest point offering panoramic views.",
+            "Padmavati Lake - A historic lake with intact walls and a scenic archway.",
+            "Rameshwar Temple - An ancient Shivling temple from the Shivkal era.",
+            "Rajwada (Royal Palace) - Remains of the palace with a lake and administrative sections.",
+            "Sadar - Administrative area believed to house officers and governance setups.",
+            "Pali Darwaja - A grand entrance with strong bastions and slit windows for cannons.",
+            "Gunjanvane Darwaja - A series of three gates with distinct pre-Shivaji architecture.",
+            "Padmavati Machi - A large living area with temples, water tanks, and historic remains.",
+            "Padmavati Temple - A temple built by Shivaji Maharaj, now accommodating visitors.",
+            "Aalu Darwaja - A secret entrance with intricate carvings of a tiger and deer.",
+            "Kaleshwari Buruj - Buruj with remarkable carvings of deities like Ganesh and Parvati."
+        ],
+        "localAccommodation": [
+            "Homestays in Velhe Village",
+            "Tents on the fort"
+        ],
+        "howToReach": {
+            "nearestBusStop": "Velhe",
+            "busesAvailable": [
+                "Pune to Velhe"
+            ]
+        },
+        "nearestRailwayStation": "Pune Railway Station",
+        "approximateBudget": "INR 800-1500 per person",
+        "location": "Velhe, Pune District, Maharashtra",
+        "map": {
+            "googleMaps": "https://www.google.com/maps/place/Rajgad+Fort",
+            "openStreetMap": "https://www.openstreetmap.org/?mlat=18.3667&mlon=73.9333#map=15/18.3667/73.9333",
+            "coordinates": {
+                "latitude": 18.246106,
+                "longitude": 73.6821
+            }
+        },
+        "bestTimeToVisit": {
+            "season": "Winter",
+            "months": [
+                "November",
+                "December",
+                "January",
+                "February"
+            ]
+        },
+        "faqs": [
+            {
+                "question": "Is camping allowed?",
+                "answer": "Yes, with prior permission."
+            },
+            {
+                "question": "Are there food stalls on the fort?",
+                "answer": "No, carry your own food."
+            }
+        ],
+        "sponsoredTreks": [
+            "Rajgad Winter Trek",
+            "Monsoon Trekking Experience"
+        ],
+        "similarNearbyForts": [
+            "Torna Fort",
+            "Sinhagad Fort"
+        ],
+        "season": "Winter, Monsoon",
+        "experience": [
+            "Stargazing",
+            "Youth Adventure",
+            "Historical Exploration"
+        ]
+    },
+    {
+        "name": "Raigad",
+        "photos": [
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/raigad1_qk9drk.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/raigad2_qkiek7.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556581/raigad3_bkkqah.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556582/raigad4_sqw440.jpg"
+        ],
+        "rating": 4.9,
+        "historicalSignificance": "The Crown of the Maratha Empire - Chhatrapati Shivaji Maharaj's Coronation Fort.",
+        "type": "inland",
+        "durationOfTrek": "2 days",
+        "difficulty": "Moderate",
+        "distance": "25 km from Mahad",
+        "history": {
+            "summary": "Raigad Fort, known as the coronation site of Shivaji Maharaj, stands as a monumental symbol of the Maratha Empire.",
+            "detailed": [
+                {
+                    "title": "Raigad - The Maratha Capital",
+                    "content": "Raigad was the capital of the Maratha Empire and the location where Chhatrapati Shivaji Maharaj was crowned in 1674. The fort was known for its massive fortifications and strategic location."
+                },
+                {
+                    "title": "Ancient Names and Capture by Shivaji Maharaj",
+                    "content": "Originally known as Raayri, Raigad was referred to as the 'Eastern Gibraltar' by Europeans. Shivaji Maharaj captured the fort in 1656 after defeating the Mores of Javali, marking the beginning of its transformation into a formidable stronghold."
+                },
+                {
+                    "title": "The Coronation of Shivaji Maharaj",
+                    "content": "Shivaji Maharaj’s coronation on 6th June 1674 at the Rajsabha of Raigad symbolized the formal establishment of the Maratha Empire. A second coronation ceremony, performed on 24th September 1674 by the Nischalpuri Gosavi, ensured spiritual legitimacy."
+                },
+                {
+                    "title": "Personal Milestones and Shivaji Maharaj's Legacy",
+                    "content": "Raigad witnessed significant personal milestones, including the Munja ceremonies of Sambhaji Maharaj in 1675 and Rajaram Maharaj in 1680. It also bore witness to the death of Shivaji Maharaj on 3rd April 1680, a sorrowful moment marked by earthquakes and devastation."
+                },
+                {
+                    "title": "The Siege and Fall of Raigad",
+                    "content": "After Shivaji Maharaj’s death, Rajaram Maharaj defended Raigad against Mughal attacks. In 1689, the fort fell to the Mughals due to betrayal by Suryaji Pisal and was renamed Islamgad. However, the Marathas recaptured it under Chhatrapati Shahu Maharaj in 1733."
+                },
+                {
+                    "title": "Raigad's Reclamation and Restoration",
+                    "content": "In 1733, Raigad was reclaimed by the Marathas under Chhatrapati Shahu Maharaj. The fort was restored and continued to hold immense strategic and historical importance in the Maratha Empire."
+                },
+                {
+                    "title": "Architectural Highlights of Raigad",
+                    "content": "Raigad is known for its grand architecture, including the Maha Darwaja, the largest gate, and Hirkani Buruj, a site linked to the legendary story of Hirkani, a mother who descended the cliffs to return to her child."
+                }
+            ],
+            "historicalTimeline": [
+                {
+                    "year": 1656,
+                    "event": "Shivaji Maharaj captures Raigad, previously known as Raayri."
+                },
+                {
+                    "year": 1674,
+                    "event": "Shivaji Maharaj is crowned Chhatrapati at Raigad."
+                },
+                {
+                    "year": 1689,
+                    "event": "Raigad falls to the Mughals after a betrayal."
+                },
+                {
+                    "year": 1733,
+                    "event": "Chhatrapati Shahu Maharaj reclaims Raigad for the Marathas."
+                },
+                {
+                    "year": 1818,
+                    "event": "The British take control of Raigad after the decline of the Maratha Empire."
+                }
+            ]
+        },
+        "keyPoints": [
+            "Shivaji Maharaj Samadhi - The final resting place of Chhatrapati Shivaji Maharaj.",
+            "Maha Darwaja - The grand main gate with massive towers and lotus carvings.",
+            "Hirkani Buruj - Famous for the legend of Hirkani, the daring milkmaid.",
+            "Takmak Tok - A breathtaking cliff offering stunning valley views.",
+            "Raj Sabha - The royal assembly hall where Shivaji Maharaj's coronation took place.",
+            "Bazaar Peth - The bustling market area with ruins of shops.",
+            "Jagdishwar Mandir - A temple dedicated to Mahadev with intricate carvings.",
+            "Ganga Sagar Talav - A sacred lake consecrated with water from seven seas.",
+            "Khubladha Buruj - The watchtower offering strategic defense.",
+            "Nana Darwaja - A small gate historically significant during Shivaji Maharaj’s reign.",
+            "Raj Bhavan - The royal palace and court of Shivaji Maharaj.",
+            "Chor Dindi - A secret passage used for emergency escapes."
+        ],
+        "localAccommodation": [
+            "MTDC Resorts in Mahad",
+            "Homestays at Pachad village"
+        ],
+        "howToReach": {
+            "nearestBusStop": "Mahad Bus Stand",
+            "busesAvailable": [
+                "Mumbai to Mahad",
+                "Pune to Mahad"
+            ]
+        },
+        "nearestRailwayStation": "Veer Railway Station (40 km)",
+        "approximateBudget": "INR 1000-2000 per person",
+        "location": "Pachad, Raigad District, Maharashtra",
+        "map": {
+            "googleMaps": "https://www.google.com/maps/place/Raigad+Fort",
+            "openStreetMap": "https://www.openstreetmap.org/?mlat=18.2986&mlon=73.4573#map=15/18.2986/73.4573",
+            "coordinates": {
+                "latitude": 18.2986,
+                "longitude": 73.4573
+            }
+        },
+        "bestTimeToVisit": {
+            "season": "Winter",
+            "months": [
+                "October",
+                "November",
+                "December",
+                "January",
+                "February",
+                "March"
+            ]
+        },
+        "faqs": [
+            {
+                "question": "Are ropeway services available?",
+                "answer": "Yes, a ropeway service is available to reach the fort."
+            },
+            {
+                "question": "Is there food available on the fort?",
+                "answer": "Yes, local vendors sell food at the top."
+            }
+        ],
+        "sponsoredTreks": [
+            "Raigad Monsoon Trek",
+            "History Walk on Raigad"
+        ],
+        "similarNearbyForts": [
+            "Pratapgad Fort",
+            "Torna Fort"
+        ],
+        "season": "Winter, Monsoon",
+        "experience": [
+            "Family Outing",
+            "Historical Exploration",
+            "Adventure Trekking"
+        ]
+    },
+    {
+        "name": "Sindhudurg",
+        "photos": [
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556634/Coastal_v6lwys.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556583/sindhudurg2_xtrcpo.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556582/sindhudurg3_i6yusf.jpg",
+            "https://res.cloudinary.com/dgbgvjj7i/image/upload/v1733556582/sindhudurg4_dozcln.jpg"
+        ],
+        "rating": 4.7,
+        "historicalSignificance": "The Gateway to Maratha Naval Power - Built by Shivaji Maharaj in 1664.",
+        "type": "coastal",
+        "durationOfTrek": "1 day",
+        "difficulty": "Easy",
+        "distance": "15 km from Malvan",
+        "history": {
+            "summary": "Sindhudurg Fort, located on an island, is a symbol of Maratha naval strength, built by Shivaji Maharaj to safeguard the western coast.",
+            "detailed": [
+                {
+                    "title": "Foundation and Construction",
+                    "content": "On 25th November 1664, Shivaji Maharaj performed a sacred ritual, offering a golden coconut to the sea, before laying the foundation of Sindhudurg Fort. The construction took over 3 years and involved 500 stonecutters, 200 blacksmiths, and 3,000 laborers. The fort was completed on 29th March 1667 under Shivaji Maharaj’s supervision."
+                },
+                {
+                    "title": "Strategic Naval Importance",
+                    "content": "Sindhudurg was built to protect the Konkan coast from maritime threats and was key in establishing the Maratha Navy. The fort's design, with molten lead poured into the foundation, ensured it was resilient to sea waves."
+                },
+                {
+                    "title": "Role in the Maratha Empire",
+                    "content": "The fort's strategic location helped in maintaining control over the sea route and safeguarding the Maratha Empire’s coastline. It was one of the most important forts for the Marathas in their naval and coastal defense."
+                },
+                {
+                    "title": "Post-Shivaji Era",
+                    "content": "After Shivaji Maharaj's death in 1680, the fort changed hands. In 1765, the British captured Sindhudurg and renamed it Fort Augustus. It was returned to the Marathas in 1766 after an agreement between Queen Jijabai and the East India Company. In 1792, it was taken over by the British once again."
+                }
+            ],
+            "historicalTimeline": [
+                {
+                    "year": 1664,
+                    "event": "Sindhudurg fort is constructed by Shivaji Maharaj."
+                },
+                {
+                    "year": 1670,
+                    "event": "Fortification of Sindhudurg begins to defend against Portuguese and other invaders."
+                },
+                {
+                    "year": 1680,
+                    "event": "Sindhudurg becomes a significant part of the Maratha naval defense system."
+                }
+            ]
+        },
+        "keyPoints": [
+            "Temple of Shivaji Maharaj: A unique temple featuring a seated statue of Shivaji Maharaj.",
+            "42 Bastions: Thick walls with narrow stairways and siege facilities.",
+            "Main Entrance (Mahadarwaja): Built using the 'Gomukhi' technique with a concealed gateway.",
+            "Impressions of Shivaji Maharaj: Preserved hand and footprints of Shivaji Maharaj inside the fort.",
+            "Sweetwater Wells: Sakhara, Dudhbaav, and Dahi Baav provide fresh water despite being surrounded by seawater.",
+            "Hanuman Sculpture: A distinctive spiritual and defensive feature at the main entrance.",
+            "Shivaji Maharaj's Palace Remains: Includes Darya Buruj (Sea Bastion) and a rainwater tank.",
+            "Ganapati Carving: Located on the bastion walls as part of the fort's design.",
+            "Hidden Secret Gates: Emergency escape routes leading directly to the sea."
+        ],
+        "localAccommodation": [
+            "Homestays in Malvan",
+            "Beach Resorts nearby"
+        ],
+        "howToReach": {
+            "nearestBusStop": "Malvan Bus Stand",
+            "busesAvailable": [
+                "Mumbai to Malvan",
+                "Pune to Malvan"
+            ]
+        },
+        "nearestRailwayStation": "Kudal Railway Station (31 km)",
+        "approximateBudget": "INR 1200-2500 per person",
+        "location": "Malvan, Sindhudurg District, Maharashtra",
+        "map": {
+            "googleMaps": "https://www.google.com/maps/place/Sindhudurg+Fort",
+            "openStreetMap": "https://www.openstreetmap.org/?mlat=16.0606&mlon=73.5034#map=15/16.0606/73.5034",
+            "coordinates": {
+                "latitude": 16.0606,
+                "longitude": 73.5034
+            }
+        },
+        "bestTimeToVisit": {
+            "season": "Winter",
+            "months": [
+                "October",
+                "November",
+                "December",
+                "January",
+                "February",
+                "March"
+            ]
+        },
+        "faqs": [
+            {
+                "question": "Is there a ferry service to the fort?",
+                "answer": "Yes, regular ferries are available from Malvan Jetty."
+            },
+            {
+                "question": "Can we visit the fort during monsoons?",
+                "answer": "No, ferry services are usually suspended during heavy rains."
+            }
+        ],
+        "sponsoredTreks": [
+            "Sindhudurg coastal Trail",
+            "Heritage Walk at Malvan"
+        ],
+        "similarNearbyForts": [
+            "Vijaydurg Fort",
+            "Tarakali Beach"
+        ],
+        "season": "Winter, Summer",
+        "experience": [
+            "Family Outing",
+            "Historical Exploration",
+            "Photography"
+        ]
+    }
+]

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useParams, useNavigate } from "react-router-dom";
 import slugify from "slugify";
-import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import "./forts.css";
 
 const Forts = () => {
@@ -22,24 +21,41 @@ const Forts = () => {
         // Filter forts based on search query
         const filtered = forts.filter(fort => 
             fort.name.toLowerCase().includes(query) || 
-            fort.location.toLowerCase().includes(query)
+            fort.location.toLowerCase().includes(query) || 
+            (fort.bestTimeToVisit.season && fort.bestTimeToVisit.season.toLowerCase().includes(query)) || // Filter by season
+            (fort.durationOfTrek && fort.durationOfTrek.toLowerCase().includes(query)) || // Filter by duration
+            (fort.experience && fort.experience.toLowerCase().includes(query))
         );
         setFilteredForts(filtered); // Update filtered forts
     };
 
-    // Fetch forts from backend
+    // Fetch forts from backend based on type
     useEffect(() => {
-        const trimmedType = type.trim().toLowerCase(); // Normalize type
-        console.log("Fetching forts for type:", trimmedType); // Log the type
-
-        axios
-            .get(`http://localhost:3001/forts/${trimmedType}`)
-            .then((response) => {
-                console.log("Response data:", response.data); // Log the response
+        const fetchForts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/forts/${type}`);
                 setForts(response.data); // Set all forts
                 setFilteredForts(response.data); // Initialize filtered forts
-            })
-            .catch((err) => console.error("Error fetching forts:", err));
+            } catch (error) {
+                console.error("Error fetching forts:", error);
+            }
+        };
+
+        fetchForts();
+    }, [type]);
+
+    useEffect(() => {
+        const fetchForts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/forts/`);
+                setForts(response.data); // Set all forts
+                setFilteredForts(response.data); // Initialize filtered forts
+            } catch (error) {
+                console.error("Error fetching forts:", error);
+            }
+        };
+
+        fetchForts();
     }, [type]);
 
     return (
@@ -71,7 +87,7 @@ const Forts = () => {
                                     aria-controls={`flush-collapse${index}`}
                                 >
                                     <div className="fort">
-                                    <img
+                                        <img
                                             src={fort.photos[0]}
                                             alt={fort.name}
                                             className="fortimg"

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import season from "../images/Season.png";
 import clock from "../images/Clock.png";
-import difficuty from "../images/Difficulty.png";
+import difficulty from "../images/Difficulty.png";
 import telescope from "../images/Telescope.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faYoutube, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faPhone, faClock } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import "./footer.css";
 
 class Footer extends Component {
@@ -19,19 +20,19 @@ class Footer extends Component {
                         <div className="card-body">
                             <h4>Trek by Season</h4>
                             <div className="card-hr"></div>
-                            <p>Summer</p>
-                            <p>Monsoon</p>
-                            <p>Winter</p>
+                            <Link to="/forts/summer" className="p-link">Summer</Link>
+                            <Link to="/forts/monsoon" className="p-link">Monsoon</Link>
+                            <Link to="/forts/winter" className="p-link">Winter</Link>
                             <img src={season} />
                         </div>
                     </div>
                     <div className="card footer-card">
                         <div className="card-body">
                             <h4>Trek by Duration</h4>
-                            <div className="card-hr"></div> 
-                            <p>1 day</p>
-                            <p>2 days</p>
-                            <p>3 days</p>
+                            <div className="card-hr"></div>
+                            <Link to="/forts/1 day" className="p-link">1 day</Link>
+                            <Link to="/forts/2 days" className="p-link">2 days</Link>
+                            <Link to="/forts/3 days" className="p-link">3 days</Link>
                             <img src={clock} />
                         </div>
                     </div>
@@ -39,19 +40,19 @@ class Footer extends Component {
                         <div className="card-body">
                             <h4>Trek by Difficulty</h4>
                             <div className="card-hr"></div>
-                            <p>Easy</p>
-                            <p>Moderate</p>
-                            <p>Difficult</p>
-                            <img src={difficuty} />
+                            <Link to="/forts/easy" className="p-link">Easy</Link>
+                            <Link to="/forts/moderate" className="p-link">Moderate</Link>
+                            <Link to="/forts/difficult" className="p-link">Difficult</Link>
+                            <img src={difficulty} />
                         </div>
                     </div>
                     <div className="card footer-card">
                         <div className="card-body">
                             <h4>Trek by Experience</h4>
                             <div className="card-hr"></div>
-                            <p>Stargazing</p>
-                            <p>Family</p>
-                            <p>Youth</p>
+                            <Link to="/forts/stargazing" className="p-link">Stargazing</Link>
+                            <Link to="/forts/family" className="p-link">Family</Link>
+                            <Link to="/forts/youth" className="p-link">Youth</Link>
                             <img src={telescope} />
                         </div>
                     </div>
@@ -98,19 +99,19 @@ class Footer extends Component {
                     <div className="right-screen">
                         <h4>Email Us</h4>
                         <form>
-                            <div class="mb-3">
-                                <label for="nameInput" class="form-label">Your Name</label>
-                                <input type="text" class="form-control" id="nameInput" placeholder="Enter your name" />
+                            <div className="mb-3">
+                                <label htmlFor="nameInput" className="form-label">Your Name</label>
+                                <input type="text" className="form-control" id="nameInput" placeholder="Enter your name" />
                             </div>
-                            <div class="mb-3">
-                                <label for="emailInput" class="form-label">Your Email</label>
-                                <input type="email" class="form-control" id="emailInput" placeholder="Enter your email" />
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            <div className="mb-3">
+                                <label htmlFor="emailInput" className="form-label">Your Email</label>
+                                <input type="email" className="form-control" id="emailInput" placeholder="Enter your email" />
+                                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                             </div>
-                            <div class="mb-3">
-                                <label for="messageInput" class="form-label">Your Message</label>
+                            <div className="mb-3">
+                                <label htmlFor="messageInput" className="form-label">Your Message</label>
                                 <textarea
-                                    class="form-control"
+                                    className="form-control"
                                     id="messageInput"
                                     rows="4"
                                     placeholder="Enter your message"
@@ -121,10 +122,9 @@ class Footer extends Component {
                     </div>
                 </div>
                 <div className="copyrights">
-    <p>© 2024 FortsAndFootmarks Private Limited.</p>
-    <p>All images are subjected to copyrights by their respective authors.</p>
-</div>
-
+                    <p>© 2024 FortsAndFootmarks Private Limited.</p>
+                    <p>All images are subjected to copyrights by their respective authors.</p>
+                </div>
             </div>
         );
     }

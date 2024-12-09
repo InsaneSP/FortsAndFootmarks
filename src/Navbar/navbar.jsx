@@ -9,7 +9,7 @@ class Navbar extends Component {
     state = {};
     render() {
         return (
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-fixed">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#">
                         <img src={logo} style={{ maxHeight: "150px", width: "150px" }} alt="Logo" />
@@ -39,8 +39,8 @@ class Navbar extends Component {
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">
-                                    Categories
+                                <Link className="nav-link" to="/forts">
+                                    Forts
                                 </Link>
                             </li>
                             <li className="nav-item">

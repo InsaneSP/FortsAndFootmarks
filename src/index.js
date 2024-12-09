@@ -33,6 +33,7 @@ root.render(
         } />
         <Route path="/login" element={<Login />} />
         <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/forts/" element={<Forts />} />
         <Route path="/forts/:type" element={<Forts />} />
         <Route path="/plan" element={<Plan />} />
         <Route path="/fort/:fortName" element={<IndividualFort />} />

@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const FortModel = require('./models/forts');
-const fortRoutes = require('./routes/fortsRoutes');  // Import the routes
+const fortRoutes = require('./routes/fortsRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,10 +17,10 @@ app.use(express.json());
 // Use the forts routes
 app.use('/forts', fortRoutes);
 
+app.use('/auth', authRoutes); 
+
 app.get('/fort/:fortName', (req, res) => {
     const fortName = req.params.fortName.toLowerCase(); // Convert to lowercase
-
-    // Query MongoDB with lowercase fortName
     FortModel.findOne({ name: new RegExp(fortName, 'i') }) // 'i' makes it case-insensitive
         .then(fort => {
             if (!fort) {

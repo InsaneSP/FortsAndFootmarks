@@ -18,7 +18,15 @@ router.get('/', async (req, res) => {
 router.get('/:type', async (req, res) => {
     const type = req.params.type.trim().toLowerCase(); // Normalize and trim
     try {
-        const forts = await FortModel.find({ type: { $regex: new RegExp(`^${type}$`, 'i') } });
+        const forts = await FortModel.find({ 
+            $or: [
+                { type: { $regex: new RegExp(`^${type}$`, 'i') } },
+                { 'bestTimeToVisit.season': { $in: [new RegExp(`^${type}$`, 'i')] } },
+                { difficulty: { $regex: new RegExp(`^${type}$`, 'i') } },
+                { experience: { $in: [new RegExp(`^${type}$`, 'i'), type] } },
+                { durationOfTrek: { $regex: new RegExp(`^${type}$`, 'i') } },
+            ]
+        });
         res.json(forts);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching forts by type', error: err });
