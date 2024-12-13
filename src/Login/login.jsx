@@ -2,12 +2,20 @@ import React, { Component } from "react";
 import log from "../images/log.png";
 import register from "../images/register.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faTwitter, faGoogle, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import {
+    faFacebook,
+    faTwitter,
+    faGoogle,
+    faLinkedin,
+} from "@fortawesome/free-brands-svg-icons";
 import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { AuthContext } from "../Context/authContext";
 import "./login.css";
 
 class Login extends Component {
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,58 +25,82 @@ class Login extends Component {
                 email: "",
                 password: "",
             },
-            error: "",
-            success: "",
+            message: { text: "", type: "" },
+            isLoading: false,
         };
     }
 
     toggleSignUpMode = () => {
         this.setState((prevState) => ({
             isSignUpMode: !prevState.isSignUpMode,
-            error: "",
-            success: "",
+            message: { text: "", type: "" },
         }));
     };
 
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState((prevState) => ({
-            formData: {
-                ...prevState.formData,
-                [name]: value,
-            },
+            formData: { ...prevState.formData, [name]: value },
         }));
     };
 
     handleSubmit = async (e) => {
         e.preventDefault();
         const { isSignUpMode, formData } = this.state;
+        const { login } = this.context;
+
+        // Validation
+        if (!this.validateForm()) return;
+
+        this.setState({ isLoading: true });
 
         try {
-            const endpoint = isSignUpMode
-                ? "http://localhost:3001/auth/register"
-                : "http://localhost:3001/auth/login";
-
-            const response = await axios.post(endpoint, formData);
+            const endpoint = `login`;  // Adjust the endpoint
+            const response = await axios.post(endpoint, {
+                ...formData,
+            });
 
             if (isSignUpMode) {
-                this.setState({ success: response.data.message, error: "" });
+                this.setState({
+                    message: { text: response.data.message, type: "success" },
+                    isLoading: false,
+                });
             } else {
-                localStorage.setItem("token", response.data.token); // Save the token in localStorage
-                this.setState({ success: "Login successful!", error: "" });
-                // Redirect or reload after login
-                window.location.href = "/"; // Change this to your desired route
+                login(response.data.token);
+                this.setState({
+                    message: { text: "Login successful!", type: "success" },
+                    isLoading: false,
+                });
+                this.props.history.push("/");
             }
         } catch (error) {
+            const errorMessage = error.response?.data?.message || "Something went wrong.";
             this.setState({
-                error: error.response?.data?.message || "An error occurred",
-                success: "",
+                message: { text: errorMessage, type: "error" },
+                isLoading: false,
             });
         }
     };
 
+    validateForm = () => {
+        const { isSignUpMode, formData } = this.state;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            this.setState({ message: { text: "Invalid email format.", type: "error" } });
+            return false;
+        }
+        if (formData.password.length < 6) {
+            this.setState({ message: { text: "Password must be at least 6 characters.", type: "error" } });
+            return false;
+        }
+        if (isSignUpMode && !formData.username) {
+            this.setState({ message: { text: "Username is required.", type: "error" } });
+            return false;
+        }
+        return true;
+    };
+
     render() {
-        const { isSignUpMode, formData, error, success } = this.state;
+        const { isSignUpMode, formData, message, isLoading } = this.state;
 
         return (
             <div className="login-body">
@@ -81,10 +113,10 @@ class Login extends Component {
                                 className="sign-in-form login-form"
                             >
                                 <h2 className="title">Sign in</h2>
-                                {error && <p className="error-text">{error}</p>}
-                                {success && <p className="success-text">{success}</p>}
+                                {message.text && <p className={`message ${message.type}`}>{message.text}</p>}
+                                {isLoading && <p>Loading...</p>}
                                 <div className="input-field">
-                                    <FontAwesomeIcon icon={faUser} className="icon" />
+                                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
                                     <input
                                         type="email"
                                         name="email"
@@ -107,7 +139,9 @@ class Login extends Component {
                                         required
                                     />
                                 </div>
-                                <input type="submit" value="Login" className="login-btn solid inp" />
+                                <button type="submit" className="login-btn solid inp">
+                                    {isLoading ? "Loading..." : "Login"}
+                                </button>
                             </form>
 
                             {/* Sign Up Form */}
@@ -116,8 +150,8 @@ class Login extends Component {
                                 className="sign-up-form login-form"
                             >
                                 <h2 className="title">Sign up</h2>
-                                {error && <p className="error-text">{error}</p>}
-                                {success && <p className="success-text">{success}</p>}
+                                {message.text && <p className={`message ${message.type}`}>{message.text}</p>}
+                                {isLoading && <p>Loading...</p>}
                                 <div className="input-field">
                                     <FontAwesomeIcon icon={faUser} className="icon" />
                                     <input
@@ -154,11 +188,9 @@ class Login extends Component {
                                         required
                                     />
                                 </div>
-                                <input
-                                    type="submit"
-                                    value="Sign up"
-                                    className="login-btn inp"
-                                />
+                                <button type="submit" className="login-btn inp">
+                                    {isLoading ? "Processing..." : "Sign up"}
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -168,8 +200,8 @@ class Login extends Component {
                             <div className="content">
                                 <h3>New to Our Trekking Community? Join Us!</h3>
                                 <p>
-                                    Sign up to start your journey through the historical forts of
-                                    Chhatrapati Shivaji Maharaj.
+                                    Sign up to start your journey through the best trekking spots
+                                    in the region.
                                 </p>
                                 <button
                                     className="login-btn transparent"
@@ -178,14 +210,14 @@ class Login extends Component {
                                     Sign up
                                 </button>
                             </div>
-                            <img src={log} className="image" alt="" />
+                            <img src={log} className="image" alt="register" />
                         </div>
                         <div className="panel right-panel">
                             <div className="content">
-                                <h3>Already a Trekker? Sign In to Continue!</h3>
+                                <h3>Already a Member? Sign In!</h3>
                                 <p>
-                                    Log in to continue exploring the majestic forts of
-                                    Chhatrapati Shivaji Maharaj.
+                                    Welcome back! Sign in to continue exploring and planning your
+                                    trekking adventures.
                                 </p>
                                 <button
                                     className="login-btn transparent"
@@ -194,7 +226,7 @@ class Login extends Component {
                                     Sign in
                                 </button>
                             </div>
-                            <img src={register} className="image" alt="" />
+                            <img src={register} className="image" alt="login" />
                         </div>
                     </div>
                 </div>

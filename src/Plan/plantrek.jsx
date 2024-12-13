@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faTrash,
-    faMinus,
-    faShareAlt,
-    faSave,
-    faCalendarAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFacebook, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faTrash, faMinus, faShareAlt, faSave, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { jsPDF } from "jspdf";  // Import jsPDF
-import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";  // Import share buttons
+import { jsPDF } from "jspdf"; 
+import { AuthContext } from "../Context/authContext";  
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 import "./plantrek.css";
 
 const Plan = () => {
-    const [itinerary, setItinerary] = useState([
-        { day: "Day 1", activities: [""] },
-    ]);
+    const { isLoggedIn } = useContext(AuthContext);  // Use AuthContext instead of UserContext
+    const [itinerary, setItinerary] = useState([{ day: "Day 1", activities: [""] }]);
     const [notes, setNotes] = useState("");
     const [expenses, setExpenses] = useState([{ item: "", amount: 0 }]);
     const [totalExpense, setTotalExpense] = useState(0);
@@ -30,7 +25,6 @@ const Plan = () => {
         },
     ]);
     const [searchQuery, setSearchQuery] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // To check if user is logged in
     const navigate = useNavigate();
 
         // Functions for itinerary
@@ -59,7 +53,6 @@ const Plan = () => {
             ]);
         };
     
-        // Functions for expense tracker
         const handleAddExpense = () => {
             setExpenses([...expenses, { item: "", amount: 0 }]);
         };
@@ -144,11 +137,6 @@ const Plan = () => {
         // Save PDF
         doc.save("TrekPlan.pdf");
     };    
-
-    const handleLogin = () => {
-        // Implement the login logic here, and once the user logs in, set isLoggedIn to true
-        setIsLoggedIn(true);  // Simulating successful login
-    };
 
     return (
         <div className="container-fluid about-us-container">
@@ -319,16 +307,16 @@ const Plan = () => {
             {/* Social Media Share Buttons (requires login) */}
             {isLoggedIn && (
                 <div className="social-share">
-                    <FacebookShareButton url={window.location.href}>
-                        Share on Facebook
-                    </FacebookShareButton>
-                    <TwitterShareButton url={window.location.href}>
-                        Share on Twitter
-                    </TwitterShareButton>
-                    <WhatsappShareButton url={window.location.href}>
-                        Share on WhatsApp
-                    </WhatsappShareButton>
-                </div>
+                <FacebookShareButton url={window.location.href} className="social-button">
+                    <FontAwesomeIcon icon={faFacebook} /> Share on Facebook
+                </FacebookShareButton>
+                <TwitterShareButton url={window.location.href} className="social-button">
+                    <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
+                </TwitterShareButton>
+                <WhatsappShareButton url={window.location.href} className="social-button">
+                    <FontAwesomeIcon icon={faWhatsapp} /> Share on WhatsApp
+                </WhatsappShareButton>
+            </div>
             )}
         </div>
     );

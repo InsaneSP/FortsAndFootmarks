@@ -38,7 +38,7 @@ class Categories extends Component {
           {
             img: mountainFort,
             title: "Mountain Fort",
-            backText: "Mountain forts, such as Sinhagad Fort, were built on steep, mountainous terrain. These forts provided excellent defensive positions due to their natural elevation and ruggedness, making them ideal for withstanding sieges and launching counter-attacks.",
+            backText: "Mountain forts, such as Anjaneri Fort, were built on steep, mountainous terrain. These forts provided excellent defensive positions due to their natural elevation and ruggedness, making them ideal for withstanding sieges and launching counter-attacks.",
             path: "/forts/mountain",
           }
           ].map((item, index) => (

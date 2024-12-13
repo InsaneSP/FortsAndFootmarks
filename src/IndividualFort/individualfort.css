@@ -38,6 +38,32 @@
     flex-direction: column;
 }
 
+.name-rating {
+    display: flex;
+    justify-content: space-between; /* Aligns name and rating on opposite ends */
+    align-items: center;
+    width: 100%;
+}
+
+.name-rating h1 {
+    margin: 0; /* Ensure there's no margin for proper alignment */
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating .info-icon {
+    font-size: 18px; /* Adjust size of the rating icon */
+}
+
+.rating p{
+    margin: 1%;
+    font-size: 28px !important;
+}
+
 .subhead {
     margin: 0;
     text-shadow: none !important;
@@ -73,7 +99,6 @@ button {
     padding: 5px 15px;
     background-color: #c9c9c9;
     border: none;
-    /* Add a light border for separation */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
     color: #000;

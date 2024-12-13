@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import logo from "../images/Logo.png";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/authContext.js";
 import "./navbarstyles.css";
 import { CAvatar } from "@coreui/react-pro";
 import "@coreui/coreui-pro/dist/css/coreui.min.css";
 
 class Navbar extends Component {
+    static contextType = AuthContext;
     state = {};
     render() {
+        const { user, logout } = this.context;
         return (
             <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-fixed">
                 <div className="container-fluid">
@@ -48,17 +51,30 @@ class Navbar extends Component {
                                     About
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/login">
-                                    Login
-                                </Link>
-                            </li>
-                            {/* Uncomment if you want to add a user profile avatar */}
-                            {/* <li className="nav-item">
-                                <Link className="nav-link" to="#">
-                                    <CAvatar color="light" size="lg">CUI</CAvatar>
-                                </Link>
-                            </li> */}
+                            {!user ? (  // Changed to use the `user` state directly
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/login">
+                                        Login
+                                    </Link>
+                                </li>
+                            ) : (
+                                <>
+                                    {/* <li className="nav-item">
+                                        <Link className="nav-link" to="/profile">
+                                            <CAvatar color="light" size="lg">{user.name.charAt(0)}</CAvatar>
+                                        </Link>
+                                    </li> */}
+                                    <li className="nav-item">
+                                        <a
+                                            className="nav-link"
+                                            href="#"
+                                            onClick={logout}  
+                                        >
+                                            Logout
+                                        </a>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>

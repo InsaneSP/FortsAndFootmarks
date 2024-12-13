@@ -46,7 +46,7 @@ const Forts = () => {
     return (
         <div className="container-fluid">
             <br />
-            <h1>{type} Forts</h1>
+            <h1 style={{textTransform: 'capitalize'}}>{type} Forts</h1>
             <form className="d-flex search" role="search">
                 <input
                     className="form-control me-2"

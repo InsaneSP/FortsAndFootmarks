@@ -13,6 +13,7 @@ import Plan from './Plan/plantrek';
 import AboutUs from './AboutUs/aboutus';
 import ScrollToTop from './ScrollToTop';
 import IndividualFort from './IndividualFort/individualfort';
+import { AuthProvider } from './Context/authContext';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -20,6 +21,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <AuthProvider>
     <Router>
       <ScrollToTop />
       <Navbar />
@@ -40,6 +42,7 @@ root.render(
       </Routes>
       <Footer />
     </Router>
+    </AuthProvider>
   </React.StrictMode>
 );
 

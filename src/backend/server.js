@@ -1,5 +1,4 @@
-// backend/server.js
-require('dotenv').config(); // Add this at the top of the file
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -14,14 +13,12 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Use the forts routes
 app.use('/forts', fortRoutes);
-
-app.use('/auth', authRoutes); 
+app.use(authRoutes);
 
 app.get('/fort/:fortName', (req, res) => {
-    const fortName = req.params.fortName.toLowerCase(); // Convert to lowercase
-    FortModel.findOne({ name: new RegExp(fortName, 'i') }) // 'i' makes it case-insensitive
+    const fortName = req.params.fortName.toLowerCase(); 
+    FortModel.findOne({ name: new RegExp(fortName, 'i') })
         .then(fort => {
             if (!fort) {
                 return res.status(404).send('Fort not found');
@@ -30,7 +27,6 @@ app.get('/fort/:fortName', (req, res) => {
         })
         .catch(err => res.status(500).send('Error fetching fort details'));
 });
-
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {

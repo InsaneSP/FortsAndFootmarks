@@ -11,6 +11,7 @@ import {
     faCloud,
     faSnowflake,
     faWarning,
+    faStar
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import coastalFort from "../images/Coastal.jfif";
@@ -19,7 +20,7 @@ import inlandFort from "../images/Inland.jfif";
 import mountainFort from "../images/Mountain.jfif";
 import { useParams } from "react-router-dom";
 import slugify from "slugify";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -45,7 +46,7 @@ const IndividualFort = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/fort/${fortName}`)  // Adjust the path to match the backend
+            .get(`http://localhost:3001/fort/${fortName}`) // Adjust the path to match the backend
             .then((response) => {
                 console.log("Fetched data:", response.data);
                 setFortData(response.data);
@@ -56,29 +57,60 @@ const IndividualFort = () => {
             });
     }, [fortName]);
 
-    if (!fortData) return <div>Fort not found or loading...</div>;  // Handle missing data
+    if (!fortData) return <div>Fort not found or loading...</div>; // Handle missing data
 
-    const fortSeasons = fortData.season.split(', ');
+    const fortSeasons = fortData.season.split(", ");
 
-  // Filter and store only the seasons that are included in the fort data
-    const displaySeasons = fortSeasons.filter(season => fortData.season.includes(season));
-
+    // Filter and store only the seasons that are included in the fort data
+    const displaySeasons = fortSeasons.filter((season) =>
+        fortData.season.includes(season)
+    );
 
     return (
         <div className="container-fluid">
             <div className="image-section">
-                <img src={fortData.photos[0]} alt={`${fortData.name} 1`} className="image-1" onError={(e) => console.log('Image failed to load:', e.target.src)} />
+                <img
+                    src={fortData.photos[0]}
+                    alt={`${fortData.name} 1`}
+                    className="image-1"
+                    onError={(e) => console.log("Image failed to load:", e.target.src)}
+                />
                 <div className="image-2-3-4">
                     <div className="image-2-3">
-                        <img src={fortData.photos[1]} alt={`${fortData.name} 2`} className="image-2" onError={(e) => console.log('Image failed to load:', e.target.src)} />
-                        <img src={fortData.photos[2]} alt={`${fortData.name} 3`} className="image-3" onError={(e) => console.log('Image failed to load:', e.target.src)} />
+                        <img
+                            src={fortData.photos[1]}
+                            alt={`${fortData.name} 2`}
+                            className="image-2"
+                            onError={(e) =>
+                                console.log("Image failed to load:", e.target.src)
+                            }
+                        />
+                        <img
+                            src={fortData.photos[2]}
+                            alt={`${fortData.name} 3`}
+                            className="image-3"
+                            onError={(e) =>
+                                console.log("Image failed to load:", e.target.src)
+                            }
+                        />
                     </div>
-                    <img src={fortData.photos[3]} alt={`${fortData.name} 4`} className="image-4" onError={(e) => console.log('Image failed to load:', e.target.src)} />
+                    <img
+                        src={fortData.photos[3]}
+                        alt={`${fortData.name} 4`}
+                        className="image-4"
+                        onError={(e) => console.log("Image failed to load:", e.target.src)}
+                    />
                 </div>
             </div>
 
             <div className="head">
+                <div className="name-rating">
                 <h1>{fortData.name}</h1>
+                <div className="rating">
+                    <FontAwesomeIcon icon={faStar} className="info-icon" />
+                    <p>{fortData.rating}</p>{" "}
+                </div>
+                </div>
                 <h3 className="subhead">{fortData.historicalSignificance}</h3>
                 <div className="imp-icons">
                     <div className="icon-item">
@@ -196,7 +228,10 @@ const IndividualFort = () => {
                     View on Google Maps
                 </a>
                 <MapContainer
-                    center={[fortData.map.coordinates.latitude, fortData.map.coordinates.longitude]} // Replace with lat/lng from the database
+                    center={[
+                        fortData.map.coordinates.latitude,
+                        fortData.map.coordinates.longitude,
+                    ]} // Replace with lat/lng from the database
                     zoom={13}
                     style={{ height: "600px", width: "100%", marginTop: "20px" }}
                 >
@@ -204,7 +239,12 @@ const IndividualFort = () => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
-                    <Marker position={[fortData.map.coordinates.latitude, fortData.map.coordinates.longitude]}>
+                    <Marker
+                        position={[
+                            fortData.map.coordinates.latitude,
+                            fortData.map.coordinates.longitude,
+                        ]}
+                    >
                         <Popup>{fortData.name}</Popup>
                     </Marker>
                 </MapContainer>
@@ -212,7 +252,7 @@ const IndividualFort = () => {
                 <p>Best months: {fortData.bestTimeToVisit.months.join(", ")}</p>
             </div>
             <div className="time-to-visit-section">
-            {displaySeasons.includes("Summer") && (
+                {displaySeasons.includes("Summer") && (
                     <div className="card season-card no-hover">
                         <div className="card-body season">
                             <div className="season-name">
@@ -268,9 +308,7 @@ const IndividualFort = () => {
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionExample"
                             >
-                                <div className="accordion-body">
-                                    {faq.answer}
-                                </div>
+                                <div className="accordion-body">{faq.answer}</div>
                             </div>
                         </div>
                     ))}
@@ -293,18 +331,25 @@ const IndividualFort = () => {
                         <div className="card fort-card no-hover" key={index}>
                             <div className="card-body">
                                 <h5>{fort}</h5>
-                                <img src={fortData.photos[0]} className="card-img-top" alt="..." /><br />
+                                <img
+                                    src={fortData.photos[0]}
+                                    className="card-img-top"
+                                    alt="..."
+                                />
+                                <br />
                                 <button
                                     className="btn fbutton"
                                     onClick={() => {
-                                        const fortSlug = slugify(fort, { lower: true, strict: true });
-                                        const firstWordSlug = fortSlug.split('-')[0];
+                                        const fortSlug = slugify(fort, {
+                                            lower: true,
+                                            strict: true,
+                                        });
+                                        const firstWordSlug = fortSlug.split("-")[0];
                                         navigate(`/fort/${firstWordSlug}`);
                                     }}
                                 >
                                     Explore More
                                 </button>
-
                             </div>
                         </div>
                     ))}
@@ -318,7 +363,7 @@ const IndividualFort = () => {
                         <div className="season-name">
                             <FontAwesomeIcon
                                 icon={faWarning}
-                                style={{ color: "red", marginRight: 15 }}
+                                style={{ color: "red", margin: 10, height: 18 }}
                             />
                             <h4>Important Safety Tips</h4>
                         </div>
