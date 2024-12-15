@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/forts', fortRoutes);
-app.use(authRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/fort/:fortName', (req, res) => {
     const fortName = req.params.fortName.toLowerCase(); 

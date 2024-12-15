@@ -33,6 +33,7 @@ class Login extends Component {
     toggleSignUpMode = () => {
         this.setState((prevState) => ({
             isSignUpMode: !prevState.isSignUpMode,
+            formData: { username: "", email: "", password: "" },
             message: { text: "", type: "" },
         }));
     };
@@ -55,7 +56,8 @@ class Login extends Component {
         this.setState({ isLoading: true });
 
         try {
-            const endpoint = `login`;  // Adjust the endpoint
+            const endpoint = isSignUpMode ? "http://localhost:3001/auth/register" 
+            : "http://localhost:3001/auth/login";
             const response = await axios.post(endpoint, {
                 ...formData,
             });
@@ -74,7 +76,8 @@ class Login extends Component {
                 this.props.history.push("/");
             }
         } catch (error) {
-            const errorMessage = error.response?.data?.message || "Something went wrong.";
+            const errorMessage =
+                error.response?.data?.message || "Something went wrong.";
             this.setState({
                 message: { text: errorMessage, type: "error" },
                 isLoading: false,
@@ -85,15 +88,24 @@ class Login extends Component {
     validateForm = () => {
         const { isSignUpMode, formData } = this.state;
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            this.setState({ message: { text: "Invalid email format.", type: "error" } });
+            this.setState({
+                message: { text: "Invalid email format.", type: "error" },
+            });
             return false;
         }
         if (formData.password.length < 6) {
-            this.setState({ message: { text: "Password must be at least 6 characters.", type: "error" } });
+            this.setState({
+                message: {
+                    text: "Password must be at least 6 characters.",
+                    type: "error",
+                },
+            });
             return false;
         }
         if (isSignUpMode && !formData.username) {
-            this.setState({ message: { text: "Username is required.", type: "error" } });
+            this.setState({
+                message: { text: "Username is required.", type: "error" },
+            });
             return false;
         }
         return true;
@@ -113,7 +125,9 @@ class Login extends Component {
                                 className="sign-in-form login-form"
                             >
                                 <h2 className="title">Sign in</h2>
-                                {message.text && <p className={`message ${message.type}`}>{message.text}</p>}
+                                {message.text && (
+                                    <p className={`message ${message.type}`}>{message.text}</p>
+                                )}
                                 {isLoading && <p>Loading...</p>}
                                 <div className="input-field">
                                     <FontAwesomeIcon icon={faEnvelope} className="icon" />
@@ -150,7 +164,9 @@ class Login extends Component {
                                 className="sign-up-form login-form"
                             >
                                 <h2 className="title">Sign up</h2>
-                                {message.text && <p className={`message ${message.type}`}>{message.text}</p>}
+                                {message.text && (
+                                    <p className={`message ${message.type}`}>{message.text}</p>
+                                )}
                                 {isLoading && <p>Loading...</p>}
                                 <div className="input-field">
                                     <FontAwesomeIcon icon={faUser} className="icon" />

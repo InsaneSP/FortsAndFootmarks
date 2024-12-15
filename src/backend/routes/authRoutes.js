@@ -8,7 +8,7 @@ const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key"; 
 
 // Register Route
-router.post("/login", async (req, res) => {
+router.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({ message: "All fields are required." });
+        return res.status(400).json({ message: "Missing email or password." });
     }
 
     try {
@@ -59,5 +59,6 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ message: "Error logging in.", error });
     }
 });
+
 
 module.exports = router;
