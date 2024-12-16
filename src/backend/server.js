@@ -5,7 +5,6 @@ const cors = require('cors');
 
 const FortModel = require('./models/forts');
 const fortRoutes = require('./routes/fortsRoutes');
-const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -14,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/forts', fortRoutes);
-app.use('/auth', authRoutes);
 
 app.get('/fort/:fortName', (req, res) => {
     const fortName = req.params.fortName.toLowerCase(); 

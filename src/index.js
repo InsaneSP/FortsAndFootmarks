@@ -13,8 +13,9 @@ import Plan from './Plan/plantrek';
 import AboutUs from './AboutUs/aboutus';
 import ScrollToTop from './ScrollToTop';
 import IndividualFort from './IndividualFort/individualfort';
-import { AuthProvider } from './Context/authContext';
 import reportWebVitals from './reportWebVitals';
+import app from './firebaseConfig.js';
+import { AuthProvider } from './Context/authContext.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 

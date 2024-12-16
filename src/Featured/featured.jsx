@@ -19,19 +19,6 @@ const Featured = () => {
             <h1 style={{ marginTop: "10px" }}>Featured Locations</h1>
             <br />
             <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
-                <div className="carousel-indicators">
-                    {forts.map((_, index) => (
-                        <button
-                            key={index}
-                            type="button"
-                            data-bs-target="#carouselExampleCaptions"
-                            data-bs-slide-to={index}
-                            className={index === 0 ? 'active' : ''}
-                            aria-current={index === 0 ? 'true' : ''}
-                            aria-label={`Slide ${index + 1}`}
-                        ></button>
-                    ))}
-                </div>
                 <div className="carousel-inner">
                     {forts.map((fort, index) => (
                         <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={fort.name}>
@@ -48,6 +35,7 @@ const Featured = () => {
                                 Explore More
                             </button>
                         </div>
+                        
                     ))}
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

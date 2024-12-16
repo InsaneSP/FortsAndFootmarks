@@ -1,44 +1,33 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import app from "../firebaseConfig.js";
 
-// Create the context
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-// Create the provider component
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const auth = getAuth(app);
 
-    const login = async (email, password) => {
-        try {
-            const response = await fetch(`http://localhost:3001/auth/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
-    
-            const data = await response.json();
-    
-            if (!response.ok) {
-                console.error("Login failed:", data.message);
-                return alert(data.message || "Something went wrong.");
-            }
-    
-            // Successful login: store token and update state
-            localStorage.setItem("token", data.token);
-            setIsAuthenticated({ isAuthenticated: true, token: data.token });
-        } catch (error) {
-            console.error("Error during login:", error);
-            alert("Something went wrong.");
-        }
-    };
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setLoading(false);
+        });
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
+        return () => unsubscribe();
+    }, [auth]);
+
+    const logout = async () => {
+        await signOut(auth);
+        setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-            {children}
+        <AuthContext.Provider value={{ user, loading, logout }}>
+            {!loading && children}
         </AuthContext.Provider>
     );
 };
+
+export const useAuth = () => useContext(AuthContext);

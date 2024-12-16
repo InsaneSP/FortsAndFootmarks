@@ -4,12 +4,11 @@ import { faFacebook, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-
 import { faTrash, faMinus, faShareAlt, faSave, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf"; 
-import { AuthContext } from "../Context/authContext";  
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import { useAuth } from "../Context/authContext.js";
 import "./plantrek.css";
 
 const Plan = () => {
-    const { isLoggedIn } = useContext(AuthContext);  // Use AuthContext instead of UserContext
     const [itinerary, setItinerary] = useState([{ day: "Day 1", activities: [""] }]);
     const [notes, setNotes] = useState("");
     const [expenses, setExpenses] = useState([{ item: "", amount: 0 }]);
@@ -26,6 +25,8 @@ const Plan = () => {
     ]);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const [shareButtons, setShareButtons] = useState(false);
 
         // Functions for itinerary
         const handleAddActivity = (dayIndex) => {
@@ -82,9 +83,13 @@ const Plan = () => {
         );
 
     const handleSharePlan = () => {
-        if (!isLoggedIn) {
+        if (!user) {
             alert("You must log in to share the trek plan.");
             return;
+        }
+
+        if (user){
+            setShareButtons(true)
         }
 
         const planData = {
@@ -305,7 +310,7 @@ const Plan = () => {
             </div>
 
             {/* Social Media Share Buttons (requires login) */}
-            {isLoggedIn && (
+            {shareButtons && (
                 <div className="social-share">
                 <FacebookShareButton url={window.location.href} className="social-button">
                     <FontAwesomeIcon icon={faFacebook} /> Share on Facebook
