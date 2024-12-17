@@ -8,9 +8,9 @@ import "./forts.css";
 
 const Forts = () => {
     const [forts, setForts] = useState([]);
-    const [filteredForts, setFilteredForts] = useState([]); // State for filtered forts
-    const [searchQuery, setSearchQuery] = useState(""); // State for search query
-    const { type } = useParams(); // This gets the category from the URL (e.g., "hill")
+    const [filteredForts, setFilteredForts] = useState([]); 
+    const [searchQuery, setSearchQuery] = useState(""); 
+    const { type } = useParams();
     const navigate = useNavigate();
 
     // Handle search input change

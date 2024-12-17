@@ -1,86 +1,120 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { faTrash, faMinus, faShareAlt, faSave, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { jsPDF } from "jspdf"; 
-import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import {
+    faFacebook,
+    faTwitter,
+    faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+    faTrash,
+    faMinus,
+    faShareAlt,
+    faSave,
+    faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { jsPDF } from "jspdf";
+import {
+    FacebookShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
+} from "react-share";
 import { useAuth } from "../Context/authContext.js";
+import axios from "axios";
 import "./plantrek.css";
 
 const Plan = () => {
-    const [itinerary, setItinerary] = useState([{ day: "Day 1", activities: [""] }]);
+    const [itinerary, setItinerary] = useState([
+        { day: "Day 1", activities: [""] },
+    ]);
     const [notes, setNotes] = useState("");
     const [expenses, setExpenses] = useState([{ item: "", amount: 0 }]);
     const [totalExpense, setTotalExpense] = useState(0);
-    const [fortTimeline, setFortTimeline] = useState([
-        {
-            fortName: "Raigad",
-            events: [
-                { year: 1656, description: "Shivaji Maharaj captures Raigad" },
-                { year: 1674, description: "Coronation of Shivaji Maharaj" },
-                { year: 1680, description: "Shivaji Maharaj passes away at Raigad" },
-            ],
-        },
-    ]);
+    const [forts, setForts] = useState([]);
+    const [fortTimeline, setFortTimeline] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const navigate = useNavigate();
     const { user } = useAuth();
     const [shareButtons, setShareButtons] = useState(false);
+    const [error, setError] = useState("");
 
-        // Functions for itinerary
-        const handleAddActivity = (dayIndex) => {
-            const updatedItinerary = [...itinerary];
-            updatedItinerary[dayIndex].activities.push("");
-            setItinerary(updatedItinerary);
+    useEffect(() => {
+        const fetchForts = async () => {
+            try {
+                const response = await axios.get("http://localhost:3001/forts");
+                setForts(response.data);
+                if (response.data.length > 0) {
+                    setFortTimeline(response.data[0]);
+                }
+            } catch (error) {
+                console.error("Error fetching forts:", error);
+            }
         };
+        fetchForts();
+    }, []);
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
     
-        const handleActivityChange = (dayIndex, activityIndex, value) => {
-            const updatedItinerary = [...itinerary];
-            updatedItinerary[dayIndex].activities[activityIndex] = value;
-            setItinerary(updatedItinerary);
-        };
-    
-        const handleDeleteActivity = (dayIndex, activityIndex) => {
-            const updatedItinerary = [...itinerary];
-            updatedItinerary[dayIndex].activities.splice(activityIndex, 1);
-            setItinerary(updatedItinerary);
-        };
-    
-        const handleAddDay = () => {
-            setItinerary([
-                ...itinerary,
-                { day: `Day ${itinerary.length + 1}`, activities: [""] },
-            ]);
-        };
-    
-        const handleAddExpense = () => {
-            setExpenses([...expenses, { item: "", amount: 0 }]);
-        };
-    
-        const handleExpenseChange = (index, field, value) => {
-            const updatedExpenses = [...expenses];
-            updatedExpenses[index][field] =
-                field === "amount" ? parseFloat(value) || 0 : value;
-            setExpenses(updatedExpenses);
-            setTotalExpense(
-                updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
-            );
-        };
-    
-        const handleDeleteExpense = (index) => {
-            const updatedExpenses = [...expenses];
-            updatedExpenses.splice(index, 1);
-            setExpenses(updatedExpenses);
-            setTotalExpense(
-                updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
-            );
-        };
-    
-        // Filter timeline based on search
-        const filteredTimeline = fortTimeline.filter((fort) =>
-            fort.fortName.toLowerCase().includes(searchQuery.toLowerCase())
+        const filtered = forts.filter((fort) =>
+            fort.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
+    
+        if (filtered.length > 0) {
+            setFortTimeline(filtered[0]); 
+            setError(""); 
+        } else {
+            setFortTimeline(null);
+            setError("Fort not found! Please try another name.");
+        }
+    };
+    
+    // Functions for itinerary
+    const handleAddActivity = (dayIndex) => {
+        const updatedItinerary = [...itinerary];
+        updatedItinerary[dayIndex].activities.push("");
+        setItinerary(updatedItinerary);
+    };
+
+    const handleActivityChange = (dayIndex, activityIndex, value) => {
+        const updatedItinerary = [...itinerary];
+        updatedItinerary[dayIndex].activities[activityIndex] = value;
+        setItinerary(updatedItinerary);
+    };
+
+    const handleDeleteActivity = (dayIndex, activityIndex) => {
+        const updatedItinerary = [...itinerary];
+        updatedItinerary[dayIndex].activities.splice(activityIndex, 1);
+        setItinerary(updatedItinerary);
+    };
+
+    const handleAddDay = () => {
+        setItinerary([
+            ...itinerary,
+            { day: `Day ${itinerary.length + 1}`, activities: [""] },
+        ]);
+    };
+
+    const handleAddExpense = () => {
+        setExpenses([...expenses, { item: "", amount: 0 }]);
+    };
+
+    const handleExpenseChange = (index, field, value) => {
+        const updatedExpenses = [...expenses];
+        updatedExpenses[index][field] =
+            field === "amount" ? parseFloat(value) || 0 : value;
+        setExpenses(updatedExpenses);
+        setTotalExpense(
+            updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+        );
+    };
+
+    const handleDeleteExpense = (index) => {
+        const updatedExpenses = [...expenses];
+        updatedExpenses.splice(index, 1);
+        setExpenses(updatedExpenses);
+        setTotalExpense(
+            updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+        );
+    };
 
     const handleSharePlan = () => {
         if (!user) {
@@ -88,8 +122,8 @@ const Plan = () => {
             return;
         }
 
-        if (user){
-            setShareButtons(true)
+        if (user) {
+            setShareButtons(true);
         }
 
         const planData = {
@@ -110,24 +144,24 @@ const Plan = () => {
         const doc = new jsPDF();
         doc.setFontSize(16);
         let yPos = 10;
-    
+
         // Add itinerary
         doc.text("Trek Plan", 10, yPos);
         yPos += 10; // Move to the next line
-    
+
         doc.text("Itinerary:", 10, yPos);
         yPos += 10; // Move to the next line
         itinerary.forEach((day, i) => {
             doc.text(`${day.day}: ${day.activities.join(", ")}`, 10, yPos);
             yPos += 10; // Adjust y position for the next item
         });
-    
+
         // Add notes
         doc.text("Notes:", 10, yPos);
         yPos += 10;
         doc.text(notes, 10, yPos);
-        yPos += 10 + (notes.split("\n").length * 5); // Adjust y position based on the length of notes
-    
+        yPos += 10 + notes.split("\n").length * 5; // Adjust y position based on the length of notes
+
         // Add expenses
         doc.text("Expenses:", 10, yPos);
         yPos += 10;
@@ -135,13 +169,14 @@ const Plan = () => {
             doc.text(`${expense.item}: ₹${expense.amount}`, 10, yPos);
             yPos += 10; // Adjust y position for the next item
         });
-    
+
         // Add total expense
+        doc.setFont("Helvetica", "normal");
         doc.text(`Total Expense: ₹${totalExpense.toFixed(2)}`, 10, yPos);
-    
+
         // Save PDF
         doc.save("TrekPlan.pdf");
-    };    
+    };
 
     return (
         <div className="container-fluid about-us-container">
@@ -229,29 +264,40 @@ const Plan = () => {
                     <div className="card plan-card itinerary no-hover">
                         <h4 className="timeline-heading">Historical Timeline</h4>
                         <div className="search-container">
-                            <input
-                                type="text"
-                                className="form-control search-input"
-                                placeholder="Search Forts..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
+                        <form onSubmit={handleFormSubmit} className="d-flex">
+    <input
+        type="text"
+        className="form-control search-input"
+        placeholder="Search Forts..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+    />
+</form>
+
                         </div>
-                        {filteredTimeline.map((fort, index) => (
-                            <div className="timeline-content" key={index}>
-                                <h5 className="fort-name">{fort.fortName}</h5>
+                        {error && <p className="error-message">{error}</p>}
+                        {fortTimeline ? (
+                            <div className="timeline-content">
+                                <h2 className="fort-name">{fortTimeline.name}</h2>
                                 <ul className="timeline-list">
-                                    {fort.events.map((event, eventIndex) => (
-                                        <li className="timeline-item" key={eventIndex}>
-                                            <FontAwesomeIcon icon={faCalendarAlt} className="icon" />
-                                            <span>
-                                                <strong>{event.year}:</strong> {event.description}
-                                            </span>
-                                        </li>
-                                    ))}
+                                    {fortTimeline.history?.historicalTimeline?.map(
+                                        (timeline, index) => (
+                                            <li className="timeline-item" key={index}>
+                                                <FontAwesomeIcon
+                                                    icon={faCalendarAlt}
+                                                    className="icon"
+                                                />
+                                                <span>
+                                                    <strong>{timeline.year}:</strong> {timeline.event}
+                                                </span>
+                                            </li>
+                                        )
+                                    )}
                                 </ul>
                             </div>
-                        ))}
+                        ) : (
+                            <p>No timeline data available.</p>
+                        )}
                     </div>
                 </div>
 
@@ -312,16 +358,25 @@ const Plan = () => {
             {/* Social Media Share Buttons (requires login) */}
             {shareButtons && (
                 <div className="social-share">
-                <FacebookShareButton url={window.location.href} className="social-button">
-                    <FontAwesomeIcon icon={faFacebook} /> Share on Facebook
-                </FacebookShareButton>
-                <TwitterShareButton url={window.location.href} className="social-button">
-                    <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
-                </TwitterShareButton>
-                <WhatsappShareButton url={window.location.href} className="social-button">
-                    <FontAwesomeIcon icon={faWhatsapp} /> Share on WhatsApp
-                </WhatsappShareButton>
-            </div>
+                    <FacebookShareButton
+                        url={window.location.href}
+                        className="social-button"
+                    >
+                        <FontAwesomeIcon icon={faFacebook} /> Share on Facebook
+                    </FacebookShareButton>
+                    <TwitterShareButton
+                        url={window.location.href}
+                        className="social-button"
+                    >
+                        <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
+                    </TwitterShareButton>
+                    <WhatsappShareButton
+                        url={window.location.href}
+                        className="social-button"
+                    >
+                        <FontAwesomeIcon icon={faWhatsapp} /> Share on WhatsApp
+                    </WhatsappShareButton>
+                </div>
             )}
         </div>
     );
