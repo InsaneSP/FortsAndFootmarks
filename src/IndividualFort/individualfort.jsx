@@ -11,17 +11,14 @@ import {
     faCloud,
     faSnowflake,
     faWarning,
-    faStar
+    faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
-import coastalFort from "../images/Coastal.jfif";
-import hillFort from "../images/Hill.jfif";
-import inlandFort from "../images/Inland.jfif";
-import mountainFort from "../images/Mountain.jfif";
 import { useParams } from "react-router-dom";
 import slugify from "slugify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../Context/authContext.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "./individualfort.css";
@@ -35,9 +32,13 @@ L.Icon.Default.mergeOptions({
 });
 
 const IndividualFort = () => {
+    const { user } = useAuth();
     const { fortName } = useParams();
-    const [fortData, setFortData] = useState(null); // State to store fetched data
+    const [fortData, setFortData] = useState(null);
     const [activeSection, setActiveSection] = useState("keyPoints");
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
+    const [weather, setWeather] = useState(null);
     const navigate = useNavigate();
 
     const toggleSection = (section) => {
@@ -46,9 +47,8 @@ const IndividualFort = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/fort/${fortName}`) // Adjust the path to match the backend
+            .get(`http://localhost:3001/fort/${fortName}`)
             .then((response) => {
-                console.log("Fetched data:", response.data);
                 setFortData(response.data);
             })
             .catch((err) => {
@@ -57,11 +57,58 @@ const IndividualFort = () => {
             });
     }, [fortName]);
 
+    useEffect(() => {
+        axios.get(`http://localhost:3001/comments/${fortName}`).then((response) => {
+            setComments(response.data);
+        });
+    }, [fortName]);
+
+    useEffect(() => {
+        if (fortData && fortData.map && fortData.map.coordinates) {
+            const { latitude, longitude } = fortData.map.coordinates;
+            axios
+                .get(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=ac8f7980f1ccd2115fec2a8538b84913&units=metric`
+                )
+                .then((response) => {
+                    setWeather(response.data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching weather data:", error);
+                });
+        }
+    }, [fortData]);
+
+    const addComment = async () => {
+        if (!newComment.trim()) {
+            alert("Comment cannot be empty!");
+            return;
+        }
+
+        if (!user) {
+            alert("You must be logged in to comment.");
+            return;
+        }
+
+        try {
+            const response = await axios.post("http://localhost:3001/comments", {
+                fortName,
+                username: user.username,
+                comment: newComment,
+            });
+
+            // Update the local comments state to display the new comment
+            setComments([...comments, response.data]);
+            setNewComment(""); // Clear input field
+        } catch (error) {
+            console.error("Error adding comment:", error);
+            alert("Failed to add comment. Please try again later.");
+        }
+    };
+
     if (!fortData) return <div>Fort not found or loading...</div>; // Handle missing data
 
     const fortSeasons = fortData.season.split(", ");
-
-    // Filter and store only the seasons that are included in the fort data
     const displaySeasons = fortSeasons.filter((season) =>
         fortData.season.includes(season)
     );
@@ -105,11 +152,11 @@ const IndividualFort = () => {
 
             <div className="head">
                 <div className="name-rating">
-                <h1>{fortData.name}</h1>
-                <div className="rating">
-                    <FontAwesomeIcon icon={faStar} className="info-icon" />
-                    <p>{fortData.rating}</p>{" "}
-                </div>
+                    <h1>{fortData.name}</h1>
+                    <div className="rating">
+                        <FontAwesomeIcon icon={faStar} className="info-icon" />
+                        <p>{fortData.rating}</p>{" "}
+                    </div>
                 </div>
                 <h3 className="subhead">{fortData.historicalSignificance}</h3>
                 <div className="imp-icons">
@@ -139,15 +186,17 @@ const IndividualFort = () => {
                 ))}
             </div>
 
-            <div className="button-container">
+            <div className="custom-button-container">
                 <button
-                    className={activeSection === "keyPoints" ? "active" : ""}
+                    className={`custom-button ${activeSection === "keyPoints" ? "custom-button-active" : ""
+                        }`}
                     onClick={() => toggleSection("keyPoints")}
                 >
                     Key Points
                 </button>
                 <button
-                    className={activeSection === "planYourVisit" ? "active" : ""}
+                    className={`custom-button ${activeSection === "planYourVisit" ? "custom-button-active" : ""
+                        }`}
                     onClick={() => toggleSection("planYourVisit")}
                 >
                     Plan Your Visit
@@ -324,6 +373,78 @@ const IndividualFort = () => {
                 </ul>
             </div>
 
+            {weather && (
+                <div className="weather-section gradient-background">
+                    <h2 className="weather-title">Current Weather</h2>
+                    <div className="weather-info">
+                        <div className="weather-item">
+                            <img
+                                className="weather-icon-large"
+                                src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                                alt={weather.weather[0].description}
+                            />
+                            <p className="weather-description">{weather.weather[0].description}</p>
+                        </div>
+                        <div className="weather-stats">
+                            <p className="stat">🌡️ Temperature: <strong>{weather.main.temp}°C</strong></p>
+                            <p className="stat">💧 Humidity: <strong>{weather.main.humidity}%</strong></p>
+                            <p className="stat">💨 Wind: <strong>{weather.wind.speed} km/h</strong></p>
+                            <p className="stat">📊 Status: <strong>{weather.main.temp < 10 ? 'Cold' : weather.main.temp <= 20 ? 'Moderate' : 'Hot'}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="safety-section">
+                <h2>Safety Information</h2>
+                <div className="card safety-card no-hover">
+                    <div className="card-body season">
+                        <div className="season-name">
+                            <FontAwesomeIcon
+                                icon={faWarning}
+                                style={{ color: "red", margin: 10, height: 18 }}
+                            />
+                            <h4>Important Safety Tips</h4>
+                        </div>
+                        <ul>
+                            <li>Inform someone about your trek plans</li>
+                            <li>Carry enough water and stay hydrated</li>
+                            <li>Be cautious near cliff edges</li>
+                            <li>Check weather conditions before starting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {/* <div className="comment-section">
+                <h2>Comments</h2>
+                <div className="comments-list">
+                    {comments.length > 0 ? (
+                        comments.map((comment, index) => (
+                            <div key={index} className="comment">
+                                <strong>{comment.username}:</strong>
+                                <p>{comment.comment}</p>
+                                <small>{new Date(comment.createdAt).toLocaleString()}</small>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No comments yet. Be the first to comment!</p>
+                    )}
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                    <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="Add a comment..."
+                        rows="3"
+                        style={{ width: "100%", padding: "10px" }}
+                    ></textarea>
+                    <button onClick={addComment} style={{ marginTop: "10px" }}>
+                        Post Comment
+                    </button>
+                </div>
+            </div> */}
+
             <div className="similar-section">
                 <h2>Similar / Nearby Forts</h2>
                 <div className="forts-card-section">
@@ -353,27 +474,6 @@ const IndividualFort = () => {
                             </div>
                         </div>
                     ))}
-                </div>
-            </div>
-
-            <div className="safety-section">
-                <h2>Safety Information</h2>
-                <div className="card safety-card no-hover">
-                    <div className="card-body season">
-                        <div className="season-name">
-                            <FontAwesomeIcon
-                                icon={faWarning}
-                                style={{ color: "red", margin: 10, height: 18 }}
-                            />
-                            <h4>Important Safety Tips</h4>
-                        </div>
-                        <ul>
-                            <li>Inform someone about your trek plans</li>
-                            <li>Carry enough water and stay hydrated</li>
-                            <li>Be cautious near cliff edges</li>
-                            <li>Check weather conditions before starting</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>

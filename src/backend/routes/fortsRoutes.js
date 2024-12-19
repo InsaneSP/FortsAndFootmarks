@@ -1,22 +1,18 @@
-// backend/routes/fortsRoutes.js
 const express = require('express');
-const FortModel = require('../models/forts');  // Import the Fort model
-
+const FortModel = require('../models/forts');
 const router = express.Router();
 
-// Route to get all forts
 router.get('/', async (req, res) => {
     try {
-        const forts = await FortModel.find();  // Get all forts from the database
+        const forts = await FortModel.find();  
         res.json(forts);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching forts', error: err });
     }
 });
 
-// Route to get forts by type (e.g., hill, coastal)
 router.get('/:type', async (req, res) => {
-    const type = req.params.type.trim().toLowerCase(); // Normalize and trim
+    const type = req.params.type.trim().toLowerCase();
     try {
         const forts = await FortModel.find({ 
             $or: [

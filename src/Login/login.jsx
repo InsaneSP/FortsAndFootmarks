@@ -42,33 +42,22 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const auth = getAuth(app);
-
-        // Validate Form
         if (!validateForm()) return;
-
         setIsLoading(true);
-
         try {
             if (isSignUpMode) {
-                await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-                setMessage({
-                    text: "Registration successful! Please log in.",
-                    type: "success",
-                });
+                const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+                const user = userCredential.user;
+                await saveUserToDatabase({ username: formData.username, email: formData.email, uid: user.uid });
+                setMessage({ text: "Registration successful! Please log in.", type: "success" });
                 toggleSignUpMode();
             } else {
                 await signInWithEmailAndPassword(auth, formData.email, formData.password);
-                setMessage({
-                    text: "Login successful!",
-                    type: "success",
-                });
+                setMessage({ text: "Login successful!" });
                 navigate("/"); // Redirect to home page
             }
         } catch (error) {
-            setMessage({
-                text: error.message || "Something went wrong.",
-                type: "error",
-            });
+            setMessage({ text: error.message || "Something went wrong.", type: "error" });
         } finally {
             setIsLoading(false);
         }
@@ -91,6 +80,24 @@ const Login = () => {
             return false;
         }
         return true;
+    };
+
+    const saveUserToDatabase = async (user) => {
+        try {
+            const response = await fetch("http://localhost:3001/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to save user data");
+            }
+            console.log("User saved successfully");
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (

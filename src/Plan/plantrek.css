@@ -243,7 +243,6 @@ textarea {
     margin-right: 10px; /* Add space between icon and text */
 }
 
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .search-container {

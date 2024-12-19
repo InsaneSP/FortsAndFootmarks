@@ -53,20 +53,20 @@ const Plan = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-    
+
         const filtered = forts.filter((fort) =>
             fort.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
-    
+
         if (filtered.length > 0) {
-            setFortTimeline(filtered[0]); 
-            setError(""); 
+            setFortTimeline(filtered[0]);
+            setError("");
         } else {
             setFortTimeline(null);
             setError("Fort not found! Please try another name.");
         }
     };
-    
+
     // Functions for itinerary
     const handleAddActivity = (dayIndex) => {
         const updatedItinerary = [...itinerary];
@@ -264,16 +264,15 @@ const Plan = () => {
                     <div className="card plan-card itinerary no-hover">
                         <h4 className="timeline-heading">Historical Timeline</h4>
                         <div className="search-container">
-                        <form onSubmit={handleFormSubmit} className="d-flex">
-    <input
-        type="text"
-        className="form-control search-input"
-        placeholder="Search Forts..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-    />
-</form>
-
+                            <form onSubmit={handleFormSubmit} className="d-flex">
+                                <input
+                                    type="text"
+                                    className="form-control search-input"
+                                    placeholder="Search Forts..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </form>
                         </div>
                         {error && <p className="error-message">{error}</p>}
                         {fortTimeline ? (

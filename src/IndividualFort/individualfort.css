@@ -1,3 +1,7 @@
+/* .container-fluid{
+    background-color: #FFF8DC;
+} */
+
 .image-section {
     display: flex;
     width: 100%;
@@ -40,13 +44,13 @@
 
 .name-rating {
     display: flex;
-    justify-content: space-between; /* Aligns name and rating on opposite ends */
+    justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
 .name-rating h1 {
-    margin: 0; /* Ensure there's no margin for proper alignment */
+    margin: 0;
 }
 
 .rating {
@@ -56,7 +60,7 @@
 }
 
 .rating .info-icon {
-    font-size: 18px; /* Adjust size of the rating icon */
+    font-size: 18px;
 }
 
 .rating p{
@@ -86,32 +90,36 @@
     height: 20px;
 }
 
-.button-container {
+.custom-button-container {
     display: flex;
     justify-content: left;
-    background-color: #c9c9c9;
-    width: 15%;
+    background-color: #FAEBD7 !important;
+    width: 100%;
+    max-width: 500px; 
     border-radius: 15px !important;
     overflow: hidden;
+    flex-wrap: wrap; 
 }
 
-button {
+.custom-button {
     padding: 5px 15px;
     background-color: #c9c9c9;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
     color: #000;
+    flex-grow: 1; 
+    text-align: center; 
+    min-width: 100px;
+    margin: 3%; 
 }
 
-button.active {
-    background-color: #ffffff;
-    color: #000;
+.custom-button.custom-button-active {
+    background-color: #000000;
+    color: #ffffff;
     font-weight: bold;
     border: 1px solid #ffff;
     border-radius: 10px !important;
-    height: 50%;
-    margin: 3%;
 }
 
 .other-info-item-container {
@@ -141,7 +149,6 @@ button.active {
     color: #555;
 }
 
-
 .time-to-visit-section {
     display: flex;
     gap: 20px;
@@ -149,6 +156,7 @@ button.active {
 
 .season-card {
     height: auto !important;
+    background-color: #FAEBD7 !important;
 }
 
 .season {
@@ -172,6 +180,7 @@ h2 {
 .fort-card {
     width: 100% !important;
     height: auto !important;
+    background-color: #FAEBD7 !important;
 }
 
 .fort-card img {
@@ -180,7 +189,193 @@ h2 {
     border-radius: 5%;
 }
 
+.weather-section.gradient-background {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.weather-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.weather-icon-large {
+    width: 100px;
+    height: 100px;
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.weather-stats {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.stat {
+    margin: 10px 0;
+    font-weight: 500;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
 .safety-card {
     background-color: rgb(248, 248, 141) !important;
     height: auto !important;
 }
+
+
+
+
+
+
+
+
+
+
+/*------------------------------------------New CSS Trial-----------------------------------*/
+.history {
+    background-color: #FAEBD7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    font-family: 'Georgia', serif;
+    color: #5D4037;
+}
+
+.history h2 {
+    color: #ff0033; 
+    font-size: 32px;
+    margin-bottom: 16px;
+    border-bottom: 3px solid #FFD700;
+    padding-bottom: 8px;
+}
+
+.history p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    text-align: justify;
+}
+
+.history div {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #FFF8DC; 
+    border-left: 5px solid #B7410E;
+    border-radius: 5px;
+}
+
+.history h5 {
+    font-size: 20px;
+    color: #556B2F;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.history div p {
+    color: #5D4037;
+    font-size: 15px;
+}
+
+.custom-button-container {
+    display: flex;
+    justify-content: left;
+    background-color: #FAF0E6;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    padding: 5px;
+    gap: 10px;
+}
+
+.custom-button {
+    padding: 10px 20px;
+    background-color: #FFF8DC;
+    border: 2px solid #B22222;
+    color: #5D4037;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-grow: 1;
+    text-align: center;
+    min-width: 120px;
+}
+
+.custom-button:hover {
+    background-color: #FFD700;
+    color: #FFF;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-button.custom-button-active {
+    background-color: #B22222;
+    color: #FFF;
+    border: 2px solid #FFD700;
+}
+
+.other-info {
+    background-color: #FAEBD7;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    font-family: 'Georgia', serif;
+    color: #5D4037;
+}
+
+.other-info-item-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #FFF8DC;
+    border-radius: 8px;
+    border-left: 5px solid #DC143C;
+    transition: transform 0.3s ease;
+}
+
+.other-info-item-container:hover {
+    transform: translateX(10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.other-info-icon {
+    font-size: 24px;
+    color: #556B2F;
+}
+
+.other-info-item {
+    flex-grow: 1;
+}
+
+.other-info-item h6 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #DC143C;
+}
+
+.other-info-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #5D4037;
+}
+
