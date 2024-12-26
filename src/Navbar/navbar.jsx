@@ -3,8 +3,8 @@ import logo from "../images/Logo.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../Context/authContext.js";
 import "./navbarstyles.css";
-import { CAvatar } from "@coreui/react-pro";
-import "@coreui/coreui-pro/dist/css/coreui.min.css";
+// import { CAvatar } from "@coreui/react-pro";
+// import "@coreui/coreui-pro/dist/css/coreui.min.css";
 
 const Navbar = () => {
     const { user, logout } = useAuth();

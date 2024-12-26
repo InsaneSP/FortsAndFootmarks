@@ -1,6 +1,6 @@
-/* .container-fluid{
+.individual-container{
     background-color: #FFF8DC;
-} */
+}
 
 .image-section {
     display: flex;
@@ -156,7 +156,8 @@
 
 .season-card {
     height: auto !important;
-    background-color: #FAEBD7 !important;
+    background-color: #A23E48 !important;
+    color: #FFF8DC !important;
 }
 
 .season {
@@ -192,9 +193,9 @@ h2 {
 .weather-section.gradient-background {
     padding: 20px;
     border-radius: 10px;
-    color: white;
+    color: #FAEBD7;
     text-align: center;
-    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    background: #A23E48;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -218,8 +219,9 @@ h2 {
 }
 
 .weather-stats {
-    background: rgba(255, 255, 255, 0.1);
+    background: #FFF8DC;
     padding: 15px;
+    color: #5D4037;
     border-radius: 10px;
     width: 100%;
     font-size: 1rem;
@@ -247,17 +249,17 @@ h2 {
 
 /*------------------------------------------New CSS Trial-----------------------------------*/
 .history {
-    background-color: #FAEBD7;
+    background-color: #A23E48;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
+    margin: 5px auto;
     font-family: 'Georgia', serif;
-    color: #5D4037;
+    color: #FFF8DC;
 }
 
 .history h2 {
-    color: #ff0033; 
+    color: #FAEBD7; 
     font-size: 32px;
     margin-bottom: 16px;
     border-bottom: 3px solid #FFD700;
@@ -275,7 +277,7 @@ h2 {
     margin-top: 20px;
     padding: 10px 15px;
     background-color: #FFF8DC; 
-    border-left: 5px solid #B7410E;
+    border-left: 7px solid #FF7F11;
     border-radius: 5px;
 }
 
@@ -296,10 +298,7 @@ h2 {
     justify-content: left;
     background-color: #FAF0E6;
     width: 100%;
-    max-width: 600px;
     border-radius: 10px;
-    padding: 5px;
-    gap: 10px;
 }
 
 .custom-button {
@@ -338,6 +337,7 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     font-family: 'Georgia', serif;
     color: #5D4037;
+    text-align: justify;
 }
 
 .other-info-item-container {
@@ -379,3 +379,10 @@ h2 {
     color: #5D4037;
 }
 
+/* .accordion-item, .accordion-button{
+    background-color: #FAEBD7 !important;
+}
+
+.accordion-body{
+    background-color: #f7ede0 !important;
+} */

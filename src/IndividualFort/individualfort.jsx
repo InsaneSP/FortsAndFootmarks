@@ -114,7 +114,7 @@ const IndividualFort = () => {
     );
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid individual-container">
             <div className="image-section">
                 <img
                     src={fortData.photos[0]}
