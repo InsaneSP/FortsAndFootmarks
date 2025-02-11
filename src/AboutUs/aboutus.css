@@ -1,0 +1,154 @@
+.about-us-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.heading {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.about-image {
+    width: 90%;
+    height: 50rem;
+    margin: 20px 5%;
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.mission-container {
+    flex: 65%;
+}
+
+.subheading {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.card-heading{
+    font-size: 1.5rem;
+    margin: 15px;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.card-container {
+    flex: 35%;
+    border-radius: 10px;
+}
+
+.no-hover{
+    transform: none !important;
+}
+
+.choose-card {
+    background-color: #FCFCFC;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+    height: auto !important;
+}
+
+.choose-card ul {
+    padding: 0;
+}
+
+.choose-card li {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem;
+}
+
+.choose-card .icon {
+    margin-right: 10px;
+    color: #000000;
+}
+
+.story, .team {
+    width: 90%;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #FCFCFC;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    height: auto !important;
+    margin-bottom: 5%;
+}
+
+.team-members-container {
+    display: flex;
+    justify-content: space-around; 
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 20px 0 0 20px;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 150px;
+}
+
+.pfp {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.team h6 {
+    color: grey;
+    font-size: 18px;
+}
+
+.team h5 {
+    color: black;
+    font-size: 20px;
+}
+
+.team h5, h6{
+    margin-left: 2%;
+}
+
+@media (max-width: 768px) {
+    .section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mission-container {
+        flex: 1;
+    }
+
+    .card-container {
+        flex: 1;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,92 @@
+.search {
+    width: 100%;
+}
+
+.fortimg {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.fort {
+    display: flex;
+}
+
+.fortname {
+    flex-direction: column;
+    margin: 5% 0 0 10%;
+}
+
+.fortname h6 {
+    color: grey;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fort-details {
+    display: flex;
+    align-items: flex-start;
+}
+
+.fort-details-img {
+    width: 280px;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.fort-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.fort-date{
+    display: flex;
+    margin: 1% 0 0 1%;
+}
+
+.calendar-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.history-text {
+    margin-top: 10px;
+    color: #555;
+    margin-left: 1%;
+}
+
+.btn {
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+.pagination {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 20px !important;
+}
+
+.page-btn {
+    background: #f8f9fa !important;
+    border: 1px solid #ccc !important;
+    padding: 8px 12px !important;
+    margin: 0 5px !important;
+    cursor: pointer !important;
+    transition: background 0.3s !important;
+}
+
+.page-btn:hover {
+    background: #696969 !important;
+    color: white !important;
+}
+
+.page-btn.active {
+    background: #696969 !important;
+    color: white !important;
+}

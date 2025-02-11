@@ -1,0 +1,268 @@
+.heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Left Container (Itinerary) */
+.left-container {
+    flex: 1;
+}
+
+.itinerary {
+    min-height: 25rem;
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.itinerary-day {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.activity-input {
+    margin-top: 10px;
+    display: flex;
+}
+
+.add-activity {
+    margin-top: 10px;
+    color: black !important;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-day {
+    margin-top: 10px;
+    background: black !important;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Right Container */
+.right-container {
+    flex: 1;
+}
+
+.plan-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 25rem;
+    height: auto !important;
+}
+
+.card-heading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Input Fields */
+.input-fields {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-control {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Buttons */
+.add-expense {
+    margin-top: 10px;
+    color: black !important;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete {
+    background: red !important;
+    color: white !important;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.total-expense {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Historical Timeline Section */
+.historical-timeline {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: white;
+    width: 90%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-input,
+.dropdown-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.timeline-content {
+    margin-bottom: 20px;
+}
+
+.fort-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.timeline-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.icon {
+    color: #000;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.timeline-item span {
+    font-size: 1rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 1%;
+}
+
+.action-btn {
+    position: relative;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.action-btn.share, .action-btn.save {
+    background-color: #000 !important;
+    color: #fff;
+}
+
+.social-share {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Add space between buttons */
+    margin-top: 20px;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.social-button:hover {
+    background-color: #e0e0e0;
+}
+
+.social-button svg {
+    margin-right: 10px; /* Add space between icon and text */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-container {
+        flex-direction: column;
+    }
+    .action-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-container,
+    .right-container {
+        width: 100%;
+    }
+}
