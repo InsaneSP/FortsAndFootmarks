@@ -17,11 +17,11 @@ export const AuthProvider = ({ children }) => {
                     const response = await axios.get(
                         `http://localhost:3001/users/${firebaseUser.uid}`
                     );
-                    const username = response.data.username;
+                    const userData = response.data;
                     setUser({
                         uid: firebaseUser.uid,
-                        username: username,
-                        photoURL: firebaseUser.photoURL,
+                        username: userData.username,
+                        photoURL: userData.photoURL || firebaseUser.photoURL,
                       });                      
                 } catch (error) {
                     console.error("Error fetching username:", error);

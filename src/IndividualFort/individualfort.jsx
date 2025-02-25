@@ -38,6 +38,8 @@ const IndividualFort = () => {
     const [activeSection, setActiveSection] = useState("keyPoints");
     const [comments, setComments] = useState(fortData?.comments || []);
     const [newCommentText, setNewCommentText] = useState("");
+    const [replyText, setReplyText] = useState("");
+    const [replyingTo, setReplyingTo] = useState(null);
     const [weather, setWeather] = useState(null);
     const [fortImages, setFortImages] = useState([]);
     const navigate = useNavigate();
@@ -60,11 +62,48 @@ const IndividualFort = () => {
             const response = await axios.post(`http://localhost:3001/fort/${fortName}`, newComment)
 
             setComments(response.data);
-
             setNewCommentText("");
         } catch (error) {
             console.error("Error saving comment:", error);
         }
+    };
+
+    const replyHandler = async (commentId) => {
+        if (!user) {
+            alert("You must be logged in to reply.");
+            return;
+        }
+    
+        if (!replyText.trim()) {
+            alert("Reply cannot be empty!");
+            return;
+        }
+    
+        try {
+            console.log(`Sending request to: http://localhost:3001/fort/${fortName}/${commentId}/reply`);
+    
+            const reply = {
+                username: user.username,
+                photoURL: user.photoURL,
+                comment: replyText,
+            };
+    
+            const response = await axios.post(
+                `http://localhost:3001/fort/${fortName}/${commentId}/reply`,
+                reply
+            );
+    
+            console.log("Reply posted successfully:", response.data);
+            setComments(response.data); // Update the state with the new comments
+            setReplyText("");
+            setReplyingTo(null);
+        } catch (error) {
+            console.error("Error posting reply:", error);
+        }
+    };
+
+    const toggleReplyingTo = (commentId) => {
+        setReplyingTo((prevState) => (prevState === commentId ? null : commentId));
     };
 
     const toggleSection = (section) => {
@@ -189,7 +228,7 @@ const IndividualFort = () => {
                 </div>
             </div>
 
-            <div className="history">
+            <div className="history block">
                 <h2>History of {fortData.name}</h2>
                 <p>{fortData.history.summary}</p>
                 {fortData.history.detailed.map((section, index) => (
@@ -217,7 +256,7 @@ const IndividualFort = () => {
                 </button>
             </div>
 
-            <div className="other-info">
+            <div className="other-info block">
                 {activeSection === "keyPoints" && (
                     <ul>
                         {fortData.keyPoints.map((point, index) => (
@@ -315,39 +354,39 @@ const IndividualFort = () => {
                 <p>Best months: {fortData.bestTimeToVisit.months.join(", ")}</p>
             </div>
             <div className="time-to-visit-section">
-                {displaySeasons.includes("Summer") && (
-                    <div className="card season-card no-hover">
-                        <div className="card-body season">
-                            <div className="season-name">
-                                <FontAwesomeIcon icon={faSun} />
-                                <h6>Summer</h6>
-                            </div>
-                            <p>Hot during the day, cooler nights. Less crowded.</p>
+                {/* {displaySeasons.includes("Summer") && ( */}
+                <div className="card season-card no-hover block1">
+                    <div className="card-body season">
+                        <div className="season-name">
+                            <FontAwesomeIcon icon={faSun} />
+                            <h6>Summer</h6>
                         </div>
+                        <p>Hot during the day, cooler nights. Less crowded.</p>
                     </div>
-                )}
-                {displaySeasons.includes("Monsoon") && (
-                    <div className="card season-card no-hover">
-                        <div className="card-body season">
-                            <div className="season-name">
-                                <FontAwesomeIcon icon={faCloud} />
-                                <h6>Monsoon</h6>
-                            </div>
-                            <p>Lush green surroundings, but trails can be slippery.</p>
+                </div>
+                {/* )} */}
+                {/* {displaySeasons.includes("Monsoon") && ( */}
+                <div className="card season-card no-hover block1">
+                    <div className="card-body season">
+                        <div className="season-name">
+                            <FontAwesomeIcon icon={faCloud} />
+                            <h6>Monsoon</h6>
                         </div>
+                        <p>Lush green surroundings, but trails can be slippery.</p>
                     </div>
-                )}
-                {displaySeasons.includes("Winter") && (
-                    <div className="card season-card no-hover">
-                        <div className="card-body season">
-                            <div className="season-name">
-                                <FontAwesomeIcon icon={faSnowflake} />
-                                <h6>Winter</h6>
-                            </div>
-                            <p>Pleasant weather, ideal for trekking. Peak tourist season.</p>
+                </div>
+                {/* )} */}
+                {/* {displaySeasons.includes("Winter") && ( */}
+                <div className="card season-card no-hover block1">
+                    <div className="card-body season">
+                        <div className="season-name">
+                            <FontAwesomeIcon icon={faSnowflake} />
+                            <h6>Winter</h6>
                         </div>
+                        <p>Pleasant weather, ideal for trekking. Peak tourist season.</p>
                     </div>
-                )}
+                </div>
+                {/* )} */}
             </div>
             <div className="faq-section">
                 <h2>Frequently Asked Questions</h2>
@@ -409,27 +448,6 @@ const IndividualFort = () => {
                 </div>
             )}
 
-            <div className="safety-section">
-                <h2>Safety Information</h2>
-                <div className="card safety-card no-hover">
-                    <div className="card-body season">
-                        <div className="season-name">
-                            <FontAwesomeIcon
-                                icon={faWarning}
-                                style={{ color: "red", margin: 10, height: 18 }}
-                            />
-                            <h4>Important Safety Tips</h4>
-                        </div>
-                        <ul>
-                            <li>Inform someone about your trek plans</li>
-                            <li>Carry enough water and stay hydrated</li>
-                            <li>Be cautious near cliff edges</li>
-                            <li>Check weather conditions before starting</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <div className="comment-section">
                 <h2>Comments</h2>
                 <div className="comments-list">
@@ -441,9 +459,77 @@ const IndividualFort = () => {
                                     <div className="comment-content">
                                         <div className="username">{c.username}</div>
                                         <div className="comment-text">{c.comment}</div>
-                                        <div className="created-time">
-                                            {new Date(c.createdAt).toLocaleString()}
+                                        <div className="comment-actions">
+                                            <button className="reply" onClick={() => toggleReplyingTo(c._id)}>Reply</button>
+                                            <div className="created-time">{new Date(c.createdAt).toLocaleString()}</div>
                                         </div>
+                                        {/* Reply Input Field */}
+                                        {replyingTo === c._id && (
+                                            <div className="reply-input">
+                                                <textarea
+                                                    value={replyText}
+                                                    onChange={(e) => setReplyText(e.target.value)}
+                                                    placeholder="Write a reply..."
+                                                />
+                                                <button onClick={() => replyHandler(c._id)}>Post Reply</button>
+                                            </div>
+                                        )}
+
+                                        {/* Display Replies */}
+                                        {c.replies && c.replies.length > 0 && (
+                                            <ul className="replies-list">
+                                                {c.replies.map((reply, replyIndex) => (
+                                                    <li key={replyIndex} className="reply no-hover">
+                                                        <img src={reply.photoURL} alt={`${reply.username}'s profile`} />
+                                                        <div className="comment-content">
+                                                            <div className="username">{reply.username}</div>
+                                                            <div className="comment-text">{reply.comment}</div>
+                                                            <div className="comment-actions">
+                                                                <button className="reply" onClick={() => toggleReplyingTo(reply._id)}>Reply</button>
+                                                                <div className="created-time">{new Date(reply.createdAt).toLocaleString()}</div>
+                                                            </div>
+                                                            {replyingTo === reply._id && (
+                                                                <div className="reply-input">
+                                                                    <textarea
+                                                                        value={replyText}
+                                                                        onChange={(e) => setReplyText(e.target.value)}
+                                                                        placeholder="Write a reply..."
+                                                                    />
+                                                                    <button onClick={() => replyHandler(reply._id)}>Post Reply</button>
+                                                                </div>
+                                                            )}
+                                                            {reply.replies && reply.replies.length > 0 && (
+                                                                <ul className="replies-list">
+                                                                    {reply.replies.map((reply, replyIndex) => (
+                                                                        <li key={replyIndex} className="reply no-hover">
+                                                                            <img src={reply.photoURL} alt={`${reply.username}'s profile`} />
+                                                                            <div className="comment-content">
+                                                                                <div className="username">{reply.username}</div>
+                                                                                <div className="comment-text">{reply.comment}</div>
+                                                                                <div className="comment-actions">
+                                                                                    <button className="reply" onClick={() => toggleReplyingTo(reply._id)}>Reply</button>
+                                                                                    <div className="created-time">{new Date(reply.createdAt).toLocaleString()}</div>
+                                                                                </div>
+                                                                                {replyingTo === reply._id && (
+                                                                                    <div className="reply-input">
+                                                                                        <textarea
+                                                                                            value={replyText}
+                                                                                            onChange={(e) => setReplyText(e.target.value)}
+                                                                                            placeholder="Write a reply..."
+                                                                                        />
+                                                                                        <button onClick={() => replyHandler(reply._id)}>Post Reply</button>
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            )}
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
                                     </div>
                                 </li>
                             ))
@@ -464,6 +550,27 @@ const IndividualFort = () => {
                             Post Comment
                         </button>
                     </form>
+                </div>
+            </div>
+
+            <div className="safety-section">
+                <h2 className="safety-title">Safety Information</h2>
+                <div className="card safety-card no-hover">
+                    <div className="card-body season">
+                        <div className="season-name">
+                            <FontAwesomeIcon
+                                icon={faWarning}
+                                style={{ color: "red", marginRight: "10px", height: "24px" }}
+                            />
+                            <h4>Important Safety Tips</h4>
+                        </div>
+                        <ul>
+                            <li>Inform someone about your trek plans</li>
+                            <li>Carry enough water and stay hydrated</li>
+                            <li>Be cautious near cliff edges</li>
+                            <li>Check weather conditions before starting</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 

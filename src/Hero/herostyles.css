@@ -1,37 +1,30 @@
 .hero-container {
-    width: 99.14vw;
-    height: 93.3vh;
-    background-image: url("../images/rajgad1.jpg");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-repeat: no-repeat;
-    flex-direction: column;
-    color: #f5f5dc;
-    text-align: center;
-    padding: 20px;
+  width: 99.14vw;
+  height: 90vh;
+  background-image: url("../images/rajgad1.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  color: #f5f5dc;
+  text-align: center;
+  padding: 20px;
 }
 
-h1 {
-    text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
-        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
-        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
-        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black !important;
+h1, h3 {
+  text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+      0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+      0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
+      0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black !important;
 }
 
-h3 {
-    margin: 30px;
-    text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
-        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
-        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black,
-        0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black !important;
-}
-
-.form-control {
-    border-radius: 15px !important;
-    width: 100% !important;
+.hero-search {
+  border-radius: 15px !important;
+  width: 100%;
+  max-width: 500px; /* Maximum width of the input */
 }
 
 .btn{
@@ -105,10 +98,12 @@ h3 {
 
 .mt-12 {
     display: flex;
-    justify-content: center; 
+    justify-content: center;  
     gap: 20px;
 }
 
-.d-flex{
-    width: 700px;
+.d-flex {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }

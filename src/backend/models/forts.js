@@ -45,7 +45,23 @@ const fortSchema = new mongoose.Schema({
             username: String,
             photoURL: String,
             comment: String,
-            createdAt: { type: Date, default: Date.now }
+            createdAt: { type: Date, default: Date.now },
+            replies: [ 
+                {
+                    username: String,
+                    photoURL: String,
+                    comment: String,
+                    createdAt: { type: Date, default: Date.now },
+                    replies: [ 
+                        {
+                            username: String,
+                            photoURL: String,
+                            comment: String,
+                            createdAt: { type: Date, default: Date.now }
+                        }
+                    ]
+                }
+            ]
         }
     ]
 });

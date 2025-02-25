@@ -275,7 +275,7 @@ const Plan = () => {
                             <form onSubmit={handleFormSubmit} className="d-flex">
                                 <input
                                     type="text"
-                                    className="form-control search-input"
+                                    className="form-control search"
                                     placeholder="Search Forts..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -353,33 +353,33 @@ const Plan = () => {
             </div>
 
             {/* Social Share and Save */}
-            <div className="action-buttons">
-                <button className="btn action-btn share" onClick={handleSharePlan}>
+            <div className="action-buttons" style={{margin: "15px 5% 15px auto"}}>
+                <button className="action-btn share" onClick={handleSharePlan}>
                     <FontAwesomeIcon icon={faShareAlt} /> Share Trek Plan
                 </button>
-                <button className="btn action-btn save" onClick={handleSavePlanAsPDF}>
+                <button className="action-btn save" onClick={handleSavePlanAsPDF}>
                     <FontAwesomeIcon icon={faSave} /> Save Trek Plan
                 </button>
             </div>
 
             {/* Social Media Share Buttons (requires login) */}
             {shareButtons && (
-                <div className="social-share">
+                <div className="social-share" style={{margin: "15px 5% 15px auto"}}>
                     <FacebookShareButton
                         url={window.location.href}
-                        className="social-button"
+                        className="social-button fb"
                     >
                         <FontAwesomeIcon icon={faFacebook} /> Share on Facebook
                     </FacebookShareButton>
                     <TwitterShareButton
                         url={window.location.href}
-                        className="social-button"
+                        className="social-button twitter"
                     >
                         <FontAwesomeIcon icon={faTwitter} /> Share on Twitter
                     </TwitterShareButton>
                     <WhatsappShareButton
                         url={window.location.href}
-                        className="social-button"
+                        className="social-button whatsapp"
                     >
                         <FontAwesomeIcon icon={faWhatsapp} /> Share on WhatsApp
                     </WhatsappShareButton>

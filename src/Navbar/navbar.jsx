@@ -9,10 +9,10 @@ import "@coreui/coreui-pro/dist/css/coreui.min.css";
 const Navbar = () => {
     const { user, logout } = useAuth();
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-fixed">
-            <div className="container-fluid">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div className="container-fluid navbar-container">
                 <a className="navbar-brand" href="#">
-                    <img src={logo} style={{ maxHeight: "150px", width: "150px" }} alt="Logo" />
+                    <img src={logo} style={{ maxHeight: "125px", width: "125px" }} alt="Logo" />
                 </a>
                 <button
                     className="navbar-toggler"
@@ -29,7 +29,7 @@ const Navbar = () => {
                     <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link" to="/">
-                                Home
+                                Home <span></span>
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -47,9 +47,10 @@ const Navbar = () => {
                                 About
                             </Link>
                         </li>
+                        </ul>
                         {!user ? (
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/login">
+                            <li className="nav-item" style={{ marginLeft: "auto" }}>
+                                <Link className="nav-link cta" to="/login">
                                     Login
                                 </Link>
                             </li>
@@ -61,7 +62,7 @@ const Navbar = () => {
                                             src={user.photoURL}
                                             alt="Profile"
                                             className="profile-picture"
-                                            style={{ borderRadius: "50%", width: "50px", height: "50px" }}
+                                            style={{ borderRadius: "50%", width: "65px", height: "65px" }}
                                         />
                                     </Link>
                                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -82,7 +83,6 @@ const Navbar = () => {
                                 </li> */}
                             </>
                         )}
-                    </ul>
                 </div>
             </div>
         </nav>

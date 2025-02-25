@@ -10,7 +10,7 @@ import Forts from './Forts/forts';
 import Footer from './Footer/footer';
 import Login from './Login/login';
 import Plan from './Plan/plantrek';
-import AboutUs from './AboutUs/aboutus';
+import AboutUs from './AboutUs/aboutus.jsx';
 import ScrollToTop from './ScrollToTop';
 import IndividualFort from './IndividualFort/individualfort';
 import PrivacyPolicy from './PrivacyPolicy/privacy';
@@ -19,6 +19,8 @@ import ScrollToTopButton from './Scroll/scrolltotopbutton.jsx';
 import reportWebVitals from './reportWebVitals';
 import app from './firebaseConfig.js';
 import { AuthProvider } from './Context/authContext.js';
+// import "flowbite";
+// import "flowbite/dist/flowbite.min.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 

@@ -52,7 +52,7 @@ class Hero extends Component {
                 <div className="d-flex align-items-center">
                     <form className="d-flex" onSubmit={this.handleSearchSubmit}>
                         <input
-                            className="form-control me-2 mw-50"
+                            className="form-control hero-search"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"

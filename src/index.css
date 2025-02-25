@@ -1,3 +1,10 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import 'flowbite/dist/flowbite.min.css'; */
+
 body {
   margin: 0;
   font-family: 'Georgia', serif !important;
@@ -6,6 +13,14 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* .container-fluid{
+  padding-left: 15% !important;
+  padding-right: 15% !important;
+} */
+
+.background{
+  background-color: #F1EFE3;
 }

@@ -10,7 +10,7 @@ class Categories extends Component {
   state = {};
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid background">
         <br />
         <br />
         <h1 style={{ textAlign: "center" }}>Unveil the Heritage</h1>

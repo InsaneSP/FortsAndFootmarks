@@ -53,9 +53,9 @@ const Forts = () => {
             <br />
             <h1 style={{ textTransform: "capitalize" }}>{type} Forts</h1>
             
-            <form className="d-flex search" role="search">
+            <form className="search" role="search">
                 <input
-                    className="form-control me-2"
+                    className="form-control me-2 search"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"

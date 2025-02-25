@@ -15,8 +15,8 @@ const Featured = () => {
     }, []);
 
     return (
-        <div className="container-fluid">
-            <h1 style={{ marginTop: "10px" }}>Featured Locations</h1>
+        <div className="container-fluid background">
+            <h1>Featured Locations</h1>
             <br />
             <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
