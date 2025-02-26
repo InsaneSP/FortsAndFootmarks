@@ -25,9 +25,6 @@ lerna-debug.log*
 .env.test
 .env.test.local
 
-# Ignore Firebase configuration file (security reasons)
-frontend/src/firebaseConfig.js
-
 # Ignore coverage reports (if using Jest for testing)
 coverage/
 
