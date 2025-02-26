@@ -10,7 +10,8 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = ["fortsandfootmarks-production.up.railway.app" || "http://localhost:3000"];
+const allowedOrigins = ["https://fortsandfootmarks-production.up.railway.app", "http://localhost:3000"];
+
 const corsOptions = {
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
