@@ -5,7 +5,6 @@ const cors = require('cors');
 
 const FortModel = require('./models/forts');
 const fortRoutes = require('./routes/fortsRoutes');
-// const commentRoutes = require('./routes/commentsRoutes');
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
@@ -20,7 +19,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/forts', fortRoutes);
-// app.use("/comments", commentRoutes);
 app.use("/users", userRoutes);
 
 app.get('/fort/:fortName', (req, res) => {

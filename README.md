@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+FortsAndFootmarks
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Overview
 
-## Available Scripts
+FortsAndFootmarks is a MERN stack trekking planner website designed to provide historical insights about forts, along with features like real-time weather updates, OpenStreetMap integration, and a user-friendly interface for trek planning.
 
-In the project directory, you can run:
+Features
 
-### `npm start`
+🏰 Fort Details: Historical information on various forts.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🌍 OpenStreetMap Integration: Interactive maps for navigation.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+☁ Real-time Weather Updates: Fetching current weather conditions.
 
-### `npm test`
+🔒 User Authentication: Firebase authentication (login/signup).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+📅 Trek Planning: Plan your trek efficiently.
 
-### `npm run build`
+📞 Contact Us Form: Integrated with Web3Forms for user inquiries.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+📜 Privacy & Terms Pages: Dedicated sections for privacy policy and terms of service.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Frontend: React, React Router, Bootstrap, CSS
 
-### `npm run eject`
+Backend: Node.js, Express, MongoDB
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Authentication: Firebase
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+API Integrations: OpenStreetMap, Weather API
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Folder Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+FortsAndFootmarks/
+│── backend/               # Backend API (Express, MongoDB)
+│── frontend/              # React Frontend
+│   │── public/           # Static assets (index.html, images, etc.)
+│   │── src/              # Main source code
+│   │   │── Context/     # Auth context for state management
+│   │   └── index.js     # Main entry point
+│── .gitignore             # Git ignore file
+│── package.json           # Node dependencies
+│── README.md              # Project documentation
 
-## Learn More
+Installation & Setup
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Prerequisites
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Ensure you have Node.js and MongoDB installed on your system.
 
-### Code Splitting
+Clone the Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+git clone https://github.com/InsaneSP/FortsAndFootmarks.git
+cd FortsAndFootmarks
 
-### Analyzing the Bundle Size
+Backend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+cd backend
+npm install
+npm start
 
-### Making a Progressive Web App
+Frontend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+cd ../frontend
+npm install
+npm start
 
-### Advanced Configuration
+Your project will run at http://localhost:3000/ 🚀
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Deployment
 
-### Deployment
+Frontend Deployment (Vercel)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Install Vercel CLI: npm install -g vercel
 
-### `npm run build` fails to minify
+Navigate to frontend: cd frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Deploy: vercel
+
+Backend Deployment (Render/Heroku)
+
+Ensure MongoDB is hosted (MongoDB Atlas preferred)
+
+Deploy backend via Render/Heroku following their instructions.
+
+Contribution
+
+Contributions are welcome! Feel free to fork, create a feature branch, and submit a PR.
+
+License
+
+This project is licensed under the MIT License.
+
