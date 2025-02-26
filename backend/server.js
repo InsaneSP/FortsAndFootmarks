@@ -9,8 +9,10 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const allowedOrigins = ["fortsandfootmarks-production.up.railway.app" || "http://localhost:3000"];
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true,
 };
@@ -121,6 +123,6 @@ mongoose.connect(process.env.MONGODB_URI, {
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log("MongoDB connection error:", err));
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
 });
