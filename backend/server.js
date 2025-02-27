@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 
 const allowedOrigins = [
     process.env.FRONTEND_URL || "https://forts-and-footmarks.vercel.app/",
-    process.env.NEXT_PUBLIC_API_URL || "https://fortsandfootmarks-production.up.railway.app/",
+    process.env.REACT_APP_API_URL || "https://fortsandfootmarks-production.up.railway.app/",
     "http://localhost:3000",
 ];
 
