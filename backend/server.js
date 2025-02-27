@@ -11,8 +11,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const allowedOrigins = [
-    process.env.FRONTEND_URL || "https://fortsandfootmarks.vercel.app",
-    process.env.NEXT_PUBLIC_API_URL || "https://fortsandfootmarks-backend.up.railway.app",
+    process.env.FRONTEND_URL || "https://forts-and-footmarks.vercel.app/",
+    process.env.NEXT_PUBLIC_API_URL || "https://fortsandfootmarks-production.up.railway.app/",
     "http://localhost:3000",
 ];
 

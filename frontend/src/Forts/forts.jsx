@@ -30,8 +30,10 @@ const Forts = () => {
         const fetchForts = async () => {
             try {
                 const response = type
-                    ? await axios.get(`http://localhost:3001/forts/${type}`)
-                    : await axios.get('http://localhost:3001/forts');
+                    // ? await axios.get(`http://localhost:3001/forts/${type}`)
+                    // : await axios.get('http://localhost:3001/forts');
+                    ? await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/forts/${type}`)
+                    : await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/forts`);
                 setForts(response.data);
                 setFilteredForts(response.data);
             } catch (error) {
