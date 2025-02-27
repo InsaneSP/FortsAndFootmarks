@@ -10,13 +10,26 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = ["https://fortsandfootmarks-production.up.railway.app", "http://localhost:3000"];
+const allowedOrigins = [
+    process.env.FRONTEND_URL || "https://fortsandfootmarks.vercel.app",
+    process.env.NEXT_PUBLIC_API_URL || "https://fortsandfootmarks-backend.up.railway.app",
+    "http://localhost:3000",
+];
 
 const corsOptions = {
-    origin: allowedOrigins,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 };
+
+app.use(cors(corsOptions));
+app.use(express.json());
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -117,13 +130,10 @@ app.post("/fort/:fortName/:commentId/reply", async (req, res) => {
 });
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log("MongoDB connection error:", err));
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
