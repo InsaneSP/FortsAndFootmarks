@@ -10,8 +10,25 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+const cors = require("cors");
+
+app.use(cors({
+    origin: "https://forts-and-footmarks.vercel.app",
+    credentials: true,
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization"
+}));
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://forts-and-footmarks.vercel.app");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 app.use(express.json());
+
 
 app.use('/forts', fortRoutes);
 app.use("/users", userRoutes);
