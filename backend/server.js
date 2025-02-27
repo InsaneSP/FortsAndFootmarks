@@ -10,28 +10,10 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = [
-    process.env.FRONTEND_URL || "https://forts-and-footmarks.vercel.app",
-    process.env.REACT_APP_API_URL || "https://fortsandfootmarks-production.up.railway.app",
-    "http://localhost:3000",
-];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-};
-
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.use('/forts', fortRoutes);
