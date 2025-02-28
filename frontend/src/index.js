@@ -15,6 +15,7 @@ import ScrollToTop from './ScrollToTop.jsx';
 import IndividualFort from './IndividualFort/individualfort.jsx';
 import PrivacyPolicy from './PrivacyPolicy/privacy.jsx';
 import Terms from './Terms/terms.jsx';
+import DeleteData from './Delete/delete.jsx';
 import ScrollToTopButton from './Scroll/scrolltotopbutton.jsx';
 import reportWebVitals from './reportWebVitals.js';
 import app from './firebaseConfig.js';
@@ -45,6 +46,7 @@ root.render(
             <Route path="/fort/:fortName" element={<IndividualFort />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/delete" element={<DeleteData />} />
           </Routes>
           <Footer />
           <ScrollToTopButton /> 

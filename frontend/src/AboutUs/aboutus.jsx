@@ -119,7 +119,7 @@ class AboutUs extends Component {
                             </div>
                             <div className="team-member">
                                 <img src={mountainFort} alt="Mountain Fort" className="pfp" />
-                                <h6>Vidhi More</h6>
+                                <h6>Smit Potkar</h6>
                                 <h5>Co-Founder</h5>
                             </div>
                             <div className="team-member">
