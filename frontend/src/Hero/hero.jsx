@@ -28,7 +28,8 @@ class Hero extends Component {
         }
 
         try {
-            const response = await axios.get(`http://localhost:3001/fort/${searchQuery.trim()}`);
+            // const response = await axios.get(`http://localhost:3001/fort/${searchQuery.trim()}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/fort/${searchQuery.trim()}`);
             const fortData = response.data;
 
             this.props.navigate(`/fort/${fortData.name}`, { state: fortData });

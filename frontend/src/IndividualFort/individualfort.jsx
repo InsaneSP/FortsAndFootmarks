@@ -59,7 +59,9 @@ const IndividualFort = () => {
 
         const newComment = { username: user.username, photoURL: user.photoURL, comment: newCommentText };
         try {
-            const response = await axios.post(`http://localhost:3001/fort/${fortName}`, newComment)
+            // const response = await axios.post(`http://localhost:3001/fort/${fortName}`, newComment)
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/fort/${fortName}`, newComment)
+
 
             setComments(response.data);
             setNewCommentText("");
@@ -79,9 +81,7 @@ const IndividualFort = () => {
             return;
         }
     
-        try {
-            console.log(`Sending request to: http://localhost:3001/fort/${fortName}/${commentId}/reply`);
-    
+        try {    
             const reply = {
                 username: user.username,
                 photoURL: user.photoURL,
@@ -89,7 +89,8 @@ const IndividualFort = () => {
             };
     
             const response = await axios.post(
-                `http://localhost:3001/fort/${fortName}/${commentId}/reply`,
+                // `http://localhost:3001/fort/${fortName}/${commentId}/reply`,
+                `${process.env.REACT_APP_API_URL}/fort/${fortName}/${commentId}/reply`,
                 reply
             );
     
@@ -112,7 +113,8 @@ const IndividualFort = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/fort/${fortName}`)
+            // .get(`http://localhost:3001/fort/${fortName}`)
+            .get(`${process.env.REACT_APP_API_URL}/fort/${fortName}`)
             .then((response) => {
                 setFortData(response.data);
                 setComments(response.data.comments || []);
@@ -146,7 +148,8 @@ const IndividualFort = () => {
             await Promise.all(
                 fortData.similarNearbyForts.map(async (fort) => {
                     try {
-                        const response = await axios.get(`http://localhost:3001/fort/${fort.toLowerCase()}`);
+                        // const response = await axios.get(`http://localhost:3001/fort/${fort.toLowerCase()}`);
+                        const response = await axios.get(`${process.env.REACT_APP_API_URL}/fort/${fort.toLowerCase()}`);
                         images[fort] = response.data.photos?.[0];
                     } catch (error) {
                         images[fort] = "";

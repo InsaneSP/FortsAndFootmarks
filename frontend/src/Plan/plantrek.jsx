@@ -39,7 +39,8 @@ const Plan = () => {
     useEffect(() => {
         const fetchForts = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/forts");
+                // const response = await axios.get("http://localhost:3001/forts");
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/forts`);
                 setForts(response.data);
                 if (response.data.length > 0) {
                     setFortTimeline(response.data[0]);
