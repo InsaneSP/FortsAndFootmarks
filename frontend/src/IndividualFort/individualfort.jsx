@@ -62,7 +62,7 @@ const IndividualFort = () => {
             // const response = await axios.post(`http://localhost:3001/fort/${fortName}`, newComment)
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/fort/${fortName}`, newComment)
 
-
+            console.log("Response from API:", response.data); // Debugging
             setComments(response.data);
             setNewCommentText("");
         } catch (error) {

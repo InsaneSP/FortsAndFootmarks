@@ -238,9 +238,9 @@
                                 <button className="circle-btn">
                                     <FontAwesomeIcon icon={faFacebook} onClick={handleFacebookLogin} />
                                 </button>
-                                <button className="circle-btn">
+                                {/* <button className="circle-btn">
                                     <FontAwesomeIcon icon={faTwitter} />
-                                </button>
+                                </button> */}
                             </div>
 
                             {/* Sign Up Form */}
