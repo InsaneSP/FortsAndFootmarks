@@ -82,4 +82,23 @@ router.get("/:uid", async (req, res) => {
     }
 });
 
+router.put("/:uid", async (req, res) => {
+    try {
+        const { uid } = req.params;
+        const { username, photoURL } = req.body;
+
+        const user = await UserModel.findOne({ uid });
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        // Update fields
+        if (username) user.username = username;
+        if (photoURL) user.photoURL = photoURL;
+        await user.save();
+
+        res.json({ message: "Profile updated successfully", user });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating profile", error: error.message });
+    }
+});
+
 module.exports = router;
