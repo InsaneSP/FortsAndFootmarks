@@ -57,13 +57,21 @@ const IndividualFort = () => {
             return;
         }
 
-        const newComment = { username: user.username, photoURL: user.photoURL, comment: newCommentText };
-        try {
-            // const response = await axios.post(`http://localhost:3001/fort/${fortName}`, newComment)
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/fort/${fortName}`, newComment)
+        const newComment = {
+            uid: user.uid,
+            username: user.username,
+            photoURL: user.photoURL,
+            comment: newCommentText
+        };
 
-            console.log("Response from API:", response.data); // Debugging
-            setComments(response.data);
+        try {
+            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/fort/${fortName}/comments`, newComment);
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/comments/fort/${fortName}/comment`,
+                newComment
+            );
+
+            setComments([...comments, response.data]); // ✅ Update comments
             setNewCommentText("");
         } catch (error) {
             console.error("Error saving comment:", error);
@@ -75,31 +83,118 @@ const IndividualFort = () => {
             alert("You must be logged in to reply.");
             return;
         }
-    
+
         if (!replyText.trim()) {
             alert("Reply cannot be empty!");
             return;
         }
-    
-        try {    
+
+        try {
             const reply = {
+                uid: user.uid,
                 username: user.username,
                 photoURL: user.photoURL,
-                comment: replyText,
+                comment: replyText
             };
-    
+
             const response = await axios.post(
-                // `http://localhost:3001/fort/${fortName}/${commentId}/reply`,
-                `${process.env.REACT_APP_API_URL}/fort/${fortName}/${commentId}/reply`,
+                `${process.env.REACT_APP_API_URL}/comments/${commentId}/reply`,
                 reply
             );
-    
+
             console.log("Reply posted successfully:", response.data);
-            setComments(response.data); // Update the state with the new comments
+
+            // ✅ Fix: Update only the specific comment's replies without overwriting all comments
+            setComments((prevComments) =>
+                prevComments.map((c) =>
+                    c._id === commentId
+                        ? { ...c, replies: [...(c.replies || []), response.data] }
+                        : c
+                )
+            );
+
             setReplyText("");
             setReplyingTo(null);
         } catch (error) {
             console.error("Error posting reply:", error);
+        }
+    };
+
+    const likeHandler = async (commentId, parentCommentId = null) => {
+        if (!user) {
+            alert("You must be logged in to like a comment.");
+            return;
+        }
+
+        if (!commentId) {
+            console.error("Error: commentId is undefined");
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/comments/${commentId}/like`,
+                { uid: user.uid }
+            );
+
+            setComments(prevComments =>
+                prevComments.map(c =>
+                    c._id === commentId
+                        ? { ...c, likes: c.likes?.includes(user.uid) ? c.likes.filter(id => id !== user.uid) : [...(c.likes || []), user.uid] }
+                        : {
+                            ...c,
+                            replies: c.replies?.map(reply =>
+                                reply._id === commentId
+                                    ? { ...reply, likes: reply.likes?.includes(user.uid) ? reply.likes.filter(id => id !== user.uid) : [...(reply.likes || []), user.uid] }
+                                    : reply
+                            ),
+                        }
+                )
+            );
+
+            console.log(response.data.message);
+        } catch (error) {
+            console.error("Error liking comment/reply:", error.response?.data || error.message);
+        }
+    };
+
+    const deleteHandler = async (commentId, commentUserId, parentCommentId = null) => {
+        if (!user) {
+            alert("You must be logged in to delete a comment.");
+            return;
+        }
+
+        if (!commentId) {
+            console.error("Error: commentId is undefined");
+            return;
+        }
+
+        if (user.uid !== commentUserId) {
+            alert("You can only delete your own comments.");
+            return;
+        }
+
+        try {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/comments/${commentId}`, {
+                data: { uid: user.uid }
+            });
+
+            setComments(prevComments =>
+                prevComments
+                    .map(c =>
+                        c._id === commentId
+                            ? null
+                            : {
+                                ...c,
+                                replies: c.replies?.filter(reply => reply._id !== commentId),
+                            }
+                    )
+                    .filter(Boolean)
+            );
+
+            console.log("Comment/Reply deleted successfully");
+        } catch (error) {
+            console.error("Error deleting comment/reply:", error.response?.data || error.message);
         }
     };
 
@@ -123,7 +218,28 @@ const IndividualFort = () => {
                 console.error("Error fetching fort details:", err);
                 setFortData(null);
             });
-    }, [fortName, fortData?.comments]);
+    }, [fortName]);
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/comments/fort/${fortName}/comments`)
+            .then((response) => {
+                const filteredComments = response.data.filter(comment => !comment.parentId);
+
+                // Ensure all comments have a likes array
+                const updatedComments = filteredComments.map(comment => ({
+                    ...comment,
+                    likes: Array.isArray(comment.likes) ? comment.likes : []
+                }));
+
+                setComments(updatedComments);
+            })
+            .catch((err) => {
+                console.error("Error fetching comments:", err);
+                setComments([]);
+            });
+    }, [fortName, user]);
+
 
     useEffect(() => {
         if (fortData && fortData.map && fortData.map.coordinates) {
@@ -463,7 +579,14 @@ const IndividualFort = () => {
                                         <div className="username">{c.username}</div>
                                         <div className="comment-text">{c.comment}</div>
                                         <div className="comment-actions">
+                                            <button className="like" onClick={() => likeHandler(c._id)}>
+                                                {Array.isArray(c.likes) && c.likes.includes(user?.uid) ? "❤️ Unlike" : "🤍 Like"}
+                                                <span className="like-count"> {c.likes ? c.likes.length : 0}</span>
+                                            </button>
                                             <button className="reply" onClick={() => toggleReplyingTo(c._id)}>Reply</button>
+                                            {user?.uid === c.userId && (
+                                                <button className="delete" onClick={() => deleteHandler(c._id, c.userId)}>Delete</button>
+                                            )}
                                             <div className="created-time">{new Date(c.createdAt).toLocaleString()}</div>
                                         </div>
                                         {/* Reply Input Field */}
@@ -477,7 +600,6 @@ const IndividualFort = () => {
                                                 <button onClick={() => replyHandler(c._id)}>Post Reply</button>
                                             </div>
                                         )}
-
                                         {/* Display Replies */}
                                         {c.replies && c.replies.length > 0 && (
                                             <ul className="replies-list">
@@ -488,8 +610,15 @@ const IndividualFort = () => {
                                                             <div className="username">{reply.username}</div>
                                                             <div className="comment-text">{reply.comment}</div>
                                                             <div className="comment-actions">
+                                                                <button className="like" onClick={() => likeHandler(reply._id, c._id)}>
+                                                                    {Array.isArray(reply.likes) && reply.likes.includes(user?.uid) ? "❤️ Unlike" : "🤍 Like"}
+                                                                    <span className="like-count"> {reply.likes ? reply.likes.length : 0}</span>
+                                                                </button>
                                                                 <button className="reply" onClick={() => toggleReplyingTo(reply._id)}>Reply</button>
-                                                                <div className="created-time">{new Date(reply.createdAt).toLocaleString()}</div>
+                                                                {user?.uid === reply.userId && (
+                                                                    <button className="delete" onClick={() => deleteHandler(reply._id, reply.userId)}>Delete</button>
+                                                                )}
+                                                                <div className="created-time">{new Date(c.createdAt).toLocaleString()}</div>
                                                             </div>
                                                             {replyingTo === reply._id && (
                                                                 <div className="reply-input">

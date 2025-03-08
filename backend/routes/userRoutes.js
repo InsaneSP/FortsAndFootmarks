@@ -1,42 +1,84 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user");
+const UserModel = require("../models/user"); // ✅ Fix: Ensure correct import
+const CommentModel = require("../models/comment");
+const FortModel = require("../models/forts");  // Ensure correct path & name
 
 router.post("/", async (req, res) => {
     const { username, email, uid, photoURL } = req.body;
 
     try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res
-                .status(400)
-                .json({ message: "User with this email already exists." });
+        let user = await UserModel.findOne({ uid });
+
+        if (user) {
+            // ✅ Update existing user's profile picture if changed
+            user.photoURL = photoURL;
+            await user.save();
+            return res.status(200).json({ message: "User updated", user });
         }
 
-        const newUser = new User({ username, email, uid, photoURL });
-        await newUser.save();
+        user = new UserModel({ username, email, uid, photoURL });
+        await user.save();
 
-        res.status(201).json({ message: "User created successfully", user: newUser });
+        res.status(201).json({ message: "User created successfully", user });
     } catch (error) {
+        console.error("Failed to save user data:", error);
         res.status(500).json({ message: "Failed to save user data", error });
     }
 });
 
 router.get("/:uid", async (req, res) => {
-    const { uid } = req.params;
-
     try {
-        const user = await User.findOne({ uid });
-        if (user) {
-            res.json({ 
-                username: user.username, 
-                photoURL: user.photoURL // Include photoURL in response
-            });
-        } else {
-            res.status(404).json({ error: "User not found" });
+        const { uid } = req.params;
+        console.log("Fetching user profile for UID:", uid);
+
+        const user = await UserModel.findOne({ uid });
+        if (!user) {
+            console.log("User not found:", uid);
+            return res.status(404).json({ message: "User not found" });
         }
+
+        // 🔹 Fetch User's Comments with Related Forts
+        const comments = await CommentModel.find({ userId: uid }).populate("fortId", "name");
+
+        // 🔹 Fetch User's Replies (inside other comments)
+        const replies = await CommentModel.find({ "replies.userId": uid })
+            .populate("fortId", "name")
+            .lean(); // Convert Mongoose document to plain JavaScript object
+
+        // Extract user's replies from the comment documents
+        let userReplies = [];
+        replies.forEach(comment => {
+            comment.replies.forEach(reply => {
+                if (reply.userId === uid) {
+                    userReplies.push({
+                        _id: reply._id,
+                        fortId: comment.fortId,
+                        comment: reply.comment,
+                        likes: reply.likes,
+                        createdAt: reply.createdAt
+                    });
+                }
+            });
+        });
+
+        // 🔹 Calculate Total Likes Received (including replies)
+        const totalLikes = [
+            ...comments.map(comment => comment.likes?.length || 0),
+            ...userReplies.map(reply => reply.likes?.length || 0)
+        ].reduce((sum, likes) => sum + likes, 0);
+
+        res.json({
+            username: user.username,
+            email: user.email,
+            photoURL: user.photoURL,
+            comments,
+            replies: userReplies,
+            totalLikes,
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error fetching profile:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 });
 

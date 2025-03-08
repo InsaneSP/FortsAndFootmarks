@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const fortSchema = new mongoose.Schema({
-    name: String,
+    name: { type: String, required: true, unique: true },
     photos: [String],
     rating: Number,
     historicalSignificance: String,
@@ -40,30 +40,7 @@ const fortSchema = new mongoose.Schema({
     similarNearbyForts: [String],
     season: String,
     experience: [String],
-    comments: [
-        {
-            username: String,
-            photoURL: String,
-            comment: String,
-            createdAt: { type: Date, default: Date.now },
-            replies: [ 
-                {
-                    username: String,
-                    photoURL: String,
-                    comment: String,
-                    createdAt: { type: Date, default: Date.now },
-                    replies: [ 
-                        {
-                            username: String,
-                            photoURL: String,
-                            comment: String,
-                            createdAt: { type: Date, default: Date.now }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 });
 
 const FortModel = mongoose.model("forts", fortSchema);

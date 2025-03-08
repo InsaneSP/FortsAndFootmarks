@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
                 try {
                     const response = await axios.get(
                         // `http://localhost:3001/users/${firebaseUser.uid}`
-                        `${process.env.REACT_APP_API_URL}/${firebaseUser.uid}`
+                        `${process.env.REACT_APP_API_URL}/users/${firebaseUser.uid}`
                     );
                     const userData = response.data;
                     setUser({

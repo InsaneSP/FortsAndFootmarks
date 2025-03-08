@@ -664,6 +664,65 @@ h2 {
     width: 100%;
 }
 
+.comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* Like Button */
+.like {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.like:hover {
+    background-color: #005f73;
+    transform: scale(1.05);
+}
+
+/* Delete Button */
+.delete {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+/* Reply Button */
+.reply {
+    background: none;
+    color: #A23E48;
+    border: none;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.reply:hover {
+    color: #DC143C;
+    transform: scale(1.05);
+    text-decoration: underline solid #DC143C;
+}
+
+
 @keyframes appear {
     from {
         opacity: 0;

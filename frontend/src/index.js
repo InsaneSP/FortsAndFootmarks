@@ -17,6 +17,7 @@ import PrivacyPolicy from './PrivacyPolicy/privacy.jsx';
 import Terms from './Terms/terms.jsx';
 import DeleteData from './Delete/delete.jsx';
 import ScrollToTopButton from './Scroll/scrolltotopbutton.jsx';
+import Profile from './Profile/profile.jsx';
 import reportWebVitals from './reportWebVitals.js';
 import app from './firebaseConfig.js';
 import { AuthProvider } from './Context/authContext.js';
@@ -47,6 +48,7 @@ root.render(
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/delete" element={<DeleteData />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
           <Footer />
           <ScrollToTopButton /> 
