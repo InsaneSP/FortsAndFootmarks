@@ -41,6 +41,12 @@ const fortSchema = new mongoose.Schema({
     season: String,
     experience: [String],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    gallery: [{
+        url: { type: String, required: true },       // ✅ Cloudinary image URL
+        uploadedBy: { type: String, required: true }, // ✅ Uploader's name
+        photoURL: { type: String },                   // ✅ Uploader's profile photo
+        uploadedAt: { type: Date, default: Date.now } // ✅ Upload timestamp
+    }],
 });
 
 const FortModel = mongoose.model("forts", fortSchema);

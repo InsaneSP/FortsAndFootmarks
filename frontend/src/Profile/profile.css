@@ -20,6 +20,43 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* 🌟 Profile Picture Styling */
+.profile-pic-container {
+    display: flex;
+    justify-content: center; /* Centers image horizontally */
+    align-items: center; /* Centers image vertically */
+    margin-top: 10px;
+    position: relative;
+}
+
+/* 🎯 Circular Profile Image */
+.profile-pic {
+    width: 150px; /* Fixed width */
+    height: 150px; /* Fixed height */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image fits within the circle */
+    border: 4px solid #FFD700; /* Golden border */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 🖱️ Hover Effect */
+.profile-pic:hover {
+    transform: scale(1.05);
+}
+
+/* ✏️ Edit Icon Inside Image */
+.profile-pic-label {
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.edit-icon {
+    color: #FFD700; /* Golden color */
+    font-size: 1rem;
+}
+
 /* ✏️ Username Section */
 .username-container {
     display: flex;
@@ -38,7 +75,7 @@
 
 .edit-icon:hover {
     transform: scale(1.1);
-    color: #fffaf0;
+    color: #FFD700;
 }
 
 /* ✏️ Editable Username Input */

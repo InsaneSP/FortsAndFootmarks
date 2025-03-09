@@ -757,3 +757,117 @@ h2 {
     animation-range: entry 0% cover 40%;
     
 }
+
+/* Gallery Section Styling */
+.gallery-section {
+    margin: 15px 0 15px 0 !important;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Fort Name Styling */
+.gallery-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* File Upload Input */
+input[type="file"] {
+    display: none;
+}
+
+.upload-label {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 10px;
+    display: inline-block;
+}
+
+.upload-label:hover {
+    background: #0056b3;
+}
+
+/* Upload Button */
+.upload-btn {
+    background: #28a745;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 10px;
+}
+
+.upload-btn:hover {
+    background: #1e7e34;
+}
+
+/* Image Gallery Grid */
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Individual Image Item */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    background: white;
+    padding: 10px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px; /* ✅ Fixed height */
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Hover Effect */
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+/* Uploader Info */
+.uploader-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.uploader-info img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+}
+
+.uploader-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}

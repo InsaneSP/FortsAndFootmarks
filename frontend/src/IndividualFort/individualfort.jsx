@@ -42,6 +42,8 @@ const IndividualFort = () => {
     const [replyingTo, setReplyingTo] = useState(null);
     const [weather, setWeather] = useState(null);
     const [fortImages, setFortImages] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [galleryImages, setGalleryImages] = useState([]);
     const navigate = useNavigate();
 
     const submitHandler = async (e) => {
@@ -198,6 +200,35 @@ const IndividualFort = () => {
         }
     };
 
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const uploadImage = async () => {
+        if (!selectedFile) {
+            alert("Please select an image first.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        formData.append("username", user?.username || "Anonymous");
+        formData.append("userPhoto", user?.photoURL || "");
+
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/forts/${fortName}/upload`,
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+
+            alert(response.data.message);
+            setGalleryImages((prevImages) => [...prevImages, response.data.image]);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    };
+
     const toggleReplyingTo = (commentId) => {
         setReplyingTo((prevState) => (prevState === commentId ? null : commentId));
     };
@@ -213,6 +244,7 @@ const IndividualFort = () => {
             .then((response) => {
                 setFortData(response.data);
                 setComments(response.data.comments || []);
+                setGalleryImages(response.data.gallery || []);
             })
             .catch((err) => {
                 console.error("Error fetching fort details:", err);
@@ -682,6 +714,30 @@ const IndividualFort = () => {
                             Post Comment
                         </button>
                     </form>
+                </div>
+            </div>
+
+            <div className="gallery-section">
+                <h2>{fortName.charAt(0).toUpperCase() + fortName.slice(1)} Gallery</h2>
+
+                <label htmlFor="file-upload" className="upload-label">Choose an Image</label>
+                <input type="file" id="file-upload" onChange={handleFileChange} />
+                <button className="upload-btn" onClick={uploadImage}>Upload Image</button>
+
+                <div className="image-gallery">
+                    {galleryImages.map((img, index) => (
+                        <div key={index} className="gallery-item">
+                            <img
+                                src={img.url}
+                                alt={`Uploaded by ${img.uploadedBy}`}
+                                onClick={() => window.open(img.url, "_blank")}
+                            />
+                            <div className="uploader-info">
+                                <img src={img.photoURL || "default-avatar.png"} alt="User" />
+                                <p>Uploaded by {img.uploadedBy || "Anonymous"}</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
