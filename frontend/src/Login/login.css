@@ -297,6 +297,19 @@
     font-size: 20px;
 }
 
+.forgot-password {
+    text-align: center;
+    margin-top: 10px; /* Adjust spacing */
+    margin-bottom: 10px;
+    color: #5d4037; /* Adjust color to match your theme */
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 1024px) {
     .container {
         min-height: 800px;
