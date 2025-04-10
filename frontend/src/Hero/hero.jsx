@@ -6,6 +6,13 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import "./herostyles.css";
 
+const MAX_CHAR_LIMIT = 300;
+const validateTextInput = (value) => {
+    if (value.includes("\"") || value.includes("'")) return "Quotes are not allowed.";
+    if (value.length > MAX_CHAR_LIMIT) return `Maximum ${MAX_CHAR_LIMIT} characters allowed.`;
+    return null;
+};
+
 class Hero extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +22,13 @@ class Hero extends Component {
     }
 
     handleSearchChange = (e) => {
-        this.setState({ searchQuery: e.target.value });
+        const query = e.target.value;
+        const validationError = validateTextInput(query);
+        if (validationError) {
+            alert(`Search Error: ${validationError}`);
+            return;
+        }
+        this.setState({ searchQuery: query });
     };
 
     handleSearchSubmit = async (e) => {
@@ -28,7 +41,6 @@ class Hero extends Component {
         }
 
         try {
-            // const response = await axios.get(`http://localhost:3001/fort/${searchQuery.trim()}`);
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/fort/${searchQuery.trim()}`);
             const fortData = response.data;
 

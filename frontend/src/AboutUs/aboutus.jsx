@@ -6,7 +6,7 @@ import {
     faUsers,
     faCamera,
 } from "@fortawesome/free-solid-svg-icons";
-import mountainFort from "../images/Mountain.jfif";
+import logo from "../images/NewLogo.png";
 import "./aboutus.css";
 
 class AboutUs extends Component {
@@ -15,7 +15,7 @@ class AboutUs extends Component {
         return (
             <div className="container-fluid about-us-container">
                 <h1 className="heading">About FortsAndFootmarks</h1>
-                <img src={mountainFort} alt="Mountain Fort" className="about-image" />
+                <img src={logo} alt="Mountain Fort" className="about-image" />
                 <div className="section">
                     <div className="mission-container">
                         <h4 className="subheading">Our Mission</h4>
@@ -113,22 +113,22 @@ class AboutUs extends Component {
                         <h4 className="card-heading">Meet Our Team</h4>
                         <div className="team-members-container">
                             <div className="team-member">
-                                <img src={mountainFort} alt="Mountain Fort" className="pfp" />
+                                <img src={logo} alt="Mountain Fort" className="pfp" />
                                 <h6>Smit Potkar</h6>
                                 <h5>Founder</h5>
                             </div>
                             <div className="team-member">
-                                <img src={mountainFort} alt="Mountain Fort" className="pfp" />
+                                <img src={logo} alt="Mountain Fort" className="pfp" />
                                 <h6>Smit Potkar</h6>
                                 <h5>Co-Founder</h5>
                             </div>
                             <div className="team-member">
-                                <img src={mountainFort} alt="Mountain Fort" className="pfp" />
+                                <img src={logo} alt="Mountain Fort" className="pfp" />
                                 <h6>Smit Potkar</h6>
                                 <h5>Team Lead</h5>
                             </div>
                             <div className="team-member">
-                                <img src={mountainFort} alt="Mountain Fort" className="pfp" />
+                                <img src={logo} alt="Mountain Fort" className="pfp" />
                                 <h6>Smit Potkar</h6>
                                 <h5>Developer</h5>
                             </div>

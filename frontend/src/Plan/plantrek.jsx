@@ -22,6 +22,21 @@ import { useAuth } from "../Context/authContext.js";
 import axios from "axios";
 import "./plantrek.css";
 
+const MAX_CHAR_LIMIT = 300;
+const MAX_EXPENSE = 100000; 
+
+const validateTextInput = (value) => {
+    if (value.includes("\"") || value.includes("'")) return "Quotes are not allowed.";
+    if (value.length > MAX_CHAR_LIMIT) return `Maximum ${MAX_CHAR_LIMIT} characters allowed.`;
+    return null;
+};
+
+const validateExpense = (value) => {
+    if (isNaN(value)) return "Must be a number.";
+    if (value > MAX_EXPENSE) return `Cannot exceed ₹${MAX_EXPENSE}`;
+    return null;
+};
+
 const Plan = () => {
     const [itinerary, setItinerary] = useState([
         { day: "Day 1", activities: [""] },
@@ -39,7 +54,6 @@ const Plan = () => {
     useEffect(() => {
         const fetchForts = async () => {
             try {
-                // const response = await axios.get("http://localhost:3001/forts");
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}/forts`);
                 setForts(response.data);
                 if (response.data.length > 0) {
@@ -55,6 +69,12 @@ const Plan = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        const validationError = validateTextInput(searchQuery);
+        if (validationError) {
+            alert(`Search Error: ${validationError}`);
+            return;
+        }
+
         const filtered = forts.filter((fort) =>
             fort.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -68,7 +88,6 @@ const Plan = () => {
         }
     };
 
-    // Functions for itinerary
     const handleAddActivity = (dayIndex) => {
         const updatedItinerary = [...itinerary];
         updatedItinerary[dayIndex].activities.push("");
@@ -76,6 +95,9 @@ const Plan = () => {
     };
 
     const handleActivityChange = (dayIndex, activityIndex, value) => {
+        const validationError = validateTextInput(value);
+        if (validationError) return alert(`Activity Error: ${validationError}`);
+
         const updatedItinerary = [...itinerary];
         updatedItinerary[dayIndex].activities[activityIndex] = value;
         setItinerary(updatedItinerary);
@@ -100,8 +122,18 @@ const Plan = () => {
 
     const handleExpenseChange = (index, field, value) => {
         const updatedExpenses = [...expenses];
-        updatedExpenses[index][field] =
-            field === "amount" ? parseFloat(value) || 0 : value;
+
+        if (field === "amount") {
+            const numericValue = parseFloat(value) || 0;
+            const validationError = validateExpense(numericValue);
+            if (validationError) return alert(`Expense Error: ${validationError}`);
+            updatedExpenses[index][field] = numericValue;
+        } else {
+            const validationError = validateTextInput(value);
+            if (validationError) return alert(`Item Error: ${validationError}`);
+            updatedExpenses[index][field] = value;
+        }
+
         setExpenses(updatedExpenses);
         setTotalExpense(
             updatedExpenses.reduce((sum, expense) => sum + expense.amount, 0)
@@ -117,6 +149,26 @@ const Plan = () => {
         );
     };
 
+    const handleNotesChange = (e) => {
+        const value = e.target.value;
+        const validationError = validateTextInput(value);
+        if (validationError) {
+            alert(`Notes Error: ${validationError}`);
+            return;
+        }
+        setNotes(value);
+    };
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        const validationError = validateTextInput(value);
+        if (validationError) {
+            alert(`Search Error: ${validationError}`);
+            return;
+        }
+        setSearchQuery(value);
+    };
+
     const handleSharePlan = () => {
         if (!user) {
             alert("You must log in to share the trek plan.");
@@ -129,16 +181,16 @@ const Plan = () => {
 
         const shareableContent = `
     Trek Plan:
-    
+
     Itinerary:
     ${itinerary.map(day => `${day.day}: ${day.activities.join(", ")}`).join("\n")}
-    
+
     Notes:
     ${notes}
-    
+
     Expenses:
     ${expenses.map(expense => `${expense.item}: ₹${expense.amount}`).join("\n")}
-    
+
     Total Expense: ₹${totalExpense.toFixed(2)}
         `;
 
@@ -148,42 +200,35 @@ const Plan = () => {
             .catch(() => alert("Failed to copy Trek Plan to clipboard."));
     };
 
-
     const handleSavePlanAsPDF = () => {
         const doc = new jsPDF();
         doc.setFontSize(16);
         let yPos = 10;
 
-        // Add itinerary
         doc.text("Trek Plan", 10, yPos);
-        yPos += 10; // Move to the next line
+        yPos += 10;
 
         doc.text("Itinerary:", 10, yPos);
-        yPos += 10; // Move to the next line
-        itinerary.forEach((day, i) => {
+        yPos += 10;
+        itinerary.forEach((day) => {
             doc.text(`${day.day}: ${day.activities.join(", ")}`, 10, yPos);
-            yPos += 10; // Adjust y position for the next item
+            yPos += 10;
         });
 
-        // Add notes
         doc.text("Notes:", 10, yPos);
         yPos += 10;
         doc.text(notes, 10, yPos);
-        yPos += 10 + notes.split("\n").length * 5; // Adjust y position based on the length of notes
+        yPos += 10 + notes.split("\n").length * 5;
 
-        // Add expenses
         doc.text("Expenses:", 10, yPos);
         yPos += 10;
-        expenses.forEach((expense, i) => {
+        expenses.forEach((expense) => {
             doc.text(`${expense.item}: ₹${expense.amount}`, 10, yPos);
-            yPos += 10; // Adjust y position for the next item
+            yPos += 10;
         });
 
-        // Add total expense
         doc.setFont("Helvetica", "normal");
         doc.text(`Total Expense: ₹${totalExpense.toFixed(2)}`, 10, yPos);
-
-        // Save PDF
         doc.save("TrekPlan.pdf");
     };
 
@@ -260,8 +305,9 @@ const Plan = () => {
                                 rows="4"
                                 placeholder="Enter your Trek Notes Here...."
                                 value={notes}
-                                onChange={(e) => setNotes(e.target.value)}
+                                onChange={handleNotesChange}
                             />
+
                         </div>
                     </div>
                 </div>
@@ -279,8 +325,9 @@ const Plan = () => {
                                     className="form-control search"
                                     placeholder="Search Forts..."
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onChange={handleSearchChange}
                                 />
+
                             </form>
                         </div>
                         {error && <p className="error-message">{error}</p>}
@@ -354,7 +401,7 @@ const Plan = () => {
             </div>
 
             {/* Social Share and Save */}
-            <div className="action-buttons" style={{margin: "15px 5% 15px auto"}}>
+            <div className="action-buttons" style={{ margin: "15px 5% 15px auto" }}>
                 <button className="action-btn share" onClick={handleSharePlan}>
                     <FontAwesomeIcon icon={faShareAlt} /> Share Trek Plan
                 </button>
@@ -365,7 +412,7 @@ const Plan = () => {
 
             {/* Social Media Share Buttons (requires login) */}
             {shareButtons && (
-                <div className="social-share" style={{margin: "15px 5% 15px auto"}}>
+                <div className="social-share" style={{ margin: "15px 5% 15px auto" }}>
                     <FacebookShareButton
                         url={window.location.href}
                         className="social-button fb"

@@ -72,23 +72,52 @@ const Login = () => {
     };
 
     const validateForm = () => {
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}:;<>?~])[A-Za-z\d!@#$%^&*()_+={}:;<>?~]{8,}$/;
+        const forbiddenCharsRegex = /["'\\]/;
+    
+        // Validate Email
+        if (!emailRegex.test(formData.email)) {
             setMessage({ text: "Invalid email format.", type: "error" });
             return false;
         }
-        if (formData.password.length < 6) {
+    
+        // Validate Password
+        if (!passwordRegex.test(formData.password)) {
             setMessage({
-                text: "Password must be at least 6 characters.",
+                text: "Password must be 8+ characters, include uppercase, lowercase, number, and symbol.",
                 type: "error",
             });
             return false;
         }
-        if (isSignUpMode && !formData.username) {
-            setMessage({ text: "Username is required.", type: "error" });
+    
+        if (forbiddenCharsRegex.test(formData.password)) {
+            setMessage({
+                text: "Password must not contain quotes or backslashes.",
+                type: "error",
+            });
             return false;
         }
+    
+        // Validate Username (only in sign-up mode)
+        if (isSignUpMode) {
+            if (!formData.username.trim()) {
+                setMessage({ text: "Username is required.", type: "error" });
+                return false;
+            }
+    
+            if (!usernameRegex.test(formData.username)) {
+                setMessage({
+                    text: "Username must be 3-20 characters, alphanumeric or underscore only.",
+                    type: "error",
+                });
+                return false;
+            }
+        }
+    
         return true;
-    };
+    };    
 
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();

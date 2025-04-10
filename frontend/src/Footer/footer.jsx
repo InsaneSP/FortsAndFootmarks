@@ -20,18 +20,46 @@ const Footer = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         setResult("Sending...");
-        const formData = new FormData(event.target);
-
-        formData.append("access_key", "956c91fc-d724-4000-932f-49ef2414c10e"); // Replace with your actual Web3Forms access key
-
+    
+        const name = event.target.name.value.trim();
+        const email = event.target.email.value.trim();
+        const message = event.target.message.value.trim();
+    
+        const validateTextInput = (value) => {
+            if (value.includes('"') || value.includes("'")) return "Quotes are not allowed.";
+            if (value.length > 300) return "Maximum 300 characters allowed.";
+            return null;
+        };
+    
+        const inputs = [
+            { field: "Name", value: name },
+            { field: "Email", value: email },
+            { field: "Message", value: message },
+        ];
+    
+        for (const input of inputs) {
+            const error = validateTextInput(input.value);
+            if (error) {
+                alert(`${input.field} Error: ${error}`);
+                setResult("Validation Failed");
+                return;
+            }
+        }
+    
+        const formData = new FormData();
+        formData.append("access_key", "956c91fc-d724-4000-932f-49ef2414c10e");
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("message", message);
+    
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 body: formData,
             });
-
+    
             const data = await response.json();
-
+    
             if (data.success) {
                 setResult("Form Submitted Successfully");
                 event.target.reset();
@@ -44,6 +72,7 @@ const Footer = () => {
             setResult("Something went wrong. Please try again later.");
         }
     };
+    
 
     return (
         <div className="container-fluid bg-body-tertiary">

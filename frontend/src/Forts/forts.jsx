@@ -6,6 +6,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import slugify from "slugify";
 import "./forts.css";
 
+const MAX_CHAR_LIMIT = 300;
+
+const validateTextInput = (value) => {
+    if (value.includes("\"") || value.includes("'")) return "Quotes are not allowed.";
+    if (value.length > MAX_CHAR_LIMIT) return `Maximum ${MAX_CHAR_LIMIT} characters allowed.`;
+    return null;
+};
+
 const Forts = () => {
     const [forts, setForts] = useState([]);
     const [filteredForts, setFilteredForts] = useState([]);
@@ -17,6 +25,11 @@ const Forts = () => {
 
     const handleSearchChange = (e) => {
         const query = e.target.value.toLowerCase();
+        const validationError = validateTextInput(query);
+        if (validationError) {
+            alert(`Search Error: ${validationError}`);
+            return;
+        }
         setSearchQuery(query);
 
         const filtered = forts.filter(fort => 
@@ -30,8 +43,6 @@ const Forts = () => {
         const fetchForts = async () => {
             try {
                 const response = type
-                    // ? await axios.get(`http://localhost:3001/forts/${type}`)
-                    // : await axios.get('http://localhost:3001/forts');
                     ? await axios.get(`${process.env.REACT_APP_API_URL}/forts/${type}`)
                     : await axios.get(`${process.env.REACT_APP_API_URL}/forts`);
                 setForts(response.data);
