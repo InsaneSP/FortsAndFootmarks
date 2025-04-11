@@ -13,7 +13,6 @@ export const showErrorToast = (message) => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        theme: "dark",
     });
 };
 

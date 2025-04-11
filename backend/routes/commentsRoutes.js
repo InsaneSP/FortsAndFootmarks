@@ -1,14 +1,43 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
+const axios = require("axios");
 const CommentModel = require("../models/comment");
 const UserModel = require("../models/user");
-const FortModel = require("../models/forts");  // ✅ Import FortModel
+const FortModel = require("../models/forts");
+
+// 🆕 Profanity filter setup
+const Filter = require("bad-words");
+const customHindiBadWords = require("../utils/badwords");
+
+const filter = new Filter();
+filter.addWords(...customHindiBadWords);
+
+const checkProfanity = async (text) => {
+    const localProfane = filter.isProfane(text);
+
+    const purgoURL = `https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`;
+    let purgoProfane = false;
+
+    try {
+        const response = await axios.get(purgoURL);
+        purgoProfane = response.data === true || response.data === "true";
+    } catch (error) {
+        console.warn("PurgoMalum API failed. Skipping online check.");
+    }
+
+    return localProfane || purgoProfane;
+};
 
 // ✅ 1. Add a Comment to a Fort
 router.post("/fort/:fortName/comment", async (req, res) => {
     const { uid, username, photoURL, comment } = req.body;
     if (!uid || !comment) return res.status(400).json({ message: "User and comment are required" });
+
+    const isProfane = await checkProfanity(comment);
+    if (isProfane) {
+        return res.status(400).json({ message: "Your comment contains inappropriate language. Please revise it." });
+    }
 
     try {
         const fortName = req.params.fortName.toLowerCase();
@@ -26,10 +55,7 @@ router.post("/fort/:fortName/comment", async (req, res) => {
             createdAt: new Date(),
         });
 
-        // 🔹 Save comment in fort's comments array
         await FortModel.findByIdAndUpdate(fort._id, { $push: { comments: newComment._id } });
-
-        // 🔹 Save comment in user’s comments array
         await UserModel.findOneAndUpdate({ uid }, { $push: { comments: newComment._id } });
 
         res.status(201).json(newComment);
@@ -52,8 +78,8 @@ router.post("/:commentId/like", async (req, res) => {
         if (!comment) return res.status(404).json({ message: "Comment/Reply not found" });
 
         let target = comment._id.toString() === req.params.commentId
-            ? comment  // It's a top-level comment
-            : comment.replies.find(reply => reply._id.toString() === req.params.commentId); // It's a reply
+            ? comment
+            : comment.replies.find(reply => reply._id.toString() === req.params.commentId);
 
         if (!target) return res.status(404).json({ message: "Reply not found" });
 
@@ -80,16 +106,12 @@ router.post("/:commentId/reply", async (req, res) => {
     const { uid, username, photoURL, comment } = req.body;
     if (!uid || !comment) return res.status(400).json({ message: "User and comment are required" });
 
-    try {
-        const findParentComment = async (comments) => {
-            for (let comment of comments) {
-                if (comment._id.toString() === req.params.commentId) return comment;
-                const found = findParentComment(comment.replies);
-                if (found) return found;
-            }
-            return null;
-        };
+    const isProfane = await checkProfanity(comment);
+    if (isProfane) {
+        return res.status(400).json({ message: "Your reply contains inappropriate language. Please revise it." });
+    }
 
+    try {
         const parentComment = await CommentModel.findOne({ "replies._id": req.params.commentId }) || await CommentModel.findById(req.params.commentId);
         if (!parentComment) return res.status(404).json({ message: "Parent comment not found" });
 
@@ -103,7 +125,6 @@ router.post("/:commentId/reply", async (req, res) => {
             createdAt: new Date()
         };
 
-        // ✅ If replying to a reply, find the correct reply object and store it inside its `replies` array
         if (parentComment.replies.some(reply => reply._id.toString() === req.params.commentId)) {
             const replyIndex = parentComment.replies.findIndex(reply => reply._id.toString() === req.params.commentId);
             parentComment.replies[replyIndex].replies.push(newReply);
@@ -133,11 +154,9 @@ router.delete("/:commentId", async (req, res) => {
         if (!comment) return res.status(404).json({ message: "Comment/Reply not found" });
 
         if (comment._id.toString() === req.params.commentId) {
-            // It's a top-level comment, delete it
             if (comment.userId.toString() !== uid) return res.status(403).json({ message: "Unauthorized" });
             await CommentModel.findByIdAndDelete(req.params.commentId);
         } else {
-            // It's a reply, find and remove it
             comment.replies = comment.replies.filter(reply => reply._id.toString() !== req.params.commentId);
             await comment.save();
         }
@@ -163,7 +182,6 @@ router.get("/fort/:fortName/comments", async (req, res) => {
             .populate("userId", "username photoURL")
             .lean();
 
-        // ✅ Ensure all nested replies are properly included
         const processReplies = (replies) => {
             return replies.map(reply => ({
                 ...reply,
@@ -183,6 +201,5 @@ router.get("/fort/:fortName/comments", async (req, res) => {
         return res.status(500).json({ message: "Error fetching comments", error: error.message });
     }
 });
-
 
 module.exports = router;

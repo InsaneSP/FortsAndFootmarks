@@ -11,25 +11,17 @@ import {
     faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { faPhone, faClock } from "@fortawesome/free-solid-svg-icons";
+import { showErrorToast, showSuccessToast } from "../Toastify/toast";
 import { Link } from "react-router-dom";
 import "./footer.css";
 
 const Footer = () => {
-    const [result, setResult] = useState("");
-
     const onSubmit = async (event) => {
         event.preventDefault();
-        setResult("Sending...");
     
         const name = event.target.name.value.trim();
         const email = event.target.email.value.trim();
         const message = event.target.message.value.trim();
-    
-        const validateTextInput = (value) => {
-            if (value.includes('"') || value.includes("'")) return "Quotes are not allowed.";
-            if (value.length > 300) return "Maximum 300 characters allowed.";
-            return null;
-        };
     
         const inputs = [
             { field: "Name", value: name },
@@ -37,14 +29,21 @@ const Footer = () => {
             { field: "Message", value: message },
         ];
     
+        const validateTextInput = (value) => {
+            if (value.includes('"') || value.includes("'")) return "Quotes are not allowed.";
+            if (value.length > 300) return "Maximum 300 characters allowed.";
+            return null;
+        };
+    
         for (const input of inputs) {
             const error = validateTextInput(input.value);
             if (error) {
-                alert(`${input.field} Error: ${error}`);
-                setResult("Validation Failed");
-                return;
+                showErrorToast(`${input.field} Error: ${error}`);
+                return; // ⛔️ Stop form submission
             }
         }
+    
+        showSuccessToast("Sending..."); // ✅ Now it's safe to proceed
     
         const formData = new FormData();
         formData.append("access_key", "956c91fc-d724-4000-932f-49ef2414c10e");
@@ -61,18 +60,17 @@ const Footer = () => {
             const data = await response.json();
     
             if (data.success) {
-                setResult("Form Submitted Successfully");
+                showSuccessToast("Form Submitted Successfully");
                 event.target.reset();
             } else {
                 console.error("Error", data);
-                setResult(data.message);
+                showErrorToast(data.message);
             }
         } catch (error) {
             console.error("Submission Error", error);
-            setResult("Something went wrong. Please try again later.");
+            showErrorToast("Something went wrong. Please try again later.");
         }
-    };
-    
+    };    
 
     return (
         <div className="container-fluid bg-body-tertiary">
@@ -292,7 +290,6 @@ const Footer = () => {
                         </div>
                         <button type="submit" className="btn fbutton">Send Message</button>
                     </form>
-                    <span className="form-result">{result}</span>
                 </div>
             </div>
             <div className="copyrights">

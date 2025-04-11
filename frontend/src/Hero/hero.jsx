@@ -4,6 +4,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFortAwesome } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { showErrorToast } from "../Toastify/toast";
 import "./herostyles.css";
 
 const MAX_CHAR_LIMIT = 300;
@@ -25,7 +26,7 @@ class Hero extends Component {
         const query = e.target.value;
         const validationError = validateTextInput(query);
         if (validationError) {
-            alert(`Search Error: ${validationError}`);
+            showErrorToast(`Search Error: ${validationError}`);
             return;
         }
         this.setState({ searchQuery: query });
@@ -36,7 +37,7 @@ class Hero extends Component {
         const { searchQuery } = this.state;
 
         if (!searchQuery.trim()) {
-            alert("Please enter a search query.");
+            showErrorToast("Please enter a search query.");
             return;
         }
 
@@ -47,10 +48,10 @@ class Hero extends Component {
             this.props.navigate(`/fort/${fortData.name}`, { state: fortData });
         } catch (err) {
             if (err.response && err.response.status === 404) {
-                alert("Fort not found. Please try another search term.");
+                showErrorToast("Fort not found. Please try another search term.");
             } else {
                 console.error("Error fetching fort:", err);
-                alert("An error occurred while searching. Please try again.");
+                showErrorToast("An error occurred while searching. Please try again.");
             }
         }
     };

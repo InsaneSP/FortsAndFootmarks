@@ -21,6 +21,7 @@ import axios from "axios";
 import { useAuth } from "../Context/authContext.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { showErrorToast, showSuccessToast } from "../Toastify/toast.jsx";
 import "./individualfort.css";
 import "leaflet/dist/leaflet.css";
 
@@ -50,12 +51,12 @@ const IndividualFort = () => {
         e.preventDefault();
 
         if (!user) {
-            alert("You must be logged in to comment.");
+            showErrorToast("You must be logged in to comment.");
             return;
         }
 
         if (!newCommentText.trim()) {
-            alert("Comment cannot be empty!");
+            showErrorToast("Comment cannot be empty!");
             return;
         }
 
@@ -76,18 +77,23 @@ const IndividualFort = () => {
             setComments([...comments, response.data]); // ✅ Update comments
             setNewCommentText("");
         } catch (error) {
-            console.error("Error saving comment:", error);
+            if (error.response && error.response.status === 400) {
+                showErrorToast(error.response.data.message || "Profanity detected. Please revise your comment.");
+            } else {
+                console.error("Error saving comment:", error);
+                showErrorToast("Something went wrong while saving your comment.");
+            }
         }
     };
 
     const replyHandler = async (commentId) => {
         if (!user) {
-            alert("You must be logged in to reply.");
+            showErrorToast("You must be logged in to reply.");
             return;
         }
 
         if (!replyText.trim()) {
-            alert("Reply cannot be empty!");
+            showErrorToast("Reply cannot be empty!");
             return;
         }
 
@@ -118,18 +124,18 @@ const IndividualFort = () => {
             setReplyText("");
             setReplyingTo(null);
         } catch (error) {
-            console.error("Error posting reply:", error);
+            showErrorToast("Error posting reply:", error);
         }
     };
 
     const likeHandler = async (commentId, parentCommentId = null) => {
         if (!user) {
-            alert("You must be logged in to like a comment.");
+            showErrorToast("You must be logged in to like a comment.");
             return;
         }
 
         if (!commentId) {
-            console.error("Error: commentId is undefined");
+            showErrorToast("Error: commentId is undefined");
             return;
         }
 
@@ -156,23 +162,23 @@ const IndividualFort = () => {
 
             console.log(response.data.message);
         } catch (error) {
-            console.error("Error liking comment/reply:", error.response?.data || error.message);
+            showErrorToast("Error liking comment/reply:", error.response?.data || error.message);
         }
     };
 
     const deleteHandler = async (commentId, commentUserId, parentCommentId = null) => {
         if (!user) {
-            alert("You must be logged in to delete a comment.");
+            showErrorToast("You must be logged in to delete a comment.");
             return;
         }
 
         if (!commentId) {
-            console.error("Error: commentId is undefined");
+            showErrorToast("Error: commentId is undefined");
             return;
         }
 
         if (user.uid !== commentUserId) {
-            alert("You can only delete your own comments.");
+            showErrorToast("You can only delete your own comments.");
             return;
         }
 
@@ -196,17 +202,26 @@ const IndividualFort = () => {
 
             console.log("Comment/Reply deleted successfully");
         } catch (error) {
-            console.error("Error deleting comment/reply:", error.response?.data || error.message);
+            showErrorToast("Error deleting comment/reply:", error.response?.data || error.message);
         }
     };
 
     const handleFileChange = (event) => {
+        if (!user) {
+            showErrorToast("You must be logged in to select an image.");
+            return;
+        }
         setSelectedFile(event.target.files[0]);
-    };
+    };    
 
     const uploadImage = async () => {
+        if (!user) {
+            showErrorToast("You must be logged in to upload images.");
+            return;
+        }
+    
         if (!selectedFile) {
-            alert("Please select an image first.");
+            showErrorToast("Please select an image first.");
             return;
         }
 
@@ -222,10 +237,10 @@ const IndividualFort = () => {
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
-            alert(response.data.message);
+            showErrorToast(response.data.message);
             setGalleryImages((prevImages) => [...prevImages, response.data.image]);
         } catch (error) {
-            console.error("Error uploading image:", error);
+            showErrorToast("Error uploading image:", error);
         }
     };
 
@@ -247,7 +262,7 @@ const IndividualFort = () => {
                 setGalleryImages(response.data.gallery || []);
             })
             .catch((err) => {
-                console.error("Error fetching fort details:", err);
+                showErrorToast("Error fetching fort details:", err);
                 setFortData(null);
             });
     }, [fortName]);
@@ -267,7 +282,7 @@ const IndividualFort = () => {
                 setComments(updatedComments);
             })
             .catch((err) => {
-                console.error("Error fetching comments:", err);
+                showErrorToast("Error fetching comments:", err);
                 setComments([]);
             });
     }, [fortName, user]);
@@ -284,7 +299,7 @@ const IndividualFort = () => {
                     setWeather(response.data);
                 })
                 .catch((error) => {
-                    console.error("Error fetching weather data:", error);
+                    showErrorToast("Error fetching weather data:", error);
                 });
         }
     }, [fortData]);

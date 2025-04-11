@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { showErrorToast, showSuccessToast } from "../Toastify/toast.jsx";
 import slugify from 'slugify';
 import "./featured.css";
 
@@ -12,7 +13,7 @@ const Featured = () => {
         fetch(`${process.env.REACT_APP_API_URL}/forts?limit=4`)
             .then(response => response.json())
             .then(data => setForts(data))
-            .catch(error => console.error("Error fetching forts:", error));
+            .catch(error => showErrorToast("Error fetching forts:", error));
     }, []);
 
     return (

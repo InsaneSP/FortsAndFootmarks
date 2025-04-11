@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../Context/authContext.js";
-import { FaPencilAlt, FaSave } from "react-icons/fa";  // ✅ Save icon added
+import { FaPencilAlt, FaSave } from "react-icons/fa"; 
+import { showErrorToast, showSuccessToast } from "../Toastify/toast.jsx";
 import "./profile.css";
 
 const Profile = () => {
@@ -11,7 +12,6 @@ const Profile = () => {
     const [newUsername, setNewUsername] = useState("");
     const [newProfilePic, setNewProfilePic] = useState(null);
     const [uploading, setUploading] = useState(false);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (user) {
@@ -22,7 +22,7 @@ const Profile = () => {
                 })
                 .catch((error) => {
                     console.error("Error fetching profile data:", error);
-                    setError("Failed to load profile. Please try again.");
+                    showErrorToast("Failed to load profile. Please try again.");
                 });
         }
     }, [user]);
@@ -61,14 +61,13 @@ const Profile = () => {
             setIsEditing(false);
         } catch (error) {
             console.error("Error updating profile:", error);
-            alert("Failed to update profile.");
+            showErrorToast("Failed to update profile.");
         } finally {
             setUploading(false);
         }
     };
 
     if (!user) return <div>Please log in to view your profile.</div>;
-    if (error) return <div className="error-message">{error}</div>;
     if (!profileData) return <div>Loading profile...</div>;
 
     return (

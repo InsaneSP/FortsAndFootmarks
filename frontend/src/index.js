@@ -19,6 +19,7 @@ import DeleteData from './Delete/delete.jsx';
 import ScrollToTopButton from './Scroll/scrolltotopbutton.jsx';
 import Profile from './Profile/profile.jsx';
 import ForgotPassword from './ForgotPassword/forgotPassword.jsx';
+import { ToastContainer } from "react-toastify";
 import reportWebVitals from './reportWebVitals.js';
 import app from './firebaseConfig.js';
 import { AuthProvider } from './Context/authContext.js';
@@ -54,6 +55,7 @@ root.render(
           </Routes>
           <Footer />
           <ScrollToTopButton /> 
+          <ToastContainer />
         </Router>
     </AuthProvider>
   </React.StrictMode>

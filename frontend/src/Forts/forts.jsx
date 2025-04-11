@@ -3,6 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useNavigate } from "react-router-dom";
+import { showErrorToast } from "../Toastify/toast";
 import slugify from "slugify";
 import "./forts.css";
 
@@ -27,7 +28,7 @@ const Forts = () => {
         const query = e.target.value.toLowerCase();
         const validationError = validateTextInput(query);
         if (validationError) {
-            alert(`Search Error: ${validationError}`);
+            showErrorToast(`Search Error: ${validationError}`);
             return;
         }
         setSearchQuery(query);
@@ -48,7 +49,7 @@ const Forts = () => {
                 setForts(response.data);
                 setFilteredForts(response.data);
             } catch (error) {
-                console.error("Error fetching forts:", error);
+                showErrorToast("Error fetching forts:", error);
             }
         };
 
