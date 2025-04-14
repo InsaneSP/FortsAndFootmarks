@@ -199,6 +199,7 @@ h2 {
     text-align: center;
     background: #8f1e00;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-top: 1% !important;
 }
 
 .weather-title {
@@ -673,20 +674,31 @@ h2 {
 
 /* Like Button */
 .like {
-    background-color: #008CBA;
-    color: white;
+    background-color: #B22222;
+    color: #FFF8DC;
     border: none;
-    padding: 6px 12px;
+    padding: 6px 14px;
     font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.like:hover {
-    background-color: #005f73;
+    border-radius: 10px;
+    display: inline-flex;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .like:hover {
+    background-color: #8f1e00;
+    color: #fff;
     transform: scale(1.05);
-}
+    box-shadow: 0 0 10px #FFD700;
+  }
+  
+  .like-count {
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 4px;
+  }
+  
 
 /* Delete Button */
 .delete {
@@ -785,7 +797,7 @@ input[type="file"] {
 }
 
 .upload-label {
-    background: #007bff;
+    background: #8f1e00;
     color: white;
     padding: 10px 15px;
     font-size: 16px;
@@ -797,12 +809,12 @@ input[type="file"] {
 }
 
 .upload-label:hover {
-    background: #0056b3;
+    scale: 1.05;
 }
 
 /* Upload Button */
 .upload-btn {
-    background: #28a745;
+    background: #8f1e00;
     color: white;
     padding: 10px 15px;
     font-size: 16px;
@@ -814,7 +826,7 @@ input[type="file"] {
 }
 
 .upload-btn:hover {
-    background: #1e7e34;
+    scale: 1.05;
 }
 
 /* Image Gallery Grid */
@@ -838,7 +850,7 @@ input[type="file"] {
 
 .gallery-item img {
     width: 100%;
-    height: 200px; /* ✅ Fixed height */
+    height: 600px; /* ✅ Fixed height */
     object-fit: cover;
     border-radius: 10px;
     cursor: pointer;

@@ -212,14 +212,14 @@ const IndividualFort = () => {
             return;
         }
         setSelectedFile(event.target.files[0]);
-    };    
+    };
 
     const uploadImage = async () => {
         if (!user) {
             showErrorToast("You must be logged in to upload images.");
             return;
         }
-    
+
         if (!selectedFile) {
             showErrorToast("Please select an image first.");
             return;
@@ -237,7 +237,7 @@ const IndividualFort = () => {
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
-            showErrorToast(response.data.message);
+            showSuccessToast(response.data.message);
             setGalleryImages((prevImages) => [...prevImages, response.data.image]);
         } catch (error) {
             showErrorToast("Error uploading image:", error);
@@ -333,7 +333,7 @@ const IndividualFort = () => {
     );
 
     return (
-        <div className="container-fluid individual-container">
+        <div className="container-fluid padding-container individual-container">
             <div className="image-section">
                 <img
                     src={fortData.photos[0]}
@@ -583,14 +583,14 @@ const IndividualFort = () => {
                 </div>
             </div>
 
-            <div className="sponsored-section">
+            {/* <div className="sponsored-section">
                 <h2>Sponsored Treks</h2>
                 <ul>
                     {fortData.sponsoredTreks.map((trek, index) => (
                         <li key={index}>{trek}</li>
                     ))}
                 </ul>
-            </div>
+            </div> */}
 
             {weather && (
                 <div className="weather-section gradient-background">
@@ -627,7 +627,7 @@ const IndividualFort = () => {
                                         <div className="comment-text">{c.comment}</div>
                                         <div className="comment-actions">
                                             <button className="like" onClick={() => likeHandler(c._id)}>
-                                                {Array.isArray(c.likes) && c.likes.includes(user?.uid) ? "❤️ Unlike" : "🤍 Like"}
+                                                {Array.isArray(c.likes) && c.likes.includes(user?.uid) ? "❤️" : "🤍"}
                                                 <span className="like-count"> {c.likes ? c.likes.length : 0}</span>
                                             </button>
                                             <button className="reply" onClick={() => toggleReplyingTo(c._id)}>Reply</button>
@@ -658,7 +658,7 @@ const IndividualFort = () => {
                                                             <div className="comment-text">{reply.comment}</div>
                                                             <div className="comment-actions">
                                                                 <button className="like" onClick={() => likeHandler(reply._id, c._id)}>
-                                                                    {Array.isArray(reply.likes) && reply.likes.includes(user?.uid) ? "❤️ Unlike" : "🤍 Like"}
+                                                                    {Array.isArray(reply.likes) && reply.likes.includes(user?.uid) ? "❤️" : "🤍"}
                                                                     <span className="like-count"> {reply.likes ? reply.likes.length : 0}</span>
                                                                 </button>
                                                                 <button className="reply" onClick={() => toggleReplyingTo(reply._id)}>Reply</button>
@@ -679,24 +679,32 @@ const IndividualFort = () => {
                                                             )}
                                                             {reply.replies && reply.replies.length > 0 && (
                                                                 <ul className="replies-list">
-                                                                    {reply.replies.map((reply, replyIndex) => (
-                                                                        <li key={replyIndex} className="reply no-hover">
-                                                                            <img src={reply.photoURL} alt={`${reply.username}'s profile`} />
+                                                                    {reply.replies.map((nestedReply, nestedIndex) => (
+                                                                        <li key={nestedIndex} className="reply no-hover">
+                                                                            <img src={nestedReply.photoURL} alt={`${nestedReply.username}'s profile`} />
                                                                             <div className="comment-content">
-                                                                                <div className="username">{reply.username}</div>
-                                                                                <div className="comment-text">{reply.comment}</div>
+                                                                                <div className="username">{nestedReply.username}</div>
+                                                                                <div className="comment-text">{nestedReply.comment}</div>
                                                                                 <div className="comment-actions">
-                                                                                    <button className="reply" onClick={() => toggleReplyingTo(reply._id)}>Reply</button>
-                                                                                    <div className="created-time">{new Date(reply.createdAt).toLocaleString()}</div>
+                                                                                    <div className="like" onClick={() => likeHandler(nestedReply._id, reply._id)}>
+                                                                                        {Array.isArray(nestedReply.likes) && nestedReply.likes.includes(user?.uid) ? "❤️" : "🤍"}
+                                                                                        <span className="like-count">{nestedReply.likes ? nestedReply.likes.length : 0}</span>
+                                                                                    </div>
+                                                                                    <button className="reply" onClick={() => toggleReplyingTo(nestedReply._id)}>Reply</button>
+                                                                                    {user?.uid === nestedReply.userId && (
+                                                                                        <button className="delete" onClick={() => deleteHandler(nestedReply._id, nestedReply.userId)}>Delete</button>
+                                                                                    )}
+                                                                                    <div className="created-time">{new Date(nestedReply.createdAt).toLocaleString()}</div>
                                                                                 </div>
-                                                                                {replyingTo === reply._id && (
+
+                                                                                {replyingTo === nestedReply._id && (
                                                                                     <div className="reply-input">
                                                                                         <textarea
                                                                                             value={replyText}
                                                                                             onChange={(e) => setReplyText(e.target.value)}
                                                                                             placeholder="Write a reply..."
                                                                                         />
-                                                                                        <button onClick={() => replyHandler(reply._id)}>Post Reply</button>
+                                                                                        <button onClick={() => replyHandler(nestedReply._id)}>Post Reply</button>
                                                                                     </div>
                                                                                 )}
                                                                             </div>
@@ -704,6 +712,7 @@ const IndividualFort = () => {
                                                                     ))}
                                                                 </ul>
                                                             )}
+
                                                         </div>
                                                     </li>
                                                 ))}

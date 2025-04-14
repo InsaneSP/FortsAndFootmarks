@@ -29,6 +29,27 @@ const checkProfanity = async (text) => {
     return localProfane || purgoProfane;
 };
 
+const findReplyRecursively = (replies, replyId) => {
+    for (const reply of replies) {
+        if (reply._id.toString() === replyId) return reply;
+        if (reply.replies?.length > 0) {
+            const found = findReplyRecursively(reply.replies, replyId);
+            if (found) return found;
+        }
+    }
+    return null;
+};
+
+const removeReplyById = (replies, idToRemove) => {
+    return replies.filter(reply => {
+        if (reply._id.toString() === idToRemove) return false;
+        if (reply.replies) {
+            reply.replies = removeReplyById(reply.replies, idToRemove);
+        }
+        return true;
+    });
+};
+
 // ✅ 1. Add a Comment to a Fort
 router.post("/fort/:fortName/comment", async (req, res) => {
     const { uid, username, photoURL, comment } = req.body;
@@ -65,7 +86,7 @@ router.post("/fort/:fortName/comment", async (req, res) => {
     }
 });
 
-// ✅ 2. Like or Unlike a Comment
+// ✅ 2. Like or Unlike a Comment or Reply
 router.post("/:commentId/like", async (req, res) => {
     const { uid } = req.body;
     if (!uid) return res.status(400).json({ message: "User ID required" });
@@ -77,9 +98,12 @@ router.post("/:commentId/like", async (req, res) => {
 
         if (!comment) return res.status(404).json({ message: "Comment/Reply not found" });
 
-        let target = comment._id.toString() === req.params.commentId
-            ? comment
-            : comment.replies.find(reply => reply._id.toString() === req.params.commentId);
+        let target;
+        if (comment._id.toString() === req.params.commentId) {
+            target = comment;
+        } else {
+            target = findReplyRecursively(comment.replies, req.params.commentId);
+        }
 
         if (!target) return res.status(404).json({ message: "Reply not found" });
 
@@ -101,7 +125,7 @@ router.post("/:commentId/like", async (req, res) => {
     }
 });
 
-// ✅ 3. Reply to a Comment
+// ✅ 3. Reply to a Comment or Reply
 router.post("/:commentId/reply", async (req, res) => {
     const { uid, username, photoURL, comment } = req.body;
     if (!uid || !comment) return res.status(400).json({ message: "User and comment are required" });
@@ -112,8 +136,11 @@ router.post("/:commentId/reply", async (req, res) => {
     }
 
     try {
-        const parentComment = await CommentModel.findOne({ "replies._id": req.params.commentId }) || await CommentModel.findById(req.params.commentId);
-        if (!parentComment) return res.status(404).json({ message: "Parent comment not found" });
+        let commentDoc = await CommentModel.findOne({
+            $or: [{ _id: req.params.commentId }, { "replies._id": req.params.commentId }]
+        }) || await CommentModel.findById(req.params.commentId);
+
+        if (!commentDoc) return res.status(404).json({ message: "Comment not found" });
 
         const newReply = {
             userId: uid,
@@ -125,23 +152,24 @@ router.post("/:commentId/reply", async (req, res) => {
             createdAt: new Date()
         };
 
-        if (parentComment.replies.some(reply => reply._id.toString() === req.params.commentId)) {
-            const replyIndex = parentComment.replies.findIndex(reply => reply._id.toString() === req.params.commentId);
-            parentComment.replies[replyIndex].replies.push(newReply);
+        if (commentDoc._id.toString() === req.params.commentId) {
+            commentDoc.replies.push(newReply);
         } else {
-            parentComment.replies.push(newReply);
+            const targetReply = findReplyRecursively(commentDoc.replies, req.params.commentId);
+            if (!targetReply) return res.status(404).json({ message: "Reply not found" });
+            targetReply.replies.push(newReply);
         }
 
-        await parentComment.save();
-
+        await commentDoc.save();
         res.status(201).json(newReply);
+
     } catch (error) {
         console.error("Error adding reply:", error);
         res.status(500).json({ message: "Server error" });
     }
 });
 
-// ✅ 4. Delete a Comment
+// ✅ 4. Delete a Comment or Reply
 router.delete("/:commentId", async (req, res) => {
     const { uid } = req.body;
     if (!uid) return res.status(400).json({ message: "User ID required" });
@@ -157,7 +185,7 @@ router.delete("/:commentId", async (req, res) => {
             if (comment.userId.toString() !== uid) return res.status(403).json({ message: "Unauthorized" });
             await CommentModel.findByIdAndDelete(req.params.commentId);
         } else {
-            comment.replies = comment.replies.filter(reply => reply._id.toString() !== req.params.commentId);
+            comment.replies = removeReplyById(comment.replies, req.params.commentId);
             await comment.save();
         }
 

@@ -16,10 +16,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* .container-fluid{
+.padding-container{
   padding-left: 15% !important;
   padding-right: 15% !important;
-} */
+}
 
 .background{
   background-color: #F1EFE3;

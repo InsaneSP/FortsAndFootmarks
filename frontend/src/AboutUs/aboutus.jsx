@@ -13,7 +13,7 @@ class AboutUs extends Component {
     state = {};
     render() {
         return (
-            <div className="container-fluid about-us-container">
+            <div className="container-fluid padding-container about-us-container">
                 <h1 className="heading">About FortsAndFootmarks</h1>
                 <img src={logo} alt="Mountain Fort" className="about-image" />
                 <div className="section">

@@ -63,7 +63,7 @@ const Forts = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid padding-container">
             <br />
             <h1 style={{ textTransform: "capitalize" }}>{type} Forts</h1>
             

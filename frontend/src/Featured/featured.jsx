@@ -17,7 +17,7 @@ const Featured = () => {
     }, []);
 
     return (
-        <div className="container-fluid background">
+        <div className="container-fluid padding-container background">
             <h1>Featured Locations</h1>
             <br />
             <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">

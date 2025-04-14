@@ -3,22 +3,6 @@
     max-width: 1300px !important;
 }
 
-.fortimg {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.fort {
-    display: flex;
-}
-
-.fortname {
-    flex-direction: column;
-    margin: 5% 0 0 10%;
-}
-
 .fortname h6 {
     color: grey;
     white-space: nowrap;
@@ -26,14 +10,22 @@
     text-overflow: ellipsis;
 }
 
+.fort-date{
+    display: flex;
+    margin: 1% 0 0 1%;
+}
+
 .fort-details {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
+    gap: 10px;
 }
 
 .fort-details-img {
-    width: 280px;
-    height: 180px;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
     object-fit: cover;
     margin-bottom: 10px;
     border-radius: 10px;
@@ -43,12 +35,28 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    flex: 1;
     margin-left: 10px;
 }
 
-.fort-date{
+/* Adjust fort section in accordion header */
+.fort {
     display: flex;
-    margin: 1% 0 0 1%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.fortimg {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.fortname {
+    flex-direction: column;
+    margin: 0;
 }
 
 .calendar-icon {
@@ -70,6 +78,8 @@
 .pagination {
     display: flex !important;
     justify-content: center !important;
+    flex-wrap: wrap; /* allow wrapping */
+    gap: 8px; /* space between buttons */
     margin-top: 20px !important;
 }
 
@@ -77,9 +87,11 @@
     background: #f8f9fa !important;
     border: 1px solid #ccc !important;
     padding: 8px 12px !important;
-    margin: 0 5px !important;
+    margin: 5px !important;
     cursor: pointer !important;
     transition: background 0.3s !important;
+    border-radius: 6px !important;
+    font-size: 1rem;
 }
 
 .page-btn:hover {
@@ -90,4 +102,31 @@
 .page-btn.active {
     background: #696969 !important;
     color: white !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .fort-details {
+        flex-direction: column;
+    }
+
+    .fort-details-img {
+        width: 100%;
+        height: auto;
+    }
+
+    .fort-info {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .fortimg {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .page-btn {
+        padding: 6px 10px !important;
+        font-size: 0.85rem;
+    }
 }

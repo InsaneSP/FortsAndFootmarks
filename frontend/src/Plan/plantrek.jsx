@@ -233,7 +233,7 @@ const Plan = () => {
     };
 
     return (
-        <div className="container-fluid about-us-container">
+        <div className="container-fluid padding-container about-us-container">
             <h1 className="heading">Plan Your Trek</h1>
             <div className="section">
                 {/* Left Container - Itinerary */}
