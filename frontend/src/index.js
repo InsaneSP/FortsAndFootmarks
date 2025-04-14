@@ -19,6 +19,7 @@ import DeleteData from './Delete/delete.jsx';
 import ScrollToTopButton from './Scroll/scrolltotopbutton.jsx';
 import Profile from './Profile/profile.jsx';
 import ForgotPassword from './ForgotPassword/forgotPassword.jsx';
+import DisclaimerPopup from './Disclaimer/disclaimer.jsx';
 import { ToastContainer } from "react-toastify";
 import reportWebVitals from './reportWebVitals.js';
 import app from './firebaseConfig.js';
@@ -31,6 +32,7 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
         <Router>
+        <DisclaimerPopup />
           <ScrollToTop />
           <Navbar />
           <Routes>
