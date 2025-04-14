@@ -200,7 +200,6 @@ const Login = () => {
         try {
             const avatar = user.photoURL || generateAvatar(user.username);
 
-            // const response = await fetch("http://localhost:3001/users", {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
                 method: "POST",
                 headers: {
@@ -280,8 +279,7 @@ const Login = () => {
                             <button type="submit" className="login-btn solid inp">
                                 {isLoading ? "Loading..." : "Login"}
                             </button>
-                        </form>
-                        <div className="social-media-buttons">
+                            <div className="social-media-buttons">
                             <button className="circle-btn" onClick={handleGoogleLogin}>
                                 <FontAwesomeIcon icon={faGoogle} />
                             </button>
@@ -292,10 +290,10 @@ const Login = () => {
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </button> */}
                         </div>
-
                         <p className="forgot-password" onClick={() => navigate("/forgot")}>
                             Forgot Password?
                         </p>
+                        </form>
 
                         {/* Sign Up Form */}
                         <form onSubmit={handleSubmit} className="sign-up-form login-form">
@@ -344,6 +342,17 @@ const Login = () => {
                             <button type="submit" className="login-btn inp">
                                 {isLoading ? "Processing..." : "Sign up"}
                             </button>
+                            <div className="social-media-buttons">
+                            <button className="circle-btn" onClick={handleGoogleLogin}>
+                                <FontAwesomeIcon icon={faGoogle} />
+                            </button>
+                            <button className="circle-btn">
+                                <FontAwesomeIcon icon={faFacebook} onClick={handleFacebookLogin} />
+                            </button>
+                            {/* <button className="circle-btn">
+                                    <FontAwesomeIcon icon={faTwitter} />
+                                </button> */}
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -353,8 +362,7 @@ const Login = () => {
                         <div className="content">
                             <h3>New to Our Trekking Community? Join Us!</h3>
                             <p>
-                                Sign up to start your journey through the best trekking spots
-                                in the region.
+                                Sign up to start your journey through the best trekking spots in the region.
                             </p>
                             <button
                                 className="login-btn transparent"
@@ -369,8 +377,7 @@ const Login = () => {
                         <div className="content">
                             <h3>Already a Member? Sign In!</h3>
                             <p>
-                                Welcome back! Sign in to continue exploring and planning your
-                                trekking adventures.
+                                Welcome back! Sign in to continue exploring and planning your trekking adventures.
                             </p>
                             <button
                                 className="login-btn transparent"

@@ -21,6 +21,7 @@
     "firebase": "^11.1.0",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.10.2",
+    "framer-motion": "^12.6.5",
     "gsap": "^3.12.5",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
