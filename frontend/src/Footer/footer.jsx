@@ -97,14 +97,14 @@ const Footer = () => {
                     <div className="card-body">
                         <h4>Trek by Duration</h4>
                         <div className="card-hr"></div>
+                        <Link to="/forts/short" className="p-link">
+                            Short Treks
+                        </Link>
                         <Link to="/forts/1 day" className="p-link">
                             1 day
                         </Link>
                         <Link to="/forts/2 days" className="p-link">
                             2 days
-                        </Link>
-                        <Link to="/forts/3 days" className="p-link">
-                            3 days
                         </Link>
                         <img src={clock} />
                     </div>

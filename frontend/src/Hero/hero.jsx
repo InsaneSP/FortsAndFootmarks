@@ -83,7 +83,7 @@ class Hero extends Component {
                 <div className="mt-12 flex justify-center space-x-8">
                     <div className="icon-text">
                         <FontAwesomeIcon icon={faMapMarkerAlt} className="w-6 h-6" />
-                        <span>65+ Locations</span>
+                        <span>60+ Locations</span>
                     </div>
                     <div className="icon-text">
                         <FontAwesomeIcon icon={faFortAwesome} className="w-6 h-6" />

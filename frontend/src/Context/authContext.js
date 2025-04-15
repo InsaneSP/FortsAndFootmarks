@@ -45,7 +45,9 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         await signOut(auth);
         setUser(null);
-    };
+        window.location.href = "/login";
+      };
+      
 
     return (
         <AuthContext.Provider value={{ user, setUser, loading, logout }}>
