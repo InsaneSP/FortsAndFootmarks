@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faScroll,
-    faMountain,
+    faMap,
     faUsers,
-    faCamera,
+    faTools,
+    faFilter,
+    faStream,
+    faShareAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../images/NewLogo.png";
 import "./aboutus.css";
@@ -50,20 +53,32 @@ class AboutUs extends Component {
                             <h4 className="card-heading">Why Choose Us?</h4>
                             <ul>
                                 <li>
-                                    <FontAwesomeIcon icon={faScroll} className="icon" />
-                                    Expert historical knowledge and storytelling
+                                    <FontAwesomeIcon icon={faMap} className="icon" />
+                                    Comprehensive Fort Information
                                 </li>
                                 <li>
-                                    <FontAwesomeIcon icon={faMountain} className="icon" />
-                                    Safe and well-planned trekking experiences
+                                    <FontAwesomeIcon icon={faScroll} className="icon" />
+                                    Authentic Historical Narratives
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faTools} className="icon" />
+                                    Personalized Trek Planning Tools
                                 </li>
                                 <li>
                                     <FontAwesomeIcon icon={faUsers} className="icon" />
-                                    Community-focused approach to heritage preservation
+                                    Community Reviews & Insights
                                 </li>
                                 <li>
-                                    <FontAwesomeIcon icon={faCamera} className="icon" />
-                                    Stunning photography opportunities at each fort
+                                    <FontAwesomeIcon icon={faFilter} className="icon" />
+                                    Seasonal & Difficulty Filters
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faStream} className="icon" />
+                                    Interactive Historical Timelines
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faShareAlt} className="icon" />
+                                    Save and share your customized trek plans
                                 </li>
                             </ul>
                         </div>
@@ -72,17 +87,14 @@ class AboutUs extends Component {
                 <div className="story">
                     <h4 className="subheading">Our Story</h4>
                     <p>
-                        FortsAndFootmarks was born out of a deep, shared passion for
+                        FortsAndFootmarks was born out of a deep, passion for
                         Maharashtra's history, its rich heritage, and a strong desire to
-                        make its magnificent forts more accessible to all. The story began
-                        in 2024, when a group of history buffs and trekking enthusiasts came
-                        together, united by their love for these awe-inspiring historical
-                        monuments. It is an initiative that would allow people from all
-                        walks of life to experience the majesty and mystery of the Maratha
-                        forts up close.
+                        make its magnificent forts more accessible to all. It is an initiative
+                        that would allow people from all walks of life to experience the majesty
+                        and mystery of the Maratha forts up close.
                     </p>
                     <p>
-                        We realized that these forts were not only remarkable for their
+                        we realized that these forts were not only remarkable for their
                         architecture and natural surroundings but also for the stories they
                         held—stories of legendary warriors, strategic brilliance, and the
                         rich culture of the Maratha Empire. We wanted to share these stories
@@ -93,7 +105,7 @@ class AboutUs extends Component {
                         of Maharashtra’s historical forts.
                     </p>
                     <p>
-                        Today, we are proud to be the go-to resource for anyone interested
+                        Today, FortsAndFootmarks is proud to be the go-to resource for anyone interested
                         in exploring the fascinating world of Maratha forts. Whether you are
                         a seasoned historian, an adventurous trekker, or a curious tourist,
                         FortsAndFootmarks has something for you. We continue to innovate and

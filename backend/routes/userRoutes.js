@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("../models/user"); // ✅ Fix: Ensure correct import
+const UserModel = require("../models/user"); 
 const CommentModel = require("../models/comment");
-const FortModel = require("../models/forts");  // Ensure correct path & name
 
 router.post("/", async (req, res) => {
     const { username, email, uid, photoURL } = req.body;
@@ -11,7 +10,7 @@ router.post("/", async (req, res) => {
         let user = await UserModel.findOne({ uid });
 
         if (user) {
-            // ✅ Update existing user's profile picture if changed
+            // Update existing user's profile picture if changed
             user.photoURL = photoURL;
             await user.save();
             return res.status(200).json({ message: "User updated", user });
@@ -38,10 +37,10 @@ router.get("/:uid", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // 🔹 Fetch User's Comments with Related Forts
+        // Fetch User's Comments with Related Forts
         const comments = await CommentModel.find({ userId: uid }).populate("fortId", "name");
 
-        // 🔹 Fetch User's Replies (inside other comments)
+        // Fetch User's Replies (inside other comments)
         const replies = await CommentModel.find({ "replies.userId": uid })
             .populate("fortId", "name")
             .lean(); // Convert Mongoose document to plain JavaScript object
@@ -62,7 +61,7 @@ router.get("/:uid", async (req, res) => {
             });
         });
 
-        // 🔹 Calculate Total Likes Received (including replies)
+        // Calculate Total Likes Received (including replies)
         const totalLikes = [
             ...comments.map(comment => comment.likes?.length || 0),
             ...userReplies.map(reply => reply.likes?.length || 0)

@@ -23,8 +23,6 @@ const Login = () => {
     });
     const [message, setMessage] = useState({ text: "", type: "" });
     const [isLoading, setIsLoading] = useState(false);
-    const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
-    const [resetEmail, setResetEmail] = useState("");
     const navigate = useNavigate();
 
     const auth = getAuth(app);
@@ -221,23 +219,6 @@ const Login = () => {
         } catch (error) {
             console.error("Error saving user:", error);
         }
-    };
-
-    const handleResetPassword = async (e) => {
-        e.preventDefault();
-        if (!resetEmail) {
-            setMessage({ text: "Please enter your email.", type: "error" });
-            return;
-        }
-        setIsLoading(true);
-        try {
-            await sendPasswordResetEmail(auth, resetEmail);
-            setMessage({ text: "Password reset email sent! Check your inbox.", type: "success" });
-            setForgotPasswordMode(false);
-        } catch (error) {
-            setMessage({ text: error.message, type: "error" });
-        }
-        setIsLoading(false);
     };
 
     return (

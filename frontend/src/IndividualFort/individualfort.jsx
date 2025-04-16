@@ -15,7 +15,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import slugify from "slugify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context/authContext.js";
@@ -68,13 +67,12 @@ const IndividualFort = () => {
         };
 
         try {
-            // const response = await axios.post(`${process.env.REACT_APP_API_URL}/fort/${fortName}/comments`, newComment);
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/comments/fort/${fortName}/comment`,
                 newComment
             );
 
-            setComments([...comments, response.data]); // ✅ Update comments
+            setComments([...comments, response.data]);
             setNewCommentText("");
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -254,7 +252,6 @@ const IndividualFort = () => {
 
     useEffect(() => {
         axios
-            // .get(`http://localhost:3001/fort/${fortName}`)
             .get(`${process.env.REACT_APP_API_URL}/fort/${fortName}`)
             .then((response) => {
                 setFortData(response.data);
@@ -311,7 +308,6 @@ const IndividualFort = () => {
             await Promise.all(
                 fortData.similarNearbyForts.map(async (fort) => {
                     try {
-                        // const response = await axios.get(`http://localhost:3001/fort/${fort.toLowerCase()}`);
                         const response = await axios.get(`${process.env.REACT_APP_API_URL}/fort/${fort.toLowerCase()}`);
                         images[fort] = response.data.photos?.[0];
                     } catch (error) {

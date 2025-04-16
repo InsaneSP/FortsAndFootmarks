@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../Context/authContext.js";
 import { FaPencilAlt, FaSave } from "react-icons/fa"; 
-import { showErrorToast, showSuccessToast } from "../Toastify/toast.jsx";
+import { showErrorToast } from "../Toastify/toast.jsx";
 import "./profile.css";
 
 const Profile = () => {

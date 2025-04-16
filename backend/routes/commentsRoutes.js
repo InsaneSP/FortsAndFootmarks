@@ -1,12 +1,10 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
 const axios = require("axios");
+const mongoose = require("mongoose");
 const CommentModel = require("../models/comment");
 const UserModel = require("../models/user");
 const FortModel = require("../models/forts");
-
-// 🆕 Profanity filter setup
 const Filter = require("bad-words");
 const customHindiBadWords = require("../utils/badwords");
 
@@ -38,6 +36,19 @@ const findReplyRecursively = (replies, replyId) => {
         }
     }
     return null;
+};
+
+const addReplyRecursively = (replies, parentId, newReply) => {
+    for (let reply of replies) {
+        if (reply._id.toString() === parentId.toString()) {
+            reply.replies.push(newReply);
+            return true;
+        } else if (reply.replies && reply.replies.length > 0) {
+            const added = addReplyRecursively(reply.replies, parentId, newReply);
+            if (added) return true;
+        }
+    }
+    return false;
 };
 
 const removeReplyById = (replies, idToRemove) => {
@@ -143,6 +154,7 @@ router.post("/:commentId/reply", async (req, res) => {
         if (!commentDoc) return res.status(404).json({ message: "Comment not found" });
 
         const newReply = {
+            _id: new mongoose.Types.ObjectId(),
             userId: uid,
             username,
             photoURL,
@@ -155,9 +167,8 @@ router.post("/:commentId/reply", async (req, res) => {
         if (commentDoc._id.toString() === req.params.commentId) {
             commentDoc.replies.push(newReply);
         } else {
-            const targetReply = findReplyRecursively(commentDoc.replies, req.params.commentId);
-            if (!targetReply) return res.status(404).json({ message: "Reply not found" });
-            targetReply.replies.push(newReply);
+            const added = addReplyRecursively(commentDoc.replies, req.params.commentId, newReply);
+            if (!added) return res.status(404).json({ message: "Could not find parent reply" });
         }
 
         await commentDoc.save();

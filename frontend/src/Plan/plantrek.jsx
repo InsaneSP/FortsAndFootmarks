@@ -21,9 +21,10 @@ import {
 import { useAuth } from "../Context/authContext.js";
 import axios from "axios";
 import "./plantrek.css";
+import { showErrorToast } from "../Toastify/toast.jsx";
 
 const MAX_CHAR_LIMIT = 300;
-const MAX_EXPENSE = 100000; 
+const MAX_EXPENSE = 100000;
 
 const validateTextInput = (value) => {
     if (value.includes("\"") || value.includes("'")) return "Quotes are not allowed.";
@@ -49,7 +50,6 @@ const Plan = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const { user } = useAuth();
     const [shareButtons, setShareButtons] = useState(false);
-    const [error, setError] = useState("");
 
     useEffect(() => {
         const fetchForts = async () => {
@@ -71,7 +71,7 @@ const Plan = () => {
 
         const validationError = validateTextInput(searchQuery);
         if (validationError) {
-            alert(`Search Error: ${validationError}`);
+            showErrorToast(`Search Error: ${validationError}`);
             return;
         }
 
@@ -81,10 +81,10 @@ const Plan = () => {
 
         if (filtered.length > 0) {
             setFortTimeline(filtered[0]);
-            setError("");
+            showErrorToast("");
         } else {
             setFortTimeline(null);
-            setError("Fort not found! Please try another name.");
+            showErrorToast("Fort not found! Please try another name.");
         }
     };
 
@@ -126,11 +126,11 @@ const Plan = () => {
         if (field === "amount") {
             const numericValue = parseFloat(value) || 0;
             const validationError = validateExpense(numericValue);
-            if (validationError) return alert(`Expense Error: ${validationError}`);
+            if (validationError) return showErrorToast(`Expense Error: ${validationError}`);
             updatedExpenses[index][field] = numericValue;
         } else {
             const validationError = validateTextInput(value);
-            if (validationError) return alert(`Item Error: ${validationError}`);
+            if (validationError) return showErrorToast(`Item Error: ${validationError}`);
             updatedExpenses[index][field] = value;
         }
 
@@ -153,7 +153,7 @@ const Plan = () => {
         const value = e.target.value;
         const validationError = validateTextInput(value);
         if (validationError) {
-            alert(`Notes Error: ${validationError}`);
+            showErrorToast(`Notes Error: ${validationError}`);
             return;
         }
         setNotes(value);
@@ -163,7 +163,7 @@ const Plan = () => {
         const value = e.target.value;
         const validationError = validateTextInput(value);
         if (validationError) {
-            alert(`Search Error: ${validationError}`);
+            showErrorToast(`Search Error: ${validationError}`);
             return;
         }
         setSearchQuery(value);
@@ -171,7 +171,7 @@ const Plan = () => {
 
     const handleSharePlan = () => {
         if (!user) {
-            alert("You must log in to share the trek plan.");
+            showErrorToast("You must log in to share the trek plan.");
             return;
         }
 
@@ -330,7 +330,6 @@ const Plan = () => {
 
                             </form>
                         </div>
-                        {error && <p className="error-message">{error}</p>}
                         {fortTimeline ? (
                             <div className="timeline-content">
                                 <h2 className="fort-name">{fortTimeline.name}</h2>

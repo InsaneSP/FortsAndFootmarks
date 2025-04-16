@@ -9,7 +9,6 @@ const Featured = () => {
     const [forts, setForts] = useState([]);
 
     useEffect(() => {
-        // fetch('http://localhost:3001/forts?limit=4')
         fetch(`${process.env.REACT_APP_API_URL}/forts?limit=4`)
             .then(response => response.json())
             .then(data => setForts(data))

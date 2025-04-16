@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import season from "../images/Season.png";
 import clock from "../images/Clock.png";
 import difficulty from "../images/Difficulty.png";
 import telescope from "../images/Telescope.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faFacebook,
-    faInstagram,
-    faYoutube,
-    faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
 import { faPhone, faClock } from "@fortawesome/free-solid-svg-icons";
 import { showErrorToast, showSuccessToast } from "../Toastify/toast";
 import { Link } from "react-router-dom";
@@ -39,11 +33,11 @@ const Footer = () => {
             const error = validateTextInput(input.value);
             if (error) {
                 showErrorToast(`${input.field} Error: ${error}`);
-                return; // ⛔️ Stop form submission
+                return;
             }
         }
     
-        showSuccessToast("Sending..."); // ✅ Now it's safe to proceed
+        showSuccessToast("Sending...");
     
         const formData = new FormData();
         formData.append("access_key", "956c91fc-d724-4000-932f-49ef2414c10e");

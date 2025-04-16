@@ -1,7 +1,6 @@
 const express = require('express');
 const FortModel = require('../models/forts');
 const upload = require("../middleware/multer");
-const cloudinary = require("../config/cloudinary"); // ✅ Import Cloudinary
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -20,12 +19,10 @@ router.get('/:type', async (req, res) => {
         let forts;
 
         if (type === "short") {
-            // Return forts with 1 or 2 day treks only
             forts = await FortModel.find({
                 durationOfTrek: { $nin: ["1 day", "2 days"] }
             });
         } else {
-            // Generic search logic
             forts = await FortModel.find({ 
                 $or: [
                     { type: { $regex: new RegExp(`^${type}$`, 'i') } },
@@ -61,22 +58,19 @@ router.post("/:fortName/upload", upload.single("image"), async (req, res) => {
             return res.status(404).json({ message: "Fort not found" });
         }
 
-        if (!req.file || !req.file.path) {
+        if (!req.file || !(req.file.path || req.file.secure_url)) {
             console.error("❌ No file uploaded or invalid file path");
             return res.status(400).json({ message: "No file uploaded" });
         }
-
-        console.log("✅ Cloudinary Upload Success:", req.file.path);
-
-        // ✅ Store Image in MongoDB (Use `gallery` key)
+        
         const newImage = {
-            url: req.file.path, 
+            url: req.file.path || req.file.secure_url,
             uploadedBy: username || "Anonymous",
             photoURL: userPhoto || "",
             uploadedAt: new Date()
-        };
+        };        
 
-        fort.gallery.push(newImage); // ✅ Use `gallery` key, not `photos`
+        fort.gallery.push(newImage);
         await fort.save();
 
         console.log("✅ Image saved in MongoDB:", newImage);
